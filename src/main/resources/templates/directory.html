@@ -348,6 +348,7 @@
             background: white;
             padding: 20px;
             border-radius: 8px;
+            margin: 15px;
         }
     </style>
 </head>
@@ -359,372 +360,14 @@
         <div id="preview"></div>
     </div>
 
-    <!-- Mobile Filter Button -->
-    <div class="mobile-filter-header">
-        <button class="filter-toggle-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas"
-            aria-controls="filterOffcanvas">
-            <i class="fa-solid fa-filter"></i>
-            <span>Filters</span>
-        </button>
-    </div>
+    <!-- Mobile Filter Button Go Here-->
 
-    <!-- Offcanvas for mobile -->
-    <div class="offcanvas offcanvas-start offcanvas-filter" tabindex="-1" id="filterOffcanvas"
-        aria-labelledby="filterOffcanvasLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="filterOffcanvasLabel">
-                <i class="fa-solid fa-filter"></i> Filters
-            </h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-                aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="filters-card">
-                <div class="section-title">
-                    <i class="fa-solid fa-filter" aria-hidden="true"></i> Filters
-                </div>
+    <!-- Offcanvas for mobile Go Here-->
 
-                <div class="mb-3">
-                    <div class="input-group">
-                        <span class="input-group-text bg-white border-0"><i
-                                class="fa-solid fa-magnifying-glass"></i></span>
-                        <input class="form-control" placeholder="Search" aria-label="Search" />
-                    </div>
-                </div>
-
-                <div class="d-flex gap-2 mb-3">
-                    <button class="btn btn-light btn-sm w-50"><i class="fa-regular fa-star me-1"></i>
-                        Favorites</button>
-                    <button class="btn btn-outline-light btn-sm w-50"><i class="fa-solid fa-map-location-dot me-1"></i>
-                        Show Map</button>
-                </div>
-
-                <div class="small-muted">Location <a href="#" class="small-muted ms-2">Set Location Filter</a></div>
-
-                <!-- Denomination Filter -->
-                <div class="filter-row">
-                    <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                        data-bs-toggle="collapse" data-bs-target="#denomination-filter-content">
-                        <div class="small-muted">Denomination</div>
-                        <i class="fa-solid fa-chevron-down small-muted"></i>
-                    </div>
-
-                    <div id="denomination-filter-content" class="filter-content collapse">
-                        <div class="filter-checkbox-group">
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="denom-baptist" name="denomination">
-                                <label for="denom-baptist" class="small-muted">Baptist</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="denom-methodist" name="denomination">
-                                <label for="denom-methodist" class="small-muted">Methodist</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="denom-presbyterian" name="denomination">
-                                <label for="denom-presbyterian" class="small-muted">Presbyterian</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Day of the Week Filter -->
-                <div class="filter-row">
-                    <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                        data-bs-toggle="collapse" data-bs-target="#day-filter-content">
-                        <div class="small-muted">Day of the Week</div>
-                        <i class="fa-solid fa-chevron-down small-muted"></i>
-                    </div>
-                    <div id="day-filter-content" class="filter-content collapse">
-                        <div class="filter-checkbox-group">
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="day-sunday" name="day_of_week">
-                                <label for="day-sunday" class="small-muted">Sunday</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="day-monday" name="day_of_week">
-                                <label for="day-monday" class="small-muted">Monday</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="day-tuesday" name="day_of_week">
-                                <label for="day-tuesday" class="small-muted">Tuesday</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="day-wednesday" name="day_of_week">
-                                <label for="day-wednesday" class="small-muted">Wednesday</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="day-thursday" name="day_of_week">
-                                <label for="day-thursday" class="small-muted">Thursday</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="day-friday" name="day_of_week">
-                                <label for="day-friday" class="small-muted">Friday</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="day-saturday" name="day_of_week">
-                                <label for="day-saturday" class="small-muted">Saturday</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Age Range Filter -->
-                <div class="filter-row">
-                    <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                        data-bs-toggle="collapse" data-bs-target="#age-filter-content">
-                        <div class="small-muted">Age Range</div>
-                        <i class="fa-solid fa-chevron-down small-muted"></i>
-                    </div>
-                    <div id="age-filter-content" class="filter-content collapse">
-                        <div class="filter-checkbox-group">
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="age-teens" name="age_range">
-                                <label for="age-teens" class="small-muted">Teens</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="age-20s" name="age_range">
-                                <label for="age-20s" class="small-muted">20s</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="age-30s" name="age_range">
-                                <label for="age-30s" class="small-muted">30s</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="age-40s" name="age_range">
-                                <label for="age-40s" class="small-muted">40s</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="age-50s" name="age_range">
-                                <label for="age-50s" class="small-muted">50s</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="age-60plus" name="age_range">
-                                <label for="age-60plus" class="small-muted">60+</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Languages Filter -->
-                <div class="filter-row">
-                    <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                        data-bs-toggle="collapse" data-bs-target="#language-filter-content">
-                        <div class="small-muted">Languages</div>
-                        <i class="fa-solid fa-chevron-down small-muted"></i>
-                    </div>
-                    <div id="language-filter-content" class="filter-content collapse">
-                        <div class="filter-checkbox-group">
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="lang-english" name="language">
-                                <label for="lang-english" class="small-muted">English</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="lang-spanish" name="language">
-                                <label for="lang-spanish" class="small-muted">Spanish</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="lang-french" name="language">
-                                <label for="lang-french" class="small-muted">French</label>
-                            </div>
-                            <div class="filter-checkbox-item">
-                                <input type="checkbox" id="lang-other" name="language">
-                                <label for="lang-other" class="small-muted">Other</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="filter-row">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="small-muted">Kids Welcome</div>
-                        <div class="toggle" role="switch" aria-checked="true"></div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-2">
-                        <div class="small-muted">Childcare Provided</div>
-                        <div class="toggle" role="switch" aria-checked="false"></div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-2">
-                        <div class="small-muted">Handicap Accessible</div>
-                        <div class="toggle" role="switch" aria-checked="true"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="pt-5 flex-grow-1 d-flex px-3 px-lg-4" id="content-body">
         <div style="display: flex; flex: 1; max-width: 1400px; margin: 0 auto;">
-            <!-- Left Filters (Desktop Only) -->
-            <div class="mb-4 d-flex flex-column pe-lg-4 desktop-filters ">
-                <div class="filters-card" style="max-height: calc(100vh - 40px); overflow-y: auto;">
-                    <div class="section-title">
-                        <i class="fa-solid fa-filter" aria-hidden="true"></i> Filters
-                    </div>
-
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <span class="input-group-text bg-white border-0"><i
-                                    class="fa-solid fa-magnifying-glass"></i></span>
-                            <input class="form-control" placeholder="Search" aria-label="Search" />
-                        </div>
-                    </div>
-
-                    <div class="d-flex gap-2 mb-3">
-                        <button class="btn btn-outline-light btn-sm w-50" id="joined-button">Joined</button>
-                        <button class="btn btn-outline-light btn-sm w-50"><i
-                                class="fa-solid fa-map-location-dot me-1"></i> Show Map</button>
-                    </div>
-
-                    <div class="small-muted">Location <a href="#" class="small-muted ms-2">Set Location Filter</a></div>
-
-                    <!-- Denomination Filter -->
-                    <div class="filter-row">
-                        <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                            data-bs-toggle="collapse" data-bs-target="#denomination-filter-content-desktop">
-                            <div class="small-muted">Denomination</div>
-                            <i class="fa-solid fa-chevron-down small-muted"></i>
-                        </div>
-                        <div id="denomination-filter-content-desktop" class="filter-content collapse">
-                            <div class="filter-checkbox-group">
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="denom-baptist-desktop" name="denomination">
-                                    <label for="denom-baptist-desktop" class="small-muted">Baptist</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="denom-methodist-desktop" name="denomination">
-                                    <label for="denom-methodist-desktop" class="small-muted">Methodist</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="denom-presbyterian-desktop" name="denomination">
-                                    <label for="denom-presbyterian-desktop" class="small-muted">Presbyterian</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Day of the Week Filter -->
-                    <div class="filter-row">
-                        <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                            data-bs-toggle="collapse" data-bs-target="#day-filter-content-desktop">
-                            <div class="small-muted">Day of the Week</div>
-                            <i class="fa-solid fa-chevron-down small-muted"></i>
-                        </div>
-                        <div id="day-filter-content-desktop" class="filter-content collapse">
-                            <div class="filter-checkbox-group">
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="day-sunday-desktop" name="day_of_week_desktop">
-                                    <label for="day-sunday-desktop" class="small-muted">Sunday</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="day-monday-desktop" name="day_of_week_desktop">
-                                    <label for="day-monday-desktop" class="small-muted">Monday</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="day-tuesday-desktop" name="day_of_week_desktop">
-                                    <label for="day-tuesday-desktop" class="small-muted">Tuesday</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="day-wednesday-desktop" name="day_of_week_desktop">
-                                    <label for="day-wednesday-desktop" class="small-muted">Wednesday</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="day-thursday-desktop" name="day_of_week_desktop">
-                                    <label for="day-thursday-desktop" class="small-muted">Thursday</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="day-friday-desktop" name="day_of_week_desktop">
-                                    <label for="day-friday-desktop" class="small-muted">Friday</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="day-saturday-desktop" name="day_of_week_desktop">
-                                    <label for="day-saturday-desktop" class="small-muted">Saturday</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Age Range Filter -->
-                    <div class="filter-row">
-                        <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                            data-bs-toggle="collapse" data-bs-target="#age-filter-content-desktop">
-                            <div class="small-muted">Age Range</div>
-                            <i class="fa-solid fa-chevron-down small-muted"></i>
-                        </div>
-                        <div id="age-filter-content-desktop" class="filter-content collapse">
-                            <div class="filter-checkbox-group">
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="age-teens-desktop" name="age_range">
-                                    <label for="age-teens-desktop" class="small-muted">Teens</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="age-20s-desktop" name="age_range">
-                                    <label for="age-20s-desktop" class="small-muted">20s</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="age-30s-desktop" name="age_range">
-                                    <label for="age-30s-desktop" class="small-muted">30s</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="age-40s-desktop" name="age_range">
-                                    <label for="age-40s-desktop" class="small-muted">40s</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="age-50s-desktop" name="age_range">
-                                    <label for="age-50s-desktop" class="small-muted">50s</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="age-60plus-desktop" name="age_range">
-                                    <label for="age-60plus-desktop" class="small-muted">60+</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Languages Filter -->
-                    <div class="filter-row">
-                        <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                            data-bs-toggle="collapse" data-bs-target="#language-filter-content-desktop">
-                            <div class="small-muted">Languages</div>
-                            <i class="fa-solid fa-chevron-down small-muted"></i>
-                        </div>
-                        <div id="language-filter-content-desktop" class="filter-content collapse">
-                            <div class="filter-checkbox-group">
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="lang-english-desktop" name="language">
-                                    <label for="lang-english-desktop" class="small-muted">English</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="lang-spanish-desktop" name="language">
-                                    <label for="lang-spanish-desktop" class="small-muted">Spanish</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="lang-french-desktop" name="language">
-                                    <label for="lang-french-desktop" class="small-muted">French</label>
-                                </div>
-                                <div class="filter-checkbox-item">
-                                    <input type="checkbox" id="lang-other-desktop" name="language">
-                                    <label for="lang-other-desktop" class="small-muted">Other</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="filter-row">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="small-muted">Kids Welcome</div>
-                            <div class="toggle" role="switch" aria-checked="true"></div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <div class="small-muted">Childcare Provided</div>
-                            <div class="toggle" role="switch" aria-checked="false"></div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <div class="small-muted">Handicap Accessible</div>
-                            <div class="toggle" role="switch" aria-checked="true"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Left Filters Go Here-->
 
             <!-- Right: Results -->
             <div class="d-flex flex-column overflow-auto" style="flex: 1; min-width: 0;">
@@ -733,177 +376,23 @@
                 </div>
 
                 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
-
                     <div class="col" th:each="group : ${groups}" th:object="${group}">
                         <div class="group-card">
                             <i class="fa-regular fa-star star"></i>
                             <div class="group-title" th:text="*{title}"></div>
                             <div class="d-flex align-items-center badges mb-2">
-                                <span class="badge rounded-pill"><i class="fa-solid fa-mars me-1"></i> Male</span>
-                                <span class="badge rounded-pill"><i class="fa-solid fa-location-dot me-1"></i> Map
-                                    View</span>
+                                <span class="badge rounded-pill"><i class="fa-solid fa-mars me-1"></i> [[*{gender}]]</span>
+                                <span class="badge rounded-pill"><i class="fa-solid fa-location-dot me-1"></i> Map View</span>
                             </div>
-                            <div class="meta-line"><i class="fa-solid fa-calendar-day"></i> Tuesday at 6:00 PM (Central)
-                            </div>
-                            <div class="meta-line"><i class="fa-solid fa-user"></i> All Adult Ages</div>
-                            <div class="meta-line"><i class="fa-solid fa-location-dot"></i> Huntsville, AL</div>
-                            <div class="meta-desc">A men's group focused on growth through friendship, faith, and
-                                authentic relationships. Using podcasts that in...</div>
+                            <div class="meta-line"><i class="fa-solid fa-calendar-day"></i> [[*{schedule}]]</div>
+                            <div class="meta-line"><i class="fa-solid fa-user"></i> [[*{age.stringValue}]]</div>
+                            <div class="meta-line"><i class="fa-solid fa-location-dot"></i> [[*{location}]]</div>
+                            <div class="meta-desc"
+                                 th:attr="data-full-description=*{description}"
+                                 th:text="*{truncatedDescription}"></div>
                             <div class="fw-semibold">Meet the Leaders:</div>
                             <div class="mt-2">
-                                <span class="leader-pill">JF</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Group Card 1 -->
-                    <div class="col">
-                        <div class="group-card">
-                            <i class="fa-regular fa-star star"></i>
-                            <div class="group-title">Better Man</div>
-                            <div class="d-flex align-items-center badges mb-2">
-                                <span class="badge rounded-pill"><i class="fa-solid fa-mars me-1"></i> Male</span>
-                                <span class="badge rounded-pill"><i class="fa-solid fa-location-dot me-1"></i> Map
-                                    View</span>
-                            </div>
-                            <div class="meta-line"><i class="fa-solid fa-calendar-day"></i> Tuesday at 6:00 PM (Central)
-                            </div>
-                            <div class="meta-line"><i class="fa-solid fa-user"></i> All Adult Ages</div>
-                            <div class="meta-line"><i class="fa-solid fa-location-dot"></i> Huntsville, AL</div>
-                            <div class="meta-desc">A men's group focused on growth through friendship, faith, and
-                                authentic relationships. Using podcasts that in...</div>
-                            <div class="fw-semibold">Meet the Leaders:</div>
-                            <div class="mt-2">
-                                <span class="leader-pill">JF</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Group Card 2 -->
-                    <div class="col">
-                        <div class="group-card">
-                            <i class="fa-regular fa-star star"></i>
-                            <div class="group-title">Women Doing Life Together</div>
-                            <div class="d-flex align-items-center badges mb-2">
-                                <span class="badge rounded-pill"><i class="fa-solid fa-mars-and-venus"></i> Both</span>
-                                <span class="badge rounded-pill"><i class="fa-solid fa-location-dot"></i> Map
-                                    View</span>
-                            </div>
-                            <div class="meta-line"><i class="fa-solid fa-calendar-day"></i> Friday at 11:00 AM (Central)
-                            </div>
-                            <div class="meta-line"><i class="fa-solid fa-user"></i> 40s, 50s, 60s</div>
-                            <div class="meta-line"><i class="fa-solid fa-location-dot"></i> Birmingham, AL</div>
-                            <div class="meta-desc">Come join us at East 59! Connecting with like-minded women, growing
-                                closer together as we grow closer to God! Lorem Ipsum is simply dummy text of the
-                                printing and typesetting industry.
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                unknown printer
-                                took a galley of type and scrambled it to make a type specimen book. It has survived not
-                                only five centuries,
-                                but also the leap into electronic typesetting, remaining essentially unchanged. It was p
-                            </div>
-                            <div class="fw-semibold">Meet the Leaders:</div>
-                            <div class="mt-2">
-                                <span class="leader-pill">HC</span>
-                                <span class="leader-pill">VD</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Group Card 3 -->
-                    <div class="col">
-                        <div class="group-card">
-                            <i class="fa-regular fa-star star"></i>
-                            <div class="group-title">Food for Thought</div>
-                            <div class="d-flex align-items-center badges mb-2">
-                                <span class="badge rounded-pill"><i class="fa-solid fa-mars me-1"></i> Male</span>
-                            </div>
-                            <div class="meta-line"><i class="fa-solid fa-calendar-day"></i> Wednesday at 7:30 AM
-                                (Central)</div>
-                            <div class="meta-line"><i class="fa-solid fa-user"></i> All Adult Ages</div>
-                            <div class="meta-line"><i class="fa-solid fa-location-dot"></i> Cracker Barrel in Trussville
-                            </div>
-                            <div class="meta-desc">Have breakfast, connect with other men, and talk about what is on
-                                your heart. We talk bible, family, work, an...</div>
-                            <div class="fw-semibold">Meet the Leaders:</div>
-                            <div class="mt-2">
-                                <span class="leader-pill">JF</span>
-                                <span class="leader-pill">JF</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Group Card 4 -->
-                    <div class="col">
-                        <div class="group-card">
-                            <i class="fa-regular fa-star star"></i>
-                            <div class="group-title">ONE Usher Breakfast</div>
-                            <div class="d-flex align-items-center badges mb-2">
-                                <span class="badge rounded-pill"><i class="fa-solid fa-venus me-1"></i>
-                                    Female</span>
-                                <span class="badge rounded-pill"><i class="fa-solid fa-location-dot me-1"></i> Map
-                                    View</span>
-                            </div>
-                            <div class="meta-line"><i class="fa-solid fa-calendar-day"></i> Friday at 7:30 AM (Central)
-                            </div>
-                            <div class="meta-line"><i class="fa-solid fa-user"></i> College Student</div>
-                            <div class="meta-line"><i class="fa-solid fa-location-dot"></i> Tuscaloosa, AL</div>
-                            <div class="meta-desc">Breakfast for the Ushers that serve at ONE to build community with
-                                one another.</div>
-                            <div class="fw-semibold">Meet the Leaders:</div>
-                            <div class="mt-2">
-                                <span class="leader-pill">AH</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Group Card 5 -->
-                    <div class="col">
-                        <div class="group-card">
-                            <i class="fa-regular fa-star star"></i>
-                            <div class="group-title">test group</div>
-                            <div class="d-flex align-items-center badges mb-2">
-                                <span class="badge rounded-pill"><i class="fa-solid fa-mars me-1"></i> Male</span>
-                            </div>
-                            <div class="meta-line"><i class="fa-solid fa-calendar-day"></i> Wednesday at 7:30 AM
-                                (Central)</div>
-                            <div class="meta-line"><i class="fa-solid fa-user"></i> All Adult Ages</div>
-                            <div class="meta-line"><i class="fa-solid fa-location-dot"></i> Cracker Barrel in Trussville
-                            </div>
-                            <div class="meta-desc">Have breakfast, connect with other men, and talk about what is on
-                                your heart. We talk bible, family, work, an...</div>
-                            <div class="fw-semibold">Meet the Leaders:</div>
-                            <div class="mt-2">
-                                <span class="leader-pill">JF</span>
-                                <span class="leader-pill">JF</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Group Card 6 -->
-                    <div class="col">
-                        <div class="group-card">
-                            <i class="fa-regular fa-star star"></i>
-                            <div class="group-title">group group 2</div>
-                            <div class="d-flex align-items-center badges mb-2">
-                                <span class="badge rounded-pill"><i class="fa-solid fa-mars me-1"></i> Male</span>
-                            </div>
-                            <div class="meta-line"><i class="fa-solid fa-calendar-day"></i> Wednesday at 7:30 AM
-                                (Central)</div>
-                            <div class="meta-line"><i class="fa-solid fa-user"></i> All Adult Ages</div>
-                            <div class="meta-line"><i class="fa-solid fa-location-dot"></i> Cracker Barrel in Trussville
-                            </div>
-                            <div class="meta-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed ex at
-                                mi sollicitudin pharetra.
-                                Fusce pharetra iaculis purus, id faucibus eros volutpat ut. Aenean malesuada gravida
-                                turpis non sollicitudin. Donec
-                                imperdiet arcu facilisis arcu maximus, vel aliquam tortor interdum. Nam et odio in
-                                libero luctus laoreet et ut purus.
-                                Ut tristique lacus vel pharetra efficitur. Vivamus efficit</div>
-                            <div class="fw-semibold">Meet the Leaders:</div>
-                            <div class="mt-2">
-                                <span class="leader-pill">JF</span>
-                                <span class="leader-pill">JF</span>
+                                <span class="leader-pill" th:each="leader : *{leaders}" th:object="${leader}">[[*{firstName}]] [[*{lastName}]]</span>
                             </div>
                         </div>
                     </div>
@@ -925,7 +414,18 @@
             const preview = document.getElementById("preview");
 
             preview.innerHTML = "";
-            preview.appendChild(el.cloneNode(true));
+            const clone = el.cloneNode(true);
+
+            // If the cloned card has a .meta-desc, replace its text with the full description stored in the data attribute
+            const metaDesc = clone.querySelector('.meta-desc');
+            if (metaDesc) {
+                const full = metaDesc.getAttribute('data-full-description');
+                if (full) {
+                    metaDesc.textContent = full;
+                }
+            }
+
+            preview.appendChild(clone);
 
             overlay.style.display = "flex";
         }
@@ -937,18 +437,24 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.group-card').forEach(groupCard => {
-                groupCard.addEventListener('click', function () {
-                    let viewportWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-                    if (viewportWidth >= fullScreenWidthMin) {
-                        openPreview(groupCard);
+                groupCard.addEventListener('click', function (e) {
+                    // Don't open preview when clicking interactive children like links or buttons
+                    const target = e.target;
+                    if (target.closest('a') || target.closest('button') || target.classList.contains('toggle')) {
+                        return;
                     }
+
+                    openPreview(groupCard);
                 })
             })
 
-            joinedButton.addEventListener('click', function () {
-                joinedButton.classList.toggle('btn-outline-light');
-                joinedButton.classList.toggle('btn-light')
-            })
+            // Only attach the joined button handler if the element exists to avoid errors
+            if (joinedButton) {
+                joinedButton.addEventListener('click', function () {
+                    joinedButton.classList.toggle('btn-outline-light');
+                    joinedButton.classList.toggle('btn-light')
+                })
+            }
 
             document.querySelectorAll('.toggle').forEach(toggle => {
                 toggle.addEventListener('click', function () {

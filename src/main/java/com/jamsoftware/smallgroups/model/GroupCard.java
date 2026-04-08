@@ -1,6 +1,7 @@
 package com.jamsoftware.smallgroups.model;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
@@ -18,4 +19,11 @@ public class GroupCard {
     private List<String> categories;
     private Gender gender;
     private Age age;
+
+    public String truncatedDescription() {
+        if (description == null) {
+            return "";
+        }
+        return description.length() > StaticVars.maxDescriptionLength ? description.substring(0, StaticVars.maxDescriptionLength) + "..." : description;
+    }
 }
