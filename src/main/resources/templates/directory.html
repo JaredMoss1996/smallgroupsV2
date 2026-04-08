@@ -346,9 +346,20 @@
         /* Centered cloned element */
         #preview {
             background: white;
-            padding: 20px;
+            padding: 32px;
             border-radius: 8px;
             margin: 15px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Close button inside preview */
+        .preview-close-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 1100;
         }
     </style>
 </head>
@@ -357,7 +368,13 @@
 
     <!-- Overlay Controller -->
     <div id="overlay" onclick="closePreview()">
-        <div id="preview"></div>
+        <div id="preview">
+            <!-- Persistent close button in the top-right of the preview -->
+            <button type="button" class="btn-close preview-close-btn" aria-label="Close"
+                    onclick="event.stopPropagation(); closePreview();"></button>
+            <!-- Inner container where cloned group-card will be inserted so the close button isn't removed -->
+            <div id="preview-inner"></div>
+        </div>
     </div>
 
     <!-- Mobile Filter Button Go Here-->
@@ -378,7 +395,6 @@
                 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
                     <div class="col" th:each="group : ${groups}" th:object="${group}">
                         <div class="group-card">
-                            <i class="fa-regular fa-star star"></i>
                             <div class="group-title" th:text="*{title}"></div>
                             <div class="d-flex align-items-center badges mb-2">
                                 <span class="badge rounded-pill"><i class="fa-solid fa-mars me-1"></i> [[*{gender}]]</span>
@@ -406,17 +422,27 @@
     <script>
 
         const joinedButton = document.querySelector('#joined-button');
-
         const fullScreenWidthMin = 992;
+
+        function disablePageScroll() {
+            // Prevent page scrolling and avoid layout shift by preserving scroll position
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function enablePageScroll() {
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';
+        }
 
         function openPreview(el) {
             const overlay = document.getElementById("overlay");
-            const preview = document.getElementById("preview");
+            const previewInner = document.getElementById("preview-inner");
 
-            preview.innerHTML = "";
+            // Populate the inner container so the static close button remains
+            previewInner.innerHTML = "";
             const clone = el.cloneNode(true);
 
-            // If the cloned card has a .meta-desc, replace its text with the full description stored in the data attribute
             const metaDesc = clone.querySelector('.meta-desc');
             if (metaDesc) {
                 const full = metaDesc.getAttribute('data-full-description');
@@ -425,20 +451,29 @@
                 }
             }
 
-            preview.appendChild(clone);
+            previewInner.appendChild(clone);
 
             overlay.style.display = "flex";
+            disablePageScroll();
         }
 
         function closePreview() {
             document.getElementById("overlay").style.display = "none";
+            enablePageScroll();
         }
 
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                const overlay = document.getElementById("overlay");
+                if (overlay && overlay.style.display === 'flex') {
+                    closePreview();
+                }
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.group-card').forEach(groupCard => {
                 groupCard.addEventListener('click', function (e) {
-                    // Don't open preview when clicking interactive children like links or buttons
                     const target = e.target;
                     if (target.closest('a') || target.closest('button') || target.classList.contains('toggle')) {
                         return;
@@ -447,6 +482,14 @@
                     openPreview(groupCard);
                 })
             })
+
+            // Prevent clicks inside the preview from bubbling up to the overlay which would close it
+            const previewEl = document.getElementById('preview');
+            if (previewEl) {
+                previewEl.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                });
+            }
 
             // Only attach the joined button handler if the element exists to avoid errors
             if (joinedButton) {
@@ -466,3 +509,4 @@
 </body>
 
 </html>
+
