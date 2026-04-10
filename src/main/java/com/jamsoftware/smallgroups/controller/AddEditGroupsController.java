@@ -16,9 +16,9 @@ public class AddEditGroupsController {
         this.directoryService = directoryService;
     }
 
-    @GetMapping("/")
+    @GetMapping({"", "/"})
     public String getDirectory(Model model) {
-        model.addAttribute("groups", directoryService.findAllGroupsByLeader());
+        model.addAttribute("groups", directoryService.findAll());
         return "add-edit-groups-home";
     }
 
