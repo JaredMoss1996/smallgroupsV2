@@ -113,6 +113,11 @@
             margin-bottom: 20px;
         }
 
+        .group-card:hover {
+            box-shadow: 0 8px 24px rgba(18, 22, 24, .12);
+            cursor: pointer;
+        }
+
         .group-card .star {
             position: absolute;
             right: 14px;
@@ -144,7 +149,6 @@
         .meta-desc {
             color: #334155;
             margin-top: .5rem;
-            margin-bottom: .6rem;
         }
 
         .leader-pill {
@@ -361,6 +365,26 @@
             right: 8px;
             z-index: 1100;
         }
+
+        /* Category badges (new) */
+        .category-name {
+            background: #eef2ff;
+            /* subtle indigo tint */
+            color: #3730a3;
+            /* darker indigo */
+            border-radius: 999px;
+            padding: .22rem .6rem;
+            font-weight: 700;
+            font-size: .8rem;
+            margin-right: .35rem;
+            display: inline-block;
+            margin-top: .35rem;
+        }
+
+        .group-card .categories {
+            margin-top: .45rem;
+            margin-bottom: .45rem;
+        }
     </style>
 </head>
 
@@ -389,7 +413,7 @@
             <!-- Right: Results -->
             <div class="d-flex flex-column overflow-auto" style="flex: 1; min-width: 0;">
                 <div class="mb-3">
-                    <div class="results-count">2,155 Results:</div>
+                    <div class="results-count">[[${groups.size}]] Results:</div>
                 </div>
 
                 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
@@ -406,6 +430,9 @@
                             <div class="meta-desc"
                                  th:attr="data-full-description=*{description}"
                                  th:text="*{truncatedDescription}"></div>
+                            <div class="mt-2 categories">
+                                <span class="category-name" th:each="category : *{categories}" th:text="${category}"></span>
+                            </div>
                             <div class="fw-semibold">Meet the Leaders:</div>
                             <div class="mt-2">
                                 <span class="leader-pill" th:each="leader : *{leaders}" th:object="${leader}">[[*{firstName}]] [[*{lastName}]]</span>
@@ -509,4 +536,6 @@
 </body>
 
 </html>
+
+
 
