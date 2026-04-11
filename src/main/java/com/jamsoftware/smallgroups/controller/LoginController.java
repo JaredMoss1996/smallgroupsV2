@@ -1,23 +1,26 @@
 package com.jamsoftware.smallgroups.controller;
 
+import com.jamsoftware.smallgroups.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+//import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 public class LoginController {
 
-    private final InMemoryUserDetailsManager userDetailsManager;
+    private final UserService userDetailsManager;
     private final PasswordEncoder passwordEncoder;
 
-    public LoginController(InMemoryUserDetailsManager userDetailsManager, PasswordEncoder passwordEncoder) {
+    public LoginController(UserService userDetailsManager, PasswordEncoder passwordEncoder) {
         this.userDetailsManager = userDetailsManager;
         this.passwordEncoder = passwordEncoder;
     }
@@ -52,7 +55,7 @@ public class LoginController {
             .roles("USER")
             .build();
 
-        userDetailsManager.createUser(user);
+        userDetailsManager.createUser(username, password, List.of("USER"));
 
         redirectAttributes.addFlashAttribute("success", "Account created. Please sign in.");
         return "redirect:/login";

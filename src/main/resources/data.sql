@@ -1,4 +1,12 @@
 
+
+
+
+
+-- Roles
+INSERT INTO role (name) VALUES ('USER');
+
+
 -- Groups
 INSERT INTO groups (title, description, schedule, location, address, contact_info, gender, age, frequency) VALUES
 ('Downtown Bible Study', 'A weekly Bible study in downtown.', 'Thursdays 7pm', 'Downtown Church', '123 Main St', 'alice@example.com', 'BOTH', 'ALL_ADULT_AGES', 'DAILY'),
