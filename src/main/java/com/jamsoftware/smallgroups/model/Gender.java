@@ -1,9 +1,9 @@
 package com.jamsoftware.smallgroups.model;
 
 public enum Gender {
-    MALE("MALE"),
-    FEMALE("FEMALE"),
-    BOTH("BOTH");
+    MALE("Men"),
+    FEMALE("Women"),
+    BOTH("Men and Women");
 
     private final String stringValue;
 
