@@ -17,17 +17,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**", "/h2-console/**", "/register", "/register/**", "/directory").permitAll()
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .permitAll()
-            )
-            .logout(logout -> logout.permitAll())
-            // disable CSRF for simplicity (adjust for production)
-            .csrf(csrf -> csrf.disable());
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**", "/h2-console/**", "/register", "/register/**", "/directory").permitAll()
+                        .requestMatchers("/leader/**").hasAnyRole("LEADER", "CHURCH_ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/church-admin/**").hasAnyRole("CHURCH_ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/super-admin/**").hasRole("SUPER_ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll()
+                )
+                .logout(logout -> logout.permitAll())
+                // disable CSRF for simplicity (adjust for production)
+                .csrf(csrf -> csrf.disable());
 
         // Allow H2 console frames
         http.headers(headers -> headers.frameOptions(frame -> frame.disable()));

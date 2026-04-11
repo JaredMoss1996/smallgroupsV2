@@ -19,10 +19,10 @@ public class DirectoryService {
         return directoryRepository.findAll();
     }
 
-    public GroupCard findById(long id) {
-        Optional<GroupCard> groupCard = directoryRepository.findById(id);
-        return groupCard.orElseThrow(() -> new RuntimeException("Group not found with id: " + id));
-    }
+//    public GroupCard findById(long id) {
+//        Optional<GroupCard> groupCard = directoryRepository.findById(id);
+//        return groupCard.orElseThrow(() -> new RuntimeException("Group not found with id: " + id));
+//    }
 
     public long insert(GroupCard group) {
         return directoryRepository.insert(group);
@@ -32,8 +32,8 @@ public class DirectoryService {
         directoryRepository.update(group);
     }
 
-    public void deleteById(long id) {
-        directoryRepository.deleteById(id);
+    public void deleteGroupById(long id) {
+        directoryRepository.deleteGroupById(id);
     }
 
 }

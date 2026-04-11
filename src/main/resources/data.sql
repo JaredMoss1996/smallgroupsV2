@@ -2,11 +2,16 @@
 
 
 
-
+---------------- Required for Spring Security ----------------
 -- Roles
 INSERT INTO role (name) VALUES ('USER');
+INSERT INTO role (name) VALUES ('LEADER');
+INSERT INTO role (name) VALUES ('CHURCH_ADMIN');
+INSERT INTO role (name) VALUES ('SUPER_ADMIN');
 
 
+
+---------------- Test Data ----------------
 -- Groups
 INSERT INTO groups (title, description, schedule, location, address, contact_info, gender, age, frequency) VALUES
 ('Downtown Bible Study', 'A weekly Bible study in downtown.', 'Thursdays 7pm', 'Downtown Church', '123 Main St', 'alice@example.com', 'BOTH', 'ALL_ADULT_AGES', 'DAILY'),
@@ -27,15 +32,22 @@ INSERT INTO group_leaders (group_id, first_name, last_name) VALUES (5,'Joe', 'Br
 INSERT INTO group_leaders (group_id, first_name, last_name) VALUES (5,'Eve', 'Brown');
 
 -- Categories
-INSERT INTO group_categories (group_id, group_category) VALUES (1,'Bible Study');
-INSERT INTO group_categories (group_id, group_category) VALUES (1,'Community Service');
-INSERT INTO group_categories (group_id, group_category) VALUES (2,'Young Adults');
-INSERT INTO group_categories (group_id, group_category) VALUES (2,'Families');
-INSERT INTO group_categories (group_id, group_category) VALUES (3,'Seniors');
-INSERT INTO group_categories (group_id, group_category) VALUES (3,'Bible Study');
-INSERT INTO group_categories (group_id, group_category) VALUES (3,'Community Service');
-INSERT INTO group_categories (group_id, group_category) VALUES (4,'Young Adults');
-INSERT INTO group_categories (group_id, group_category) VALUES (5,'Families');
-INSERT INTO group_categories (group_id, group_category) VALUES (5,'Seniors');
+INSERT INTO group_categories (group_id, category_id) VALUES (1,1);
+INSERT INTO group_categories (group_id, category_id) VALUES (1,2);
+INSERT INTO group_categories (group_id, category_id) VALUES (2,2);
+INSERT INTO group_categories (group_id, category_id) VALUES (2,3);
+INSERT INTO group_categories (group_id, category_id) VALUES (3,5);
+INSERT INTO group_categories (group_id, category_id) VALUES (3,1);
+INSERT INTO group_categories (group_id, category_id) VALUES (3,4);
+INSERT INTO group_categories (group_id, category_id) VALUES (4,4);
+INSERT INTO group_categories (group_id, category_id) VALUES (5,4);
+INSERT INTO group_categories (group_id, category_id) VALUES (5,3);
 
 
+INSERT INTO category (name) VALUES ('Bible Study');
+INSERT INTO category (name) VALUES ('Community Service');
+INSERT INTO category (name) VALUES ('Young Adults');
+INSERT INTO category (name) VALUES ('Families');
+INSERT INTO category (name) VALUES ('Seniors');
+
+--

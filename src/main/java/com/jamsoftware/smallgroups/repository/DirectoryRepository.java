@@ -39,11 +39,17 @@ public class DirectoryRepository {
     }
 
     public List<String> findAllCategoriesByGroupId(long groupId) {
-        String sql = "SELECT group_category FROM group_categories WHERE group_id = :groupId";
-        return jdbcClient.sql(sql)
+        String sql = """
+                SELECT c.name
+                FROM group_categories gc
+                JOIN category c ON c.id = gc.category_id
+                WHERE gc.group_id = :groupId;
+                """;
+        List<String> categoryNames =  jdbcClient.sql(sql)
                 .param("groupId", groupId)
-                .query((rs, rowNum) -> rs.getString("group_category"))
+                .query((rs, rowNum) -> rs.getString("name"))
                 .list();
+        return categoryNames;
     }
 
     public List<Leader> findAllLeadersByGroupId(long groupId) {
@@ -59,25 +65,25 @@ public class DirectoryRepository {
                 .list();
     }
 
-    // ===================== SELECT BY ID =====================
-    public Optional<GroupCard> findById(long id) {
-        String sql = """
-                    SELECT g.*,
-                           gl.id as leader_id, gl.first_name, gl.last_name,
-                           gc.id as category_id, gc.group_category
-                    FROM groups g
-                    LEFT JOIN group_leaders gl ON g.id = gl.group_id
-                    LEFT JOIN group_categories gc ON g.id = gc.group_id
-                    WHERE g.id = :id
-                """;
-
-        List<GroupCard> results = jdbcClient.sql(sql)
-                .param("id", id)
-                .query((rs, rowNum) -> groupCardExtractor(rs))
-                .single();
-
-        return results.stream().findFirst();
-    }
+//    // ===================== SELECT BY ID =====================
+//    public Optional<GroupCard> findById(long id) {
+//        String sql = """
+//                    SELECT g.*,
+//                           gl.id as leader_id, gl.first_name, gl.last_name,
+//                           gc.id as category_id, gc.group_categories
+//                    FROM groups g
+//                    LEFT JOIN group_leaders gl ON g.id = gl.group_id
+//                    LEFT JOIN group_categories gc ON g.id = gc.group_id
+//                    WHERE g.id = :id
+//                """;
+//
+//        List<GroupCard> results = jdbcClient.sql(sql)
+//                .param("id", id)
+//                .query((rs, rowNum) -> groupCardExtractor(rs))
+//                .single();
+//
+//        return results.stream().findFirst();
+//    }
 
     // ===================== INSERT =====================
     @Transactional
@@ -115,13 +121,14 @@ public class DirectoryRepository {
         }
 
         if (group.getCategories() != null) {
-            for (String category : group.getCategories()) {
+            List<Long> categoryIds = findAllCategoryIds(group.getCategories());
+            for (Long categoryId : categoryIds) {
                 jdbcClient.sql("""
-                                    INSERT INTO group_categories (group_id, group_category)
-                                    VALUES (:groupId, :category)
+                                    INSERT INTO group_categories (group_id, category_id)
+                                    VALUES (:groupId, :categoryId)
                                 """)
                         .param("groupId", groupId)
-                        .param("category", category)
+                        .param("categoryId", categoryId)
                         .update();
             }
         }
@@ -177,20 +184,29 @@ public class DirectoryRepository {
                 .update();
 
         if (group.getCategories() != null) {
-            for (String category : group.getCategories()) {
+            List<Long> categoryIds = findAllCategoryIds(group.getCategories());
+            for (Long categoryId : categoryIds) {
                 jdbcClient.sql("""
-                                    INSERT INTO group_categories (group_id, group_category)
+                                    INSERT INTO group_categories (group_id, group_categories)
                                     VALUES (:groupId, :category)
                                 """)
                         .param("groupId", group.getId())
-                        .param("category", category)
+                        .param("category", categoryIds)
                         .update();
             }
         }
     }
 
+    public List<Long> findAllCategoryIds(List<String> categoryNames) {
+        List<Long> categoryIds = jdbcClient.sql("SELECT id FROM category WHERE name in (:categories)")
+                .param("categories", categoryNames)
+                .query((rs, rowNum) -> rs.getLong("id"))
+                .list();
+        return categoryIds;
+    }
+
     // ===================== DELETE =====================
-    public void deleteById(long id) {
+    public void deleteGroupById(long id) {
         jdbcClient.sql("DELETE FROM groups WHERE id = :id")
                 .param("id", id)
                 .update();
