@@ -1,6 +1,6 @@
 package com.jamsoftware.smallgroups.repository;
 
-import com.jamsoftware.smallgroups.model.User;
+import com.jamsoftware.smallgroups.model.AppUser;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -68,14 +68,14 @@ public class UserRepository {
     }
 
     // find user by username
-    public Optional<User> findByUsername(String username) {
+    public Optional<AppUser> findByUsername(String username) {
         return jdbcClient.sql("""
                 SELECT id, username, password, enabled
                 FROM app_user
                 WHERE username = :username
             """)
                 .param("username", username)
-                .query((rs, rowNum) -> new User(
+                .query((rs, rowNum) -> new AppUser(
                         rs.getLong("id"),
                         rs.getString("username"),
                         rs.getString("password"),
@@ -84,13 +84,14 @@ public class UserRepository {
                 .optional();
     }
 
-    // find role names for a user id
-    public List<String> findRoleNamesByUserId(Long userId) {
+    public List<String> findPermissionNamesByUserId(Long userId) {
         return jdbcClient.sql("""
-                SELECT r.name
-                FROM role r
-                JOIN user_role ur ON r.id = ur.role_id
-                WHERE ur.user_id = :userId
+                SELECT p.name
+                FROM app_user au
+                JOIN roles r ON r.id = au.role_id
+                JOIN role_permissions rp ON rp.role_id = r.id
+                JOIN permissions p ON p.id = rp.permission_id
+                WHERE au.id = :userId
             """)
                 .param("userId", userId)
                 .query((rs, rowNum) -> rs.getString("name"))
