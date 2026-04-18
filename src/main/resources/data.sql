@@ -66,7 +66,7 @@ INSERT INTO genders (name) VALUES ('BOTH');
 INSERT INTO churches (name, address, contact_info) VALUES ('First Church', '123 Main St', 'contact info here');
 
 INSERT INTO app_user (email, password, role_id) VALUES ('alice@email.com', 'password', 1);
-INSERT INTO app_user (email, password, role_id) VALUES ('john@gmail.com', 'password', 2);
+INSERT INTO app_user (email, password, role_id) VALUES ('john@gmail.com', '1234', 2);
 
 INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Alice', 'Smith', 1, 1);
 INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('John', 'Crab', 1, 2);

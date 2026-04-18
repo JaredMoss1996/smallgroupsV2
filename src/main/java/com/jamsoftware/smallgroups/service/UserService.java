@@ -1,5 +1,6 @@
 package com.jamsoftware.smallgroups.service;
 
+import com.jamsoftware.smallgroups.model.Member;
 import com.jamsoftware.smallgroups.repository.UserRepository;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -14,7 +15,7 @@ import java.util.Objects;
 public class UserService {
 
     private final PasswordEncoder passwordEncoder;
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
@@ -33,5 +34,9 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(rawPassword);
         long userId = userRepository.createUser(username, encodedPassword);
         userRepository.assignUserRoles(roles, userId);
+    }
+
+    public void getCurrentUser() {
+
     }
 }

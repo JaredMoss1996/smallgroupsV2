@@ -22,7 +22,7 @@ public class GroupRepository {
         String sql = """
                     SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
                     FROM groups gr
-                    JOIN genders ge ON ge.id = gr.id
+                    LEFT JOIN genders ge ON ge.id = gr.id
                     ORDER BY id
                 """;
 
@@ -39,7 +39,7 @@ public class GroupRepository {
     }
 
     private List<Member> findLeadersByGroupId(long groupId) {
-        String sql = """
+        String sql = """ 
                     SELECT m.app_user_id, m.first_name, m.last_name
                     FROM group_leaders gl
                     JOIN members m ON m.id = gl.member_id
@@ -48,7 +48,6 @@ public class GroupRepository {
         List<Member> leaders = jdbcClient.sql(sql)
                 .param("groupId", groupId)
                 .query((rs, rowNum) -> Member.builder()
-                        .appUserId(rs.getLong("app_user_id"))
                         .firstName(rs.getString("first_name"))
                         .lastName(rs.getString("last_name"))
                         .build())

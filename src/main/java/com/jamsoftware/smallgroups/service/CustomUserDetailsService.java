@@ -34,8 +34,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Long userId = user.getId();
 
-        Member member = memberRepository.getMemberByUserId(userId);
-
         List<String> permissions = userRepository.findPermissionNamesByUserId(userId);
 
         List<GrantedAuthority> authorities = permissions.stream()
@@ -44,7 +42,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return CustomUserDetails.builder()
                 .userId(userId)
-                .member(member)
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .enabled(user.isEnabled())

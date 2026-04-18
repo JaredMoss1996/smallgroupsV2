@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class MemberRepository {
@@ -15,7 +16,7 @@ public class MemberRepository {
         this.jdbcClient = jdbcClient;
     }
 
-    public Member getMemberByUserId(Long userId) {
+    public Optional<Member> getMemberByUserId(Long userId) {
         String sql = """
                 SELECT id, first_name, last_name, email, home_phone, cell_phone, church_id
                 FROM members
@@ -32,6 +33,6 @@ public class MemberRepository {
                         .mobilePhone(rs.getString("mobile_phone"))
                         .church_id(rs.getLong("church_id"))
                         .build())
-                .single();
+                .optional();
     }
 }

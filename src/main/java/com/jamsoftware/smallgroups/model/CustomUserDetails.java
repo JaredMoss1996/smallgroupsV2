@@ -11,16 +11,14 @@ import java.util.List;
 public class CustomUserDetails implements UserDetails {
 
     private final Long userId;
-    private final Long memberId;
     private final String username;
     private final String password;
     private final boolean enabled;
     private final List<GrantedAuthority> authorities;
 
-    public CustomUserDetails(Long userId, Long memberId, String username, String password,
+    public CustomUserDetails(Long userId, String username, String password,
                              boolean enabled, List<GrantedAuthority> authorities) {
         this.userId = userId;
-        this.memberId = memberId;
         this.username = username;
         this.password = password;
         this.enabled = enabled;

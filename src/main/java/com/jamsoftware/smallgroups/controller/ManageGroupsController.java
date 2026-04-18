@@ -1,6 +1,8 @@
 package com.jamsoftware.smallgroups.controller;
 
 import com.jamsoftware.smallgroups.model.CustomUserDetails;
+import com.jamsoftware.smallgroups.model.Member;
+import com.jamsoftware.smallgroups.service.CurrentMemberService;
 import com.jamsoftware.smallgroups.service.GroupService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -12,16 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/groups/manage")
 public class ManageGroupsController {
-    GroupService groupService;
+    private final GroupService groupService;
+    private final CurrentMemberService currentMemberService;
 
-    public ManageGroupsController(GroupService groupService) {
+    public ManageGroupsController(GroupService groupService, CurrentMemberService currentMemberService) {
         this.groupService = groupService;
+        this.currentMemberService = currentMemberService;
     }
 
     @GetMapping({"", "/"})
-    public String getDirectory(Model model, @AuthenticationPrincipal CustomUserDetails user) {
-        Long userId = user.getUserId();
-        model.addAttribute("groups", groupService.findAllByLeaderId());
+    public String getDirectory(Model model) {
+        Member currentMember = currentMemberService.getCurrentMember();
+        model.addAttribute("groups", groupService.findAllByLeaderId(currentMember.getId()));
         return "manage-groups";
     }
 
