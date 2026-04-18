@@ -1,10 +1,8 @@
 package com.jamsoftware.smallgroups.controller;
 
-import com.jamsoftware.smallgroups.model.CustomUserDetails;
 import com.jamsoftware.smallgroups.model.Member;
 import com.jamsoftware.smallgroups.service.CurrentMemberService;
 import com.jamsoftware.smallgroups.service.GroupService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

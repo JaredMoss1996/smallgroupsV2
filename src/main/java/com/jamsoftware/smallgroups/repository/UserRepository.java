@@ -67,7 +67,7 @@ public class UserRepository {
         }
     }
 
-    // find user by username
+    // find user by email
     public Optional<AppUser> findByEmail(String email) {
         return jdbcClient.sql("""
                 SELECT id, email, password, enabled

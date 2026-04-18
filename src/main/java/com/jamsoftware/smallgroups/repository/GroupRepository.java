@@ -4,7 +4,6 @@ import com.jamsoftware.smallgroups.model.GroupCard;
 import com.jamsoftware.smallgroups.model.Member;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;

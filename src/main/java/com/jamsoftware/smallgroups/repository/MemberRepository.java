@@ -3,8 +3,6 @@ package com.jamsoftware.smallgroups.repository;
 import com.jamsoftware.smallgroups.model.Member;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 import java.util.Optional;
 
 @Repository

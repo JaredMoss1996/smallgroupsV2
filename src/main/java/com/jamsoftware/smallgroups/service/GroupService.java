@@ -22,21 +22,4 @@ public class GroupService {
          return groupRepository.findAllByLeaderMemberId(memberLeaderId);
     }
 
-//    public GroupCard findById(long id) {
-//        Optional<GroupCard> groupCard = directoryRepository.findById(id);
-//        return groupCard.orElseThrow(() -> new RuntimeException("Group not found with id: " + id));
-//    }
-
-//    public long insert(GroupCard group) {
-//        return groupRepository.insert(group);
-//    }
-//
-//    public void update(GroupCard group) {
-//        groupRepository.update(group);
-//    }
-//
-//    public void deleteGroupById(long id) {
-//        groupRepository.deleteGroupById(id);
-//    }
-
 }

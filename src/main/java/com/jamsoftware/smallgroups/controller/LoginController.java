@@ -2,14 +2,10 @@ package com.jamsoftware.smallgroups.controller;
 
 import com.jamsoftware.smallgroups.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-//import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -49,11 +45,6 @@ public class LoginController {
             redirectAttributes.addFlashAttribute("error", "User already exists.");
             return "redirect:/register";
         }
-
-        UserDetails user = User.withUsername(username)
-            .password(passwordEncoder.encode(password))
-            .roles("USER")
-            .build();
 
         userDetailsManager.createUser(username, password, List.of("USER"));
 
