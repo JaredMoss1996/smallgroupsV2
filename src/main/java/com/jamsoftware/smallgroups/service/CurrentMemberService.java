@@ -4,13 +4,11 @@ import com.jamsoftware.smallgroups.model.CustomUserDetails;
 import com.jamsoftware.smallgroups.model.Member;
 import com.jamsoftware.smallgroups.repository.MemberRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.context.annotation.SessionScope;
 
 @Service
-@RequestScope
+@SessionScope
 public class CurrentMemberService {
     private final MemberRepository memberRepository;
     private Member cachedMember;

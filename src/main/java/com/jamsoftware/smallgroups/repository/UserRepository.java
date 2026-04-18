@@ -68,16 +68,16 @@ public class UserRepository {
     }
 
     // find user by username
-    public Optional<AppUser> findByUsername(String username) {
+    public Optional<AppUser> findByEmail(String email) {
         return jdbcClient.sql("""
-                SELECT id, username, password, enabled
+                SELECT id, email, password, enabled
                 FROM app_user
-                WHERE username = :username
+                WHERE email = :email
             """)
-                .param("username", username)
+                .param("email", email)
                 .query((rs, rowNum) -> new AppUser(
                         rs.getLong("id"),
-                        rs.getString("username"),
+                        rs.getString("email"),
                         rs.getString("password"),
                         rs.getBoolean("enabled")
                 ))

@@ -75,7 +75,7 @@ public class GroupRepository {
                 SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
                 FROM group_leaders gl
                 JOIN groups gr on gr.id = gl.group_id
-                JOIN genders ge ON ge.id = gr.id
+                LEFT JOIN genders ge ON ge.id = gr.id
                 WHERE gl.member_id = :leaderMemberId
                 """;
 

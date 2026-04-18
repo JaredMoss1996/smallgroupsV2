@@ -19,17 +19,15 @@ import java.util.List;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
-    private final MemberRepository memberRepository;
 
-    public CustomUserDetailsService(UserRepository userRepository, MemberRepository memberRepository) {
+    public CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.memberRepository = memberRepository;
     }
 
     @Override
     public @NonNull UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
 
-         AppUser user = userRepository.findByUsername(username)
+         AppUser user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         Long userId = user.getId();

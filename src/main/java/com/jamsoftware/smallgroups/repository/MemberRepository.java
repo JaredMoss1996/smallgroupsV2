@@ -18,7 +18,7 @@ public class MemberRepository {
 
     public Optional<Member> getMemberByUserId(Long userId) {
         String sql = """
-                SELECT id, first_name, last_name, email, home_phone, cell_phone, church_id
+                SELECT id, first_name, last_name, email, home_phone, mobile_phone, church_id
                 FROM members
                 WHERE app_user_id = :userId
                 """;
