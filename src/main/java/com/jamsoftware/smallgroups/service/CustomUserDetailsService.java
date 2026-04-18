@@ -1,8 +1,12 @@
 package com.jamsoftware.smallgroups.service;
 
 import com.jamsoftware.smallgroups.model.AppUser;
+import com.jamsoftware.smallgroups.model.CustomUserDetails;
+import com.jamsoftware.smallgroups.model.Member;
+import com.jamsoftware.smallgroups.repository.MemberRepository;
 import com.jamsoftware.smallgroups.repository.UserRepository;
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,9 +19,11 @@ import java.util.List;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
-    public CustomUserDetailsService(UserRepository userRepository) {
+    public CustomUserDetailsService(UserRepository userRepository, MemberRepository memberRepository) {
         this.userRepository = userRepository;
+        this.memberRepository = memberRepository;
     }
 
     @Override
@@ -28,18 +34,20 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Long userId = user.getId();
 
+        Member member = memberRepository.getMemberByUserId(userId);
+
         List<String> permissions = userRepository.findPermissionNamesByUserId(userId);
 
-        List<SimpleGrantedAuthority> authorities = permissions.stream()
-                .map(SimpleGrantedAuthority::new)
+        List<GrantedAuthority> authorities = permissions.stream()
+                .map(permission -> (GrantedAuthority) new SimpleGrantedAuthority(permission))
                 .toList();
 
-
-
-        return User
-                .withUsername(user.getUsername())
+        return CustomUserDetails.builder()
+                .userId(userId)
+                .member(member)
+                .username(user.getUsername())
                 .password(user.getPassword())
-                .disabled(!user.isEnabled())
+                .enabled(user.isEnabled())
                 .authorities(authorities)
                 .build();
     }

@@ -6,7 +6,8 @@ import lombok.Data;
 @Data
 @Builder
 public class Member {
-    long appUserId;
+    long id;
+    long church_id;
     String firstName;
     String lastName;
     String email;

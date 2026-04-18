@@ -66,20 +66,33 @@ INSERT INTO genders (name) VALUES ('BOTH');
 INSERT INTO churches (name, address, contact_info) VALUES ('First Church', '123 Main St', 'contact info here');
 
 INSERT INTO app_user (email, password, role_id) VALUES ('alice@email.com', 'password', 1);
-INSERT INTO app_user (email, password, role_id) VALUES ('leade@gmail.com', 'password', 2);
+INSERT INTO app_user (email, password, role_id) VALUES ('john@gmail.com', 'password', 2);
 
 INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Alice', 'Smith', 1, 1);
-INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Alice', 'Smith', 1, 2);
+INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('John', 'Crab', 1, 2);
 
-INSERT INTO groups (title, description, schedule, location, address, contact_info, frequency, gender_id, church_id) VALUES
+INSERT INTO groups (title, description, schedule, location, address, frequency, gender_id, church_id) VALUES
 ('Downtown Bible Study', 'A weekly Bible study in downtown.', 'Thursdays 7pm', 'Downtown Church',
- '123 Main St', 'alice@example.com', 'DAILY', 1, 1);
+ '123 Main St', 'DAILY', 1, 1);
+INSERT INTO groups (title, description, schedule, location, address, frequency, gender_id, church_id) VALUES
+('2 Study', 'test 2 downtown.', '222222 7pm', '2nd Church',
+    '222 2nd St', 'DAILY', 2, 1);
+INSERT INTO groups (title, description, schedule, location, address, frequency, gender_id, church_id) VALUES
+('3 Study', 'test 3 downtown.', '3333 7pm', '3nd Church',
+    '333 3nd St', 'DAILY', 2, 1);
+INSERT INTO groups (title, description, schedule, location, address, frequency, gender_id, church_id) VALUES
+('4 Study', 'test 4 downtown.', '4444444 7pm', '2nd Church',
+    '444 4 St', 'DAILY', 2, 1);
 
 INSERT INTO group_ages (group_id, age_id) VALUES (1, 1); -- ALL_ADULT_AGES
 INSERT INTO group_ages (group_id, age_id) VALUES (1, 2); -- TWENTIES
 
-INSERT INTO group_members (group_id, member_id) VALUES (1, 1);
+-- INSERT INTO group_members (group_id, member_id) VALUES (1, 1);
+
 INSERT INTO group_leaders (group_id, member_id) VALUES (1, 2);
+INSERT INTO group_leaders (group_id, member_id) VALUES (2, 2);
+INSERT INTO group_leaders (group_id, member_id) VALUES (3, 1);
+INSERT INTO group_leaders (group_id, member_id) VALUES (4, 2);
 
 INSERT INTO group_categories (group_id, category_id) VALUES (1,1);
 INSERT INTO group_categories (group_id, category_id) VALUES (1,2);

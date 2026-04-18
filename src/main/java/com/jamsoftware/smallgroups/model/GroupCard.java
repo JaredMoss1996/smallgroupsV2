@@ -16,7 +16,6 @@ public class GroupCard {
     private String frequency;
     private String location;
     private String address;
-    private String contactInfo;
     private List<Member> leaders;
     private List<String> categories;
     private String gender;
