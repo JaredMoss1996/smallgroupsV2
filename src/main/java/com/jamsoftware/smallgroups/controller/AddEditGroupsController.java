@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/addEditGroups")
+@RequestMapping("/groups/manage")
 public class AddEditGroupsController {
     DirectoryService directoryService;
 
@@ -19,7 +19,7 @@ public class AddEditGroupsController {
     @GetMapping({"", "/"})
     public String getDirectory(Model model) {
         model.addAttribute("groups", directoryService.findAll());
-        return "add-edit-groups-home";
+        return "manage-groups";
     }
 
     @GetMapping("/addGroup")

@@ -150,7 +150,7 @@ public class DirectoryRepository {
                 .param("address", group.getAddress())
                 .param("contactInfo", group.getContactInfo())
                 .param("gender", group.getGender())
-                .param("age", group.getAge())
+//                .param("age", group.getAges())
                 .update(keyHolder);
 
         Number groupId = (Number) Objects.requireNonNull(keyHolder.getKeys()).get("id");
@@ -207,7 +207,7 @@ public class DirectoryRepository {
                 .param("address", group.getAddress())
                 .param("contactInfo", group.getContactInfo())
                 .param("gender", group.getGender())
-                .param("age", group.getAge())
+//                .param("age", group.getAge()) TODO insert all ages
                 .update();
 
         jdbcClient.sql("DELETE FROM group_leaders WHERE group_id = :id")

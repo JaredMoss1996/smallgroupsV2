@@ -20,7 +20,7 @@ public class GroupCard {
     private List<Member> leaders;
     private List<String> categories;
     private String gender;
-    private String age;
+    private String ages;
 
     public String truncatedDescription() {
         if (description == null) {

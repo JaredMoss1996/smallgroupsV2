@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Find Groups Directory</title>
 
+    <th:block th:insert="fragments/navbar :: navbarCss"></th:block>
+
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-
     <style>
         * {
             box-sizing: border-box;
@@ -386,9 +387,12 @@
             margin-bottom: .45rem;
         }
     </style>
+
 </head>
 
 <body>
+
+<th:block th:insert="fragments/navbar :: navbar('directory')"></th:block>
 
     <!-- Overlay Controller -->
     <div id="overlay" onclick="closePreview()">
@@ -418,30 +422,7 @@
 
                 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
                     <div class="col" th:each="group : ${groups}" th:object="${group}">
-                        <div class="group-card">
-                            <div class="group-title" th:text="*{title}"></div>
-                            <div class="d-flex align-items-center badges mb-2">
-                                <th:block>
-                                    <span class="badge rounded-pill" th:if="${#strings.equals(group.gender.name(),'MALE')}"><i class="fa-solid fa-mars me-1"></i> [[*{gender.stringValue}]]</span>
-                                    <span class="badge rounded-pill" th:if="${#strings.equals(group.gender.name(),'FEMALE')}"><i class="fa-solid fa-venus me-1"></i> [[*{gender.stringValue}]]</span>
-                                    <span class="badge rounded-pill" th:if="${#strings.equals(group.gender.name(),'BOTH')}"><i class="fa-solid fa-venus me-1"></i><i class="fa-solid fa-mars me-1"></i> [[*{gender.stringValue}]]</span>
-                                </th:block>
-                                <span class="badge rounded-pill"><i class="fa-solid fa-location-dot me-1"></i> Map View</span>
-                            </div>
-                            <div class="meta-line"><i class="fa-solid fa-calendar-day"></i> [[*{schedule}]]</div>
-                            <div class="meta-line"><i class="fa-solid fa-user"></i> [[*{age.stringValue}]]</div>
-                            <div class="meta-line"><i class="fa-solid fa-location-dot"></i> [[*{location}]]</div>
-                            <div class="meta-desc"
-                                 th:attr="data-full-description=*{description}"
-                                 th:text="*{truncatedDescription}"></div>
-                            <div class="mt-2 categories">
-                                <span class="category-name" th:each="category : *{categories}" th:text="${category}"></span>
-                            </div>
-                            <div class="fw-semibold">Meet the Leaders:</div>
-                            <div class="mt-2">
-                                <span class="leader-pill" th:each="leader : *{leaders}" th:object="${leader}">[[*{firstName}]] [[*{lastName}]]</span>
-                            </div>
-                        </div>
+                        <th:block th:insert="fragments/group-card :: groupCard(${group})"></th:block>
                     </div>
                 </div>
             </div>
@@ -449,94 +430,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-
-        const joinedButton = document.querySelector('#joined-button');
-        const fullScreenWidthMin = 992;
-
-        function disablePageScroll() {
-            // Prevent page scrolling and avoid layout shift by preserving scroll position
-            document.documentElement.style.overflow = 'hidden';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function enablePageScroll() {
-            document.documentElement.style.overflow = '';
-            document.body.style.overflow = '';
-        }
-
-        function openPreview(el) {
-            const overlay = document.getElementById("overlay");
-            const previewInner = document.getElementById("preview-inner");
-
-            // Populate the inner container so the static close button remains
-            previewInner.innerHTML = "";
-            const clone = el.cloneNode(true);
-
-            const metaDesc = clone.querySelector('.meta-desc');
-            if (metaDesc) {
-                const full = metaDesc.getAttribute('data-full-description');
-                if (full) {
-                    metaDesc.textContent = full;
-                }
-            }
-
-            previewInner.appendChild(clone);
-
-            overlay.style.display = "flex";
-            disablePageScroll();
-        }
-
-        function closePreview() {
-            document.getElementById("overlay").style.display = "none";
-            enablePageScroll();
-        }
-
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                const overlay = document.getElementById("overlay");
-                if (overlay && overlay.style.display === 'flex') {
-                    closePreview();
-                }
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.group-card').forEach(groupCard => {
-                groupCard.addEventListener('click', function (e) {
-                    const target = e.target;
-                    if (target.closest('a') || target.closest('button') || target.classList.contains('toggle')) {
-                        return;
-                    }
-
-                    openPreview(groupCard);
-                })
-            })
-
-            // Prevent clicks inside the preview from bubbling up to the overlay which would close it
-            const previewEl = document.getElementById('preview');
-            if (previewEl) {
-                previewEl.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                });
-            }
-
-            // Only attach the joined button handler if the element exists to avoid errors
-            if (joinedButton) {
-                joinedButton.addEventListener('click', function () {
-                    joinedButton.classList.toggle('btn-outline-light');
-                    joinedButton.classList.toggle('btn-light')
-                })
-            }
-
-            document.querySelectorAll('.toggle').forEach(toggle => {
-                toggle.addEventListener('click', function () {
-                    toggle.classList.toggle('on');
-                });
-            });
-        });
-    </script>
+    <script th:src="@{/js/directory.js}"></script>
 </body>
 
 </html>

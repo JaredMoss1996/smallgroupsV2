@@ -8,27 +8,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.core.userdetails.User;
 
 @Configuration
 @EnableWebSecurity
-@ConditionalOnProperty(name = "testconfig", havingValue = "false", matchIfMissing = true)
-public class SecurityConfig {
+@ConditionalOnProperty(name = "testconfig", havingValue = "true")
+public class TestSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**", "/h2-console/**", "/register", "/register/**", "/directory", "/error").permitAll()
-                        .requestMatchers("/leader/**").hasAnyRole("LEADER", "CHURCH_ADMIN", "SUPER_ADMIN")
-                        .requestMatchers("/church-admin/**").hasAnyRole("CHURCH_ADMIN", "SUPER_ADMIN")
-                        .requestMatchers("/super-admin/**").hasRole("SUPER_ADMIN")
-                        .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll()
+                        .anyRequest().permitAll()
                 )
                 .logout(logout -> logout.permitAll())
                 // disable CSRF for simplicity (adjust for production)

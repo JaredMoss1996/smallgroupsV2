@@ -9,4 +9,8 @@ public class Member {
     long appUserId;
     String firstName;
     String lastName;
+    String email;
+    String homePhone;
+    String mobilePhone;
+    //TODO later add a profile pic
 }
