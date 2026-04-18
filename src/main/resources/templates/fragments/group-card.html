@@ -1,6 +1,19 @@
 
 
-<div th:fragment="groupCard(group)" class="group-card">
+<div th:fragment="groupCard(group, showActions)" class="group-card"
+     th:classappend="${showActions} ? ' group-card--with-actions' : ''">
+    <div class="group-card-actions" th:if="${showActions}">
+        <button type="button"
+                class="group-card-edit-btn"
+                onclick="event.stopPropagation();">
+            Edit Group
+        </button>
+        <button type="button"
+                class="group-card-delete-btn"
+                onclick="event.stopPropagation();">
+            Delete group
+        </button>
+    </div>
     <div class="group-title" th:text="*{title}"></div>
     <div class="d-flex align-items-center badges mb-2">
         <th:block>

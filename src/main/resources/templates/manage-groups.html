@@ -114,9 +114,56 @@
             margin-bottom: 20px;
         }
 
+        .group-card--with-actions {
+            padding-right: 6.5rem;
+        }
+
         .group-card:hover {
             box-shadow: 0 8px 24px rgba(18, 22, 24, .12);
             cursor: pointer;
+        }
+
+        .group-card-actions {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: .5rem;
+            z-index: 2;
+        }
+
+        .group-card-delete-btn,
+        .group-card-edit-btn {
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+            padding: .45rem .8rem;
+            white-space: nowrap;
+        }
+
+        .group-card-delete-btn:hover,
+        .group-card-edit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(15, 23, 42, .12);
+        }
+
+        .group-card-delete-btn {
+            background: #dc2626;
+            color: #fff;
+        }
+
+        .group-card-delete-btn:hover {
+            background: #b91c1c;
+        }
+
+        .group-card-edit-btn:hover {
+            background: #eff6ff;
         }
 
         .group-card .star {
@@ -422,7 +469,7 @@
 
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
                 <div class="col" th:each="group : ${groups}" th:object="${group}">
-                    <th:block th:insert="fragments/group-card :: groupCard(${group})"></th:block>
+                    <th:block th:insert="fragments/group-card :: groupCard(${group}, true)"></th:block>
                 </div>
             </div>
         </div>

@@ -422,7 +422,7 @@
 
                 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
                     <div class="col" th:each="group : ${groups}" th:object="${group}">
-                        <th:block th:insert="fragments/group-card :: groupCard(${group})"></th:block>
+                        <th:block th:insert="fragments/group-card :: groupCard(${group}, false)"></th:block>
                     </div>
                 </div>
             </div>
