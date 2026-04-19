@@ -1,6 +1,6 @@
 package com.jamsoftware.smallgroups.repository;
 
-import com.jamsoftware.smallgroups.model.GroupCard;
+import com.jamsoftware.smallgroups.model.Group;
 import com.jamsoftware.smallgroups.model.Member;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -17,7 +17,7 @@ public class GroupRepository {
     }
 
     // ===================== SELECT ALL =====================
-    public List<GroupCard> findAll() {
+    public List<Group> findAll() {
         String sql = """
                     SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
                     FROM groups gr
@@ -25,16 +25,32 @@ public class GroupRepository {
                     ORDER BY id
                 """;
 
-        List<GroupCard> result = jdbcClient.sql(sql)
+        List<Group> result = jdbcClient.sql(sql)
                 .query((rs, rowNum) -> mapToGroupCardList(rs))
                 .list();
 
-        for (GroupCard group : result) {
+        for (Group group : result) {
             group.setLeaders(findLeadersByGroupId(group.getId()));
             group.setCategories(findCategoriesByGroupId(group.getId()));
+            group.setAges(findAgesByGroupId(group.getId()));
+            group.setMembers(findMembersByGroupId(group.getId()));
         }
 
         return result;
+    }
+
+    private List<String> findAgesByGroupId(long groupId) {
+        String sql = """
+                SELECT a.name
+                FROM group_ages ga
+                JOIN ages a ON a.id = ga.age_id
+                WHERE ga.group_id = :groupId;
+                """;
+        List<String> ageNames = jdbcClient.sql(sql)
+                .param("groupId", groupId)
+                .query((rs, rowNum) -> rs.getString("name"))
+                .list();
+        return ageNames;
     }
 
     private List<Member> findLeadersByGroupId(long groupId) {
@@ -54,6 +70,28 @@ public class GroupRepository {
         return leaders;
     }
 
+    private List<Member> findMembersByGroupId(long groupId) {
+        String sql = """ 
+                    SELECT m.app_user_id, m.first_name, m.last_name, m.email, m.home_phone, m.mobile_phone, m.church_id, m.id
+                    FROM group_members gm
+                    JOIN members m ON m.id = gm.member_id
+                    WHERE gm.group_id = :groupId;
+                """;
+        List<Member> members = jdbcClient.sql(sql)
+                .param("groupId", groupId)
+                .query((rs, rowNum) -> Member.builder()
+                        .firstName(rs.getString("first_name"))
+                        .lastName(rs.getString("last_name"))
+                        .email(rs.getString("email"))
+                        .homePhone(rs.getString("home_phone"))
+                        .id(rs.getLong("id"))
+                        .church_id(rs.getLong("church_id"))
+                        .mobilePhone(rs.getString("mobile_phone"))
+                        .build())
+                .list();
+        return members;
+    }
+
     public List<String> findCategoriesByGroupId(long groupId) {
         String sql = """
                 SELECT c.name
@@ -69,7 +107,7 @@ public class GroupRepository {
     }
 
 
-    public List<GroupCard> findAllByLeaderMemberId(Long memberLeaderId) {
+    public List<Group> findAllByLeaderMemberId(Long memberLeaderId) {
         String sql = """
                 SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
                 FROM group_leaders gl
@@ -78,12 +116,12 @@ public class GroupRepository {
                 WHERE gl.member_id = :leaderMemberId
                 """;
 
-        List<GroupCard> result = jdbcClient.sql(sql)
+        List<Group> result = jdbcClient.sql(sql)
                 .param("leaderMemberId", memberLeaderId)
                 .query((rs, rowNum) -> mapToGroupCardList(rs))
                 .list();
 
-        for (GroupCard group : result) {
+        for (Group group : result) {
             group.setLeaders(findLeadersByGroupId(group.getId()));
             group.setCategories(findCategoriesByGroupId(group.getId()));
         }
@@ -91,8 +129,8 @@ public class GroupRepository {
         return result;
     }
 
-    private GroupCard mapToGroupCardList(ResultSet rs) throws SQLException {
-        return GroupCard.builder()
+    private Group mapToGroupCardList(ResultSet rs) throws SQLException {
+        return Group.builder()
                 .id(rs.getLong("id"))
                 .title(rs.getString("title"))
                 .description(rs.getString("description"))

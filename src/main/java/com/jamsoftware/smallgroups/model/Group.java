@@ -2,13 +2,12 @@ package com.jamsoftware.smallgroups.model;
 
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
 @Data
 @Builder
-public class GroupCard {
+public class Group {
     private long id;
     private String title;
     private String description;
@@ -17,9 +16,10 @@ public class GroupCard {
     private String location;
     private String address;
     private List<Member> leaders;
+    private List<Member> members;
     private List<String> categories;
     private String gender;
-    private String ages;
+    private List<String> ages;
 
     public String truncatedDescription() {
         if (description == null) {
