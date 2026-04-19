@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create Group</title>
+    <style>
+        :root {
+            --bg: #f4f7f8;
+            --surface: #ffffff;
+            --surface-muted: #f8fafc;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #dbe3ea;
+            --border-strong: #cbd5e1;
+            --dark: #10171a;
+            --accent: #1fc07a;
+            --accent-dark: #16a366;
+            --accent-soft: #e8fbf2;
+            --blue-soft: #eef6fb;
+            --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+            --radius-xl: 22px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background:
+            radial-gradient(circle at top left, rgba(31, 192, 122, 0.10), transparent 28%),
+            linear-gradient(180deg, #f8fbfc 0%, #f4f7f8 100%);
+            color: var(--text);
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+        }
+
+        .page-shell {
+            width: min(1120px, calc(100% - 32px));
+            margin: 36px auto 56px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #10171a 0%, #1b2a31 100%);
+            color: #fff;
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            box-shadow: 0 16px 40px rgba(16, 23, 26, 0.20);
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::after {
+            content: "";
+            position: absolute;
+            inset: auto -80px -80px auto;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(31, 192, 122, 0.12);
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.10);
+            color: #d7fbe9;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .page-header h1 {
+            margin: 0 0 10px;
+            font-size: clamp(1.9rem, 4vw, 2.7rem);
+            line-height: 1.1;
+        }
+
+        .page-header p {
+            margin: 0;
+            max-width: 760px;
+            color: rgba(255, 255, 255, 0.82);
+            line-height: 1.65;
+        }
+
+        .form-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.95fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .form-card,
+        .info-card {
+            background: var(--surface);
+            border: 1px solid rgba(219, 227, 234, 0.8);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow);
+        }
+
+        .form-card {
+            padding: 28px;
+        }
+
+        .info-card {
+            padding: 24px;
+            position: sticky;
+            top: 24px;
+        }
+
+        .form-section + .form-section {
+            margin-top: 28px;
+            padding-top: 28px;
+            border-top: 1px solid #e9eef3;
+        }
+
+        .section-heading {
+            margin: 0 0 6px;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .section-copy {
+            margin: 0 0 18px;
+            color: var(--muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .grid.two-col {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field label,
+        .field-legend {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .field-help {
+            margin: -2px 0 2px;
+            color: var(--muted);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            border: 1px solid var(--border);
+            background: var(--surface-muted);
+            color: var(--text);
+            border-radius: 14px;
+            padding: 14px 16px;
+            font: inherit;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(31, 192, 122, 0.14);
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .choice-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .choice-grid.three {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .choice-grid.two {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .choice-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: #fff;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+
+        .choice-card:hover {
+            transform: translateY(-1px);
+            border-color: var(--border-strong);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+        }
+
+        .choice-card input {
+            margin-top: 3px;
+            accent-color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .choice-card strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.95rem;
+        }
+
+        .choice-card span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.84rem;
+            line-height: 1.45;
+        }
+
+        .pill-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: #0a6b3d;
+            font-weight: 700;
+            font-size: 0.84rem;
+            margin-bottom: 14px;
+        }
+
+        .pill-note::before {
+            content: "●";
+            font-size: 0.8rem;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #e9eef3;
+        }
+
+        .actions-left,
+        .actions-right {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn {
+            appearance: none;
+            border: none;
+            border-radius: 999px;
+            padding: 13px 20px;
+            font: inherit;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #062b19;
+            box-shadow: 0 10px 24px rgba(31, 192, 122, 0.24);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #1a2428;
+        }
+
+        .btn-ghost {
+            background: #fff;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--border-strong);
+            background: #f8fafc;
+        }
+
+        .info-card h2 {
+            margin: 0 0 12px;
+            font-size: 1.1rem;
+        }
+
+        .info-card p {
+            margin: 0 0 16px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .mini-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 12px;
+        }
+
+        .mini-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: var(--surface-muted);
+            border: 1px solid #edf2f7;
+        }
+
+        .mini-list li strong {
+            display: block;
+            margin-bottom: 2px;
+            font-size: 0.93rem;
+        }
+
+        .mini-list li span {
+            color: var(--muted);
+            font-size: 0.84rem;
+            line-height: 1.45;
+        }
+
+        .mini-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: var(--blue-soft);
+            color: #0b4e78;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .sidebar-callout {
+            margin-top: 18px;
+            padding: 16px;
+            border-radius: 16px;
+            background: linear-gradient(180deg, #f8fafc 0%, #eef6fb 100%);
+            border: 1px solid #d9e8f2;
+        }
+
+        .sidebar-callout strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .sidebar-callout p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 960px) {
+            .form-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .info-card {
+                position: static;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .page-shell {
+            width: min(100% - 20px, 1120px);
+            margin-top: 20px;
+            margin-bottom: 32px;
+        }
+
+            .page-header,
+            .form-card,
+            .info-card {
+                border-radius: 18px;
+            }
+
+            .page-header,
+            .form-card,
+            .info-card {
+                padding: 20px;
+            }
+
+            .grid.two-col,
+            .choice-grid.three,
+            .choice-grid.two {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .actions-left,
+            .actions-right {
+                width: 100%;
+            }
+
+            .actions-left .btn,
+            .actions-right .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<main class="page-shell">
+    <section class="page-header">
+        <span class="eyebrow">Group Management</span>
+        <h1>Create a New Group</h1>
+        <p>
+            Add the core details for your small group below. This version is intentionally plain HTML and CSS only,
+            so you can wire in your own Thymeleaf bindings and controller actions afterward.
+        </p>
+    </section>
+
+    <div class="form-layout">
+        <section class="form-card">
+            <form action="#" method="post">
+                <input type="hidden" name="id" value="" />
+
+                <div class="form-section">
+                    <div class="pill-note">New group setup</div>
+                    <h2 class="section-heading">Basic Information</h2>
+                    <p class="section-copy">
+                        Start with the details people will immediately see in the directory.
+                    </p>
+
+                    <div class="grid">
+                        <div class="field">
+                            <label for="title">Group Title</label>
+                            <input
+                                    type="text"
+                                    id="title"
+                                    name="title"
+                                    placeholder="Downtown Bible Study"
+                                    maxlength="255"
+                            />
+                        </div>
+
+                        <div class="field">
+                            <label for="description">Description</label>
+                            <p class="field-help">
+                                Share what the group is about, who it is for, and what a new person should expect.
+                            </p>
+                            <textarea
+                                    id="description"
+                                    name="description"
+                                    placeholder="A welcoming weekly group focused on Scripture, prayer, and meaningful conversation."
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-heading">Meeting Details</h2>
+                    <p class="section-copy">
+                        Add when and where the group meets.
+                    </p>
+
+                    <div class="grid two-col">
+                        <div class="field">
+                            <label for="schedule">Schedule</label>
+                            <input
+                                    type="text"
+                                    id="schedule"
+                                    name="schedule"
+                                    placeholder="Thursdays at 7:00 PM"
+                            />
+                        </div>
+
+                        <div class="field">
+                            <label for="frequency">Frequency</label>
+                            <select id="frequency" name="frequency">
+                                <option value="">Select frequency</option>
+                                <option value="DAILY">Daily</option>
+                                <option value="WEEKLY">Weekly</option>
+                                <option value="BIWEEKLY">Biweekly</option>
+                                <option value="MONTHLY">Monthly</option>
+                                <option value="VARIES">Varies</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="location">Location Name</label>
+                            <input
+                                    type="text"
+                                    id="location"
+                                    name="location"
+                                    placeholder="Downtown Church"
+                            />
+                        </div>
+
+                        <div class="field">
+                            <label for="address">Street Address</label>
+                            <input
+                                    type="text"
+                                    id="address"
+                                    name="address"
+                                    placeholder="123 Main St, Springfield, IL"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-heading">Audience</h2>
+                    <p class="section-copy">
+                        Define who this group is intended for.
+                    </p>
+
+                    <fieldset class="field" style="border: 0; padding: 0; margin: 0 0 18px;">
+                        <legend class="field-legend" style="margin-bottom: 10px;">Gender</legend>
+                        <div class="choice-grid three">
+                            <label class="choice-card" for="gender-male">
+                                <input type="radio" id="gender-male" name="gender" value="MALE" />
+                                <div>
+                                    <strong>Male</strong>
+                                    <span>Intended for men.</span>
+                                </div>
+                            </label>
+
+                            <label class="choice-card" for="gender-female">
+                                <input type="radio" id="gender-female" name="gender" value="FEMALE" />
+                                <div>
+                                    <strong>Female</strong>
+                                    <span>Intended for women.</span>
+                                </div>
+                            </label>
+
+                            <label class="choice-card" for="gender-both">
+                                <input type="radio" id="gender-both" name="gender" value="BOTH" />
+                                <div>
+                                    <strong>Both</strong>
+                                    <span>Open to everyone.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="field" style="border: 0; padding: 0; margin: 0 0 18px;">
+                        <legend class="field-legend" style="margin-bottom: 10px;">Age Range</legend>
+                        <div class="choice-grid two">
+                            <label class="choice-card" for="age-all-adult">
+                                <input type="checkbox" id="age-all-adult" name="ages" value="ALL_ADULT_AGES" />
+                                <div>
+                                    <strong>All Adult Ages</strong>
+                                    <span>Broad adult audience.</span>
+                                </div>
+                            </label>
+
+                            <label class="choice-card" for="age-twenties">
+                                <input type="checkbox" id="age-twenties" name="ages" value="TWENTIES" />
+                                <div>
+                                    <strong>Twenties</strong>
+                                    <span>Focused on people in their 20s.</span>
+                                </div>
+                            </label>
+
+                            <label class="choice-card" for="age-thirties">
+                                <input type="checkbox" id="age-thirties" name="ages" value="THIRTIES" />
+                                <div>
+                                    <strong>Thirties</strong>
+                                    <span>Focused on people in their 30s.</span>
+                                </div>
+                            </label>
+
+                            <label class="choice-card" for="age-forties">
+                                <input type="checkbox" id="age-forties" name="ages" value="FORTIES" />
+                                <div>
+                                    <strong>Forties</strong>
+                                    <span>Focused on people in their 40s.</span>
+                                </div>
+                            </label>
+
+                            <label class="choice-card" for="age-fifties">
+                                <input type="checkbox" id="age-fifties" name="ages" value="FIFTIES" />
+                                <div>
+                                    <strong>Fifties</strong>
+                                    <span>Focused on people in their 50s.</span>
+                                </div>
+                            </label>
+
+                            <label class="choice-card" for="age-sixties">
+                                <input type="checkbox" id="age-sixties" name="ages" value="SIXTIES" />
+                                <div>
+                                    <strong>Sixties</strong>
+                                    <span>Focused on people in their 60s.</span>
+                                </div>
+                            </label>
+
+                            <label class="choice-card" for="age-seventies">
+                                <input type="checkbox" id="age-seventies" name="ages" value="SEVENTIES_AND_UP" />
+                                <div>
+                                    <strong>Seventies and Up</strong>
+                                    <span>Focused on seniors.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="field" style="border: 0; padding: 0; margin: 0;">
+                        <legend class="field-legend" style="margin-bottom: 10px;">Categories</legend>
+                        <div class="choice-grid two">
+                            <label class="choice-card" for="cat-bible-study">
+                                <input type="checkbox" id="cat-bible-study" name="categories" value="Bible Study" />
+                                <div>
+                                    <strong>Bible Study</strong>
+                                    <span>Scripture-focused teaching and discussion.</span>
+                                </div>
+                            </label>
+
+                            <label class="choice-card" for="cat-community-service">
+                                <input type="checkbox" id="cat-community-service" name="categories" value="Community Service" />
+                                <div>
+                                    <strong>Community Service</strong>
+                                    <span>Serving the community together.</span>
+                                </div>
+                            </label>
+
+                            <label class="choice-card" for="cat-young-adults">
+                                <input type="checkbox" id="cat-young-adults" name="categories" value="Young Adults" />
+                                <div>
+                                    <strong>Young Adults</strong>
+                                    <span>Geared toward younger adult members.</span>
+                                </div>
+                            </label>
+
+                            <label class="choice-card" for="cat-families">
+                                <input type="checkbox" id="cat-families" name="categories" value="Families" />
+                                <div>
+                                    <strong>Families</strong>
+                                    <span>Designed for households and parents.</span>
+                                </div>
+                            </label>
+
+                            <label class="choice-card" for="cat-seniors">
+                                <input type="checkbox" id="cat-seniors" name="categories" value="Seniors" />
+                                <div>
+                                    <strong>Seniors</strong>
+                                    <span>Community for older adults.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="actions">
+                    <div class="actions-left">
+                        <a href="#" class="btn btn-ghost">Cancel</a>
+                    </div>
+                    <div class="actions-right">
+                        <button type="button" class="btn btn-secondary">Save Draft</button>
+                        <button type="submit" class="btn btn-primary">Create Group</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <aside class="info-card">
+            <h2>Form Notes</h2>
+            <p>
+                This layout is intentionally presentation-only so you can add your own server-side bindings later.
+            </p>
+
+            <ul class="mini-list">
+                <li>
+                    <div class="mini-icon">1</div>
+                    <div>
+                        <strong>Names already line up</strong>
+                        <span>
+                            Inputs use names like <code>title</code>, <code>description</code>, <code>schedule</code>,
+                            <code>frequency</code>, <code>location</code>, <code>address</code>, <code>gender</code>,
+                            <code>ages</code>, and <code>categories</code>.
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <div class="mini-icon">2</div>
+                    <div>
+                        <strong>Easy to reuse for edit mode</strong>
+                        <span>
+                            Change the heading text, button label, and form action when you build the edit page.
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <div class="mini-icon">3</div>
+                    <div>
+                        <strong>Leaders and members</strong>
+                        <span>
+                            I left <code>leaders</code> and <code>members</code> out of the static form because those
+                            will likely need custom UI and binding logic for <code>List&lt;Member&gt;</code>.
+                        </span>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="sidebar-callout">
+                <strong>Good next step</strong>
+                <p>
+                    Once you wire this into Thymeleaf, you can prefill edit values and mark selected radio/checkbox
+                    options based on the existing group data.
+                </p>
+            </div>
+        </aside>
+    </div>
+</main>
+</body>
+</html>

@@ -3,16 +3,16 @@
 <div th:fragment="groupCard(group, showActions)" class="group-card"
      th:classappend="${showActions} ? ' group-card--with-actions' : ''">
     <div class="group-card-actions" th:if="${showActions}">
-        <button type="button"
+        <a type="button"
                 class="group-card-edit-btn"
-                onclick="event.stopPropagation();">
+                th:href="@{/groups/edit/{id}(id=*{id})}">
             Edit Group
-        </button>
-        <button type="button"
+        </a>
+        <a type="button"
                 class="group-card-delete-btn"
                 onclick="event.stopPropagation();">
             Delete group
-        </button>
+        </a>
     </div>
     <div class="group-title" th:text="*{title}"></div>
     <div class="d-flex align-items-center badges mb-2">

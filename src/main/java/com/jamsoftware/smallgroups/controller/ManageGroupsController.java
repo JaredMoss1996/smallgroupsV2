@@ -1,16 +1,15 @@
 package com.jamsoftware.smallgroups.controller;
 
+import com.jamsoftware.smallgroups.model.Group;
 import com.jamsoftware.smallgroups.model.Member;
 import com.jamsoftware.smallgroups.service.CurrentMemberService;
 import com.jamsoftware.smallgroups.service.GroupService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/groups/manage")
+@RequestMapping("/groups")
 public class ManageGroupsController {
     private final GroupService groupService;
     private final CurrentMemberService currentMemberService;
@@ -27,13 +26,24 @@ public class ManageGroupsController {
         return "manage-groups";
     }
 
-    @GetMapping("/addGroup")
-    public String addGroup(Model model) {
-        return "add-edit-group";
+    @GetMapping("/create")
+    public String createGroup(Model model) {
+        model.addAttribute("groupData", new Group());
+        return "create-edit-group";
     }
 
-    @PostMapping("/addGroup")
-    public String addGroupSubmit(Model model) {
-        return "add-edit-group";
+    @PostMapping("/create")
+    public String createGroupSubmit(@ModelAttribute Group groupData, Model model) {
+        return "manage-groups";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editGroup(@PathVariable Long id, Model model) {
+        return "create-edit-group";
+    }
+
+    @PostMapping("/edit")
+    public String editGroupSubmit(@ModelAttribute Group groupData, Model model) {
+        return "manage-groups";
     }
 }
