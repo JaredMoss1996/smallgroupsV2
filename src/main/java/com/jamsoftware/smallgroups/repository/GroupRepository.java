@@ -55,7 +55,7 @@ public class GroupRepository {
 
     private List<Member> findLeadersByGroupId(long groupId) {
         String sql = """ 
-                    SELECT m.app_user_id, m.first_name, m.last_name
+                    SELECT m.app_user_id, m.first_name, m.last_name, m.email, m.home_phone, m.mobile_phone, m.church_id, m.id
                     FROM group_leaders gl
                     JOIN members m ON m.id = gl.member_id
                     WHERE gl.group_id = :groupId;
@@ -65,6 +65,11 @@ public class GroupRepository {
                 .query((rs, rowNum) -> Member.builder()
                         .firstName(rs.getString("first_name"))
                         .lastName(rs.getString("last_name"))
+                        .email(rs.getString("email"))
+                        .homePhone(rs.getString("home_phone"))
+                        .id(rs.getLong("id"))
+                        .church_id(rs.getLong("church_id"))
+                        .mobilePhone(rs.getString("mobile_phone"))
                         .build())
                 .list();
         return leaders;
