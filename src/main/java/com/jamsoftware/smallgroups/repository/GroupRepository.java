@@ -39,6 +39,27 @@ public class GroupRepository {
         return result;
     }
 
+    public Group findById(long id) {
+        String sql = """
+                    SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
+                    FROM groups gr
+                    LEFT JOIN genders ge ON ge.id = gr.id
+                    WHERE id = :id
+                """;
+
+        Group group = jdbcClient.sql(sql)
+                .param("id", id)
+                .query((rs, rowNum) -> mapToGroupCardList(rs))
+                .single();
+
+        group.setLeaders(findLeadersByGroupId(group.getId()));
+        group.setCategories(findCategoriesByGroupId(group.getId()));
+        group.setAges(findAgesByGroupId(group.getId()));
+        group.setMembers(findMembersByGroupId(group.getId()));
+
+        return group;
+    }
+
     private List<String> findAgesByGroupId(long groupId) {
         String sql = """
                 SELECT a.name

@@ -412,9 +412,10 @@
 
         @media (max-width: 720px) {
             .page-shell {
-            width: min(100% - 20px, 1120px);
-            margin-top: 20px;
-            margin-bottom: 32px;
+                width: min(100% - 20px, 1120px);
+                margin-top: 20px;
+                margin-bottom: 32px;
+            }
         }
 
             .page-header,
@@ -466,7 +467,8 @@
 
     <div class="form-layout">
         <section class="form-card">
-            <form action="#" method="post">
+            <form th:action="${isEdit} ? @{/groups/create} : @{/groups/edit}"
+                  th:object="${groupData}" method="post" enctype="multipart/form-data">>
                 <input type="hidden" name="id" value="" />
 
                 <div class="form-section">

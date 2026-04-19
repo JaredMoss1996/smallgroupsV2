@@ -39,6 +39,7 @@ public class ManageGroupsController {
 
     @GetMapping("/edit/{id}")
     public String editGroup(@PathVariable Long id, Model model) {
+        model.addAttribute("groupData", groupService.findById(id));
         return "create-edit-group";
     }
 
