@@ -22,7 +22,7 @@ public class GroupRepository {
                     SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
                     FROM groups gr
                     LEFT JOIN genders ge ON ge.id = gr.id
-                    ORDER BY id
+                    ORDER BY gr.id
                 """;
 
         List<Group> result = jdbcClient.sql(sql)
@@ -44,7 +44,7 @@ public class GroupRepository {
                     SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
                     FROM groups gr
                     LEFT JOIN genders ge ON ge.id = gr.id
-                    WHERE id = :id
+                    WHERE gr.id = :id
                 """;
 
         Group group = jdbcClient.sql(sql)

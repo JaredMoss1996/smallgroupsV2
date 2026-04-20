@@ -481,7 +481,7 @@
                     <div class="grid">
                         <div class="field">
                             <label for="title">Group Title</label>
-                            <input
+                            <input  th:field="*{title}"
                                     type="text"
                                     id="title"
                                     name="title"
@@ -495,7 +495,7 @@
                             <p class="field-help">
                                 Share what the group is about, who it is for, and what a new person should expect.
                             </p>
-                            <textarea
+                            <textarea   th:field="*{description}"
                                     id="description"
                                     name="description"
                                     placeholder="A welcoming weekly group focused on Scripture, prayer, and meaningful conversation."
