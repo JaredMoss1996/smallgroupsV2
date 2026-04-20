@@ -31,6 +31,11 @@ public class LoginController {
         return "register"; // resolves to src/main/resources/templates/register.html
     }
 
+    @GetMapping("/errors/403")
+    public String accessDenied() {
+        return "errors/403";
+    }
+
     @PostMapping("/register")
     public String registerSubmit(@RequestParam String username,
                                  @RequestParam String password,

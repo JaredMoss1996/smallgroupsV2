@@ -22,11 +22,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**", "/h2-console/**", "/register", "/register/**", "/directory", "/error").permitAll()
+                        .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**", "/h2-console/**", "/register", "/register/**", "/directory", "/error", "/errors/403").permitAll()
                         .requestMatchers("/leader/**").hasAnyRole("LEADER", "CHURCH_ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/church-admin/**").hasAnyRole("CHURCH_ADMIN", "SUPER_ADMIN")
                         .requestMatchers("/super-admin/**").hasRole("SUPER_ADMIN")
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(exception -> exception
+                        .accessDeniedPage("/errors/403")
                 )
                 .formLogin(form -> form
                         .loginPage("/login")

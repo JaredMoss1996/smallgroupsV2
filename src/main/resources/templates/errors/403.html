@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 - Access Denied</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            color: #1f2937;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            width: min(92vw, 560px);
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            font-size: 2rem;
+        }
+
+        p {
+            margin: 0 0 12px;
+            line-height: 1.5;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            border-radius: 8px;
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            color: #111827;
+            font-weight: 600;
+        }
+
+        a.primary {
+            background: #111827;
+            color: #ffffff;
+            border-color: #111827;
+        }
+    </style>
+</head>
+<body>
+<main class="card">
+    <h1>403</h1>
+    <p><strong>Access denied.</strong> Your account does not have permission to open this page.</p>
+    <p>If you think this is a mistake, contact an administrator and ask for the required role.</p>
+    <div class="actions">
+        <a class="primary" href="/">Go to Home</a>
+        <a href="/directory">Open Directory</a>
+    </div>
+</main>
+</body>
+</html>
