@@ -4,6 +4,8 @@ import com.jamsoftware.smallgroups.model.Group;
 import com.jamsoftware.smallgroups.model.Member;
 import com.jamsoftware.smallgroups.service.CurrentMemberService;
 import com.jamsoftware.smallgroups.service.GroupService;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,7 @@ public class ManageGroupsController {
     @GetMapping("/create")
     public String createGroup(Model model) {
         model.addAttribute("groupData", new Group());
+        model.addAttribute("isCreate", true);
         return "create-edit-group";
     }
 
@@ -38,8 +41,10 @@ public class ManageGroupsController {
     }
 
     @GetMapping("/edit/{id}")
+    @PreAuthorize("@authz.canEditGroup(#id)")
     public String editGroup(@PathVariable Long id, Model model) {
         model.addAttribute("groupData", groupService.findById(id));
+        model.addAttribute("isCreate", false);
         return "create-edit-group";
     }
 

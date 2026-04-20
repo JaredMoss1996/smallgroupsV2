@@ -1,13 +1,21 @@
 package com.jamsoftware.smallgroups.service;
 
+import com.jamsoftware.smallgroups.repository.SecurityRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 @Component("authz")
 public class AuthorizationService {
 
-    public boolean canEditGroup(String username, Long groupId) {
-        // Implement logic to check if the user has permission to edit the group
-        // This could involve checking the user's roles and the group's ownership
-        return true; // Placeholder, replace with actual logic
+    private final SecurityRepository securityRepository;
+    private final CurrentMemberService currentMemberService;
+
+    AuthorizationService(SecurityRepository securityRepository, CurrentMemberService currentMemberService) {
+        this.securityRepository = securityRepository;
+        this.currentMemberService = currentMemberService;
+    }
+
+    public boolean canEditGroup(Long groupId) {
+        return securityRepository.isGroupLeader(groupId, currentMemberService.getCurrentMember().getId());
     }
 }

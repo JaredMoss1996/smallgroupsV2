@@ -463,8 +463,13 @@
 
         <!-- Right: Results -->
         <div class="d-flex flex-column overflow-auto" style="flex: 1; min-width: 0;">
+            <div class="mb-3 d-flex justify-content-center">
+                <a class="btn btn-primary btn-lg px-5 py-2 d-inline-flex align-items-center" th:href="@{/groups/create}">
+                    <i class="fa-solid fa-plus me-1"></i>Create Group
+                </a>
+            </div>
             <div class="mb-3">
-                <div class="results-count">[[${groups.size}]] Results:</div>
+                <div class="results-count mb-0">[[${groups.size}]] Results:</div>
             </div>
 
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">

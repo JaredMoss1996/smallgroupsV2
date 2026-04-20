@@ -26,7 +26,7 @@ public class GroupRepository {
                 """;
 
         List<Group> result = jdbcClient.sql(sql)
-                .query((rs, rowNum) -> mapToGroupCardList(rs))
+                .query((rs, rowNum) -> mapToGroupList(rs))
                 .list();
 
         for (Group group : result) {
@@ -49,7 +49,7 @@ public class GroupRepository {
 
         Group group = jdbcClient.sql(sql)
                 .param("id", id)
-                .query((rs, rowNum) -> mapToGroupCardList(rs))
+                .query((rs, rowNum) -> mapToGroupList(rs))
                 .single();
 
         group.setLeaders(findLeadersByGroupId(group.getId()));
@@ -144,7 +144,7 @@ public class GroupRepository {
 
         List<Group> result = jdbcClient.sql(sql)
                 .param("leaderMemberId", memberLeaderId)
-                .query((rs, rowNum) -> mapToGroupCardList(rs))
+                .query((rs, rowNum) -> mapToGroupList(rs))
                 .list();
 
         for (Group group : result) {
@@ -155,7 +155,7 @@ public class GroupRepository {
         return result;
     }
 
-    private Group mapToGroupCardList(ResultSet rs) throws SQLException {
+    private Group mapToGroupList(ResultSet rs) throws SQLException {
         return Group.builder()
                 .id(rs.getLong("id"))
                 .title(rs.getString("title"))

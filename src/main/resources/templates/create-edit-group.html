@@ -458,7 +458,7 @@
 <main class="page-shell">
     <section class="page-header">
         <span class="eyebrow">Group Management</span>
-        <h1 th:text="${isEdit} ? 'Create a New Group' : 'Edit Group'"></h1>
+        <h1 th:text="${isCreate} ? 'Create a New Group' : 'Edit Group'"></h1>
         <p>
             Add the core details for your small group below. This version is intentionally plain HTML and CSS only,
             so you can wire in your own Thymeleaf bindings and controller actions afterward.
@@ -467,12 +467,12 @@
 
     <div class="form-layout">
         <section class="form-card">
-            <form th:action="${isEdit} ? @{/groups/create} : @{/groups/edit}"
+            <form th:action="${isCreate} ? @{/groups/create} : @{/groups/edit}"
                   th:object="${groupData}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" th:field="*{id}" />
 
                 <div class="form-section">
-                    <div class="pill-note">New group setup</div>
+                    <div class="pill-note" th:text="${isCreate} ? 'New group setup' : 'Edit group setup'"></div>
                     <h2 class="section-heading">Basic Information</h2>
                     <p class="section-copy">
                         Start with the details people will immediately see in the directory.
@@ -487,6 +487,7 @@
                                     name="title"
                                     placeholder="Downtown Bible Study"
                                     maxlength="255"
+                                    required
                             />
                         </div>
 
@@ -499,6 +500,7 @@
                                     id="description"
                                     name="description"
                                     placeholder="A welcoming weekly group focused on Scripture, prayer, and meaningful conversation."
+                                    required
                             ></textarea>
                         </div>
                     </div>
@@ -518,20 +520,21 @@
                                     id="schedule"
                                     name="schedule"
                                     placeholder="Thursdays at 7:00 PM"
+                                    required
                             />
                         </div>
 
-                        <div class="field">
-                            <label for="frequency">Frequency</label>
-                            <select id="frequency" name="frequency">
-                                <option value="">Select frequency</option>
-                                <option value="DAILY">Daily</option>
-                                <option value="WEEKLY">Weekly</option>
-                                <option value="BIWEEKLY">Biweekly</option>
-                                <option value="MONTHLY">Monthly</option>
-                                <option value="VARIES">Varies</option>
-                            </select>
-                        </div>
+<!--                        <div class="field">-->
+<!--                            <label for="frequency">Frequency</label>-->
+<!--                            <select th:field="*{frequency}" id="frequency" name="frequency" required>-->
+<!--                                <option value="">Select frequency</option>-->
+<!--                                <option value="DAILY">Daily</option>-->
+<!--                                <option value="WEEKLY">Weekly</option>-->
+<!--                                <option value="BIWEEKLY">Biweekly</option>-->
+<!--                                <option value="MONTHLY">Monthly</option>-->
+<!--                                <option value="VARIES">Varies</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
 
                         <div class="field">
                             <label for="location">Location Name</label>
@@ -540,11 +543,12 @@
                                     id="location"
                                     name="location"
                                     placeholder="Downtown Church"
+                                    required
                             />
                         </div>
 
                         <div class="field">
-                            <label for="address">Street Address</label>
+                            <label for="address">Street Address <span style="font-weight: 400; font-size: 0.82rem; color: var(--muted); margin-left: 6px;">Optional — leave blank if not applicable</span></label>
                             <input  th:field="*{address}"
                                     type="text"
                                     id="address"
@@ -565,7 +569,7 @@
                         <legend class="field-legend" style="margin-bottom: 10px;">Gender</legend>
                         <div class="choice-grid three">
                             <label class="choice-card" for="gender-male">
-                                <input type="radio" id="gender-male" name="gender" value="MALE" th:field="*{gender}"/>
+                                <input type="radio" id="gender-male" name="gender" value="MALE" th:field="*{gender}" required/>
                                 <div>
                                     <strong>Male</strong>
                                     <span>Intended for men.</span>
@@ -591,7 +595,7 @@
                     </fieldset>
 
                     <fieldset class="field" style="border: 0; padding: 0; margin: 0 0 18px;">
-                        <legend class="field-legend" style="margin-bottom: 10px;">Age Range</legend>
+                        <legend class="field-legend" style="margin-bottom: 10px;">Age Range <span style="font-weight: 400; font-size: 0.82rem; color: var(--muted); margin-left: 6px;">Select all that apply</span></legend>
                         <div class="choice-grid two">
                             <label class="choice-card" for="age-all-adult">
                                 <input type="checkbox" id="age-all-adult" name="ages" value="ALL_ADULT_AGES" th:field="*{ages}"/>
@@ -652,7 +656,7 @@
                     </fieldset>
 
                     <fieldset class="field" style="border: 0; padding: 0; margin: 0;">
-                        <legend class="field-legend" style="margin-bottom: 10px;">Categories</legend>
+                        <legend class="field-legend" style="margin-bottom: 10px;">Categories <span style="font-weight: 400; font-size: 0.82rem; color: var(--muted); margin-left: 6px;">Select all that apply</span></legend>
                         <div class="choice-grid two">
                             <label class="choice-card" for="cat-bible-study">
                                 <input type="checkbox" id="cat-bible-study" name="categories" value="Bible Study" th:field="*{categories}"/>
@@ -702,7 +706,7 @@
                         <a href="#" class="btn btn-ghost">Cancel</a>
                     </div>
                     <div class="actions-right">
-                        <button type="submit" class="btn btn-primary" th:text="${isEdit} ? 'Create Group' : 'Save Edits'">Create Group</button>
+                        <button type="submit" class="btn btn-primary" th:text="${isCreate} ? 'Create Group' : 'Save Edits'">Create Group</button>
                     </div>
                 </div>
             </form>
@@ -757,5 +761,59 @@
         </aside>
     </div>
 </main>
+<script>
+    (function () {
+        const form = document.querySelector('.form-card form');
+        if (!form) {
+            return;
+        }
+
+        const groupRules = [
+            { name: 'ages', message: 'Please select at least one age range.' },
+            { name: 'categories', message: 'Please select at least one category.' }
+        ];
+
+        function validateCheckboxGroup(name, message) {
+            const checkboxes = form.querySelectorAll('input[name="' + name + '"]');
+            if (!checkboxes.length) {
+                return true;
+            }
+
+            const hasSelection = Array.prototype.some.call(checkboxes, function (checkbox) {
+                return checkbox.checked;
+            });
+
+            checkboxes[0].setCustomValidity(hasSelection ? '' : message);
+            return hasSelection;
+        }
+
+        groupRules.forEach(function (rule) {
+            const checkboxes = form.querySelectorAll('input[name="' + rule.name + '"]');
+            Array.prototype.forEach.call(checkboxes, function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    validateCheckboxGroup(rule.name, rule.message);
+                });
+            });
+        });
+
+        form.addEventListener('submit', function (event) {
+            let valid = true;
+
+            groupRules.forEach(function (rule) {
+                if (!validateCheckboxGroup(rule.name, rule.message)) {
+                    valid = false;
+                }
+            });
+
+            if (!valid) {
+                event.preventDefault();
+                const firstInvalid = form.querySelector(':invalid');
+                if (firstInvalid && typeof firstInvalid.reportValidity === 'function') {
+                    firstInvalid.reportValidity();
+                }
+            }
+        });
+    })();
+</script>
 </body>
 </html>
