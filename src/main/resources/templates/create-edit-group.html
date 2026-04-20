@@ -458,7 +458,7 @@
 <main class="page-shell">
     <section class="page-header">
         <span class="eyebrow">Group Management</span>
-        <h1>Create a New Group</h1>
+        <h1 th:text="${isEdit} ? 'Create a New Group' : 'Edit Group'"></h1>
         <p>
             Add the core details for your small group below. This version is intentionally plain HTML and CSS only,
             so you can wire in your own Thymeleaf bindings and controller actions afterward.
@@ -468,8 +468,8 @@
     <div class="form-layout">
         <section class="form-card">
             <form th:action="${isEdit} ? @{/groups/create} : @{/groups/edit}"
-                  th:object="${groupData}" method="post" enctype="multipart/form-data">>
-                <input type="hidden" name="id" value="" />
+                  th:object="${groupData}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" th:field="*{id}" />
 
                 <div class="form-section">
                     <div class="pill-note">New group setup</div>
@@ -495,7 +495,7 @@
                             <p class="field-help">
                                 Share what the group is about, who it is for, and what a new person should expect.
                             </p>
-                            <textarea   th:field="*{description}"
+                            <textarea th:field="*{description}"
                                     id="description"
                                     name="description"
                                     placeholder="A welcoming weekly group focused on Scripture, prayer, and meaningful conversation."
@@ -513,7 +513,7 @@
                     <div class="grid two-col">
                         <div class="field">
                             <label for="schedule">Schedule</label>
-                            <input
+                            <input  th:field="*{schedule}"
                                     type="text"
                                     id="schedule"
                                     name="schedule"
@@ -535,7 +535,7 @@
 
                         <div class="field">
                             <label for="location">Location Name</label>
-                            <input
+                            <input  th:field="*{location}"
                                     type="text"
                                     id="location"
                                     name="location"
@@ -545,7 +545,7 @@
 
                         <div class="field">
                             <label for="address">Street Address</label>
-                            <input
+                            <input  th:field="*{address}"
                                     type="text"
                                     id="address"
                                     name="address"
@@ -565,7 +565,7 @@
                         <legend class="field-legend" style="margin-bottom: 10px;">Gender</legend>
                         <div class="choice-grid three">
                             <label class="choice-card" for="gender-male">
-                                <input type="radio" id="gender-male" name="gender" value="MALE" />
+                                <input type="radio" id="gender-male" name="gender" value="MALE" th:field="*{gender}"/>
                                 <div>
                                     <strong>Male</strong>
                                     <span>Intended for men.</span>
@@ -573,7 +573,7 @@
                             </label>
 
                             <label class="choice-card" for="gender-female">
-                                <input type="radio" id="gender-female" name="gender" value="FEMALE" />
+                                <input type="radio" id="gender-female" name="gender" value="FEMALE" th:field="*{gender}"/>
                                 <div>
                                     <strong>Female</strong>
                                     <span>Intended for women.</span>
@@ -581,7 +581,7 @@
                             </label>
 
                             <label class="choice-card" for="gender-both">
-                                <input type="radio" id="gender-both" name="gender" value="BOTH" />
+                                <input type="radio" id="gender-both" name="gender" value="BOTH" th:field="*{gender}"/>
                                 <div>
                                     <strong>Both</strong>
                                     <span>Open to everyone.</span>
@@ -594,7 +594,7 @@
                         <legend class="field-legend" style="margin-bottom: 10px;">Age Range</legend>
                         <div class="choice-grid two">
                             <label class="choice-card" for="age-all-adult">
-                                <input type="checkbox" id="age-all-adult" name="ages" value="ALL_ADULT_AGES" />
+                                <input type="checkbox" id="age-all-adult" name="ages" value="ALL_ADULT_AGES" th:field="*{ages}"/>
                                 <div>
                                     <strong>All Adult Ages</strong>
                                     <span>Broad adult audience.</span>
@@ -602,7 +602,7 @@
                             </label>
 
                             <label class="choice-card" for="age-twenties">
-                                <input type="checkbox" id="age-twenties" name="ages" value="TWENTIES" />
+                                <input type="checkbox" id="age-twenties" name="ages" value="TWENTIES" th:field="*{ages}"/>
                                 <div>
                                     <strong>Twenties</strong>
                                     <span>Focused on people in their 20s.</span>
@@ -610,7 +610,7 @@
                             </label>
 
                             <label class="choice-card" for="age-thirties">
-                                <input type="checkbox" id="age-thirties" name="ages" value="THIRTIES" />
+                                <input type="checkbox" id="age-thirties" name="ages" value="THIRTIES" th:field="*{ages}"/>
                                 <div>
                                     <strong>Thirties</strong>
                                     <span>Focused on people in their 30s.</span>
@@ -618,7 +618,7 @@
                             </label>
 
                             <label class="choice-card" for="age-forties">
-                                <input type="checkbox" id="age-forties" name="ages" value="FORTIES" />
+                                <input type="checkbox" id="age-forties" name="ages" value="FORTIES" th:field="*{ages}"/>
                                 <div>
                                     <strong>Forties</strong>
                                     <span>Focused on people in their 40s.</span>
@@ -626,7 +626,7 @@
                             </label>
 
                             <label class="choice-card" for="age-fifties">
-                                <input type="checkbox" id="age-fifties" name="ages" value="FIFTIES" />
+                                <input type="checkbox" id="age-fifties" name="ages" value="FIFTIES" th:field="*{ages}"/>
                                 <div>
                                     <strong>Fifties</strong>
                                     <span>Focused on people in their 50s.</span>
@@ -634,7 +634,7 @@
                             </label>
 
                             <label class="choice-card" for="age-sixties">
-                                <input type="checkbox" id="age-sixties" name="ages" value="SIXTIES" />
+                                <input type="checkbox" id="age-sixties" name="ages" value="SIXTIES" th:field="*{ages}"/>
                                 <div>
                                     <strong>Sixties</strong>
                                     <span>Focused on people in their 60s.</span>
@@ -642,7 +642,7 @@
                             </label>
 
                             <label class="choice-card" for="age-seventies">
-                                <input type="checkbox" id="age-seventies" name="ages" value="SEVENTIES_AND_UP" />
+                                <input type="checkbox" id="age-seventies" name="ages" value="SEVENTIES_AND_UP" th:field="*{ages}"/>
                                 <div>
                                     <strong>Seventies and Up</strong>
                                     <span>Focused on seniors.</span>
@@ -655,7 +655,7 @@
                         <legend class="field-legend" style="margin-bottom: 10px;">Categories</legend>
                         <div class="choice-grid two">
                             <label class="choice-card" for="cat-bible-study">
-                                <input type="checkbox" id="cat-bible-study" name="categories" value="Bible Study" />
+                                <input type="checkbox" id="cat-bible-study" name="categories" value="Bible Study" th:field="*{categories}"/>
                                 <div>
                                     <strong>Bible Study</strong>
                                     <span>Scripture-focused teaching and discussion.</span>
@@ -663,7 +663,7 @@
                             </label>
 
                             <label class="choice-card" for="cat-community-service">
-                                <input type="checkbox" id="cat-community-service" name="categories" value="Community Service" />
+                                <input type="checkbox" id="cat-community-service" name="categories" value="Community Service" th:field="*{categories}"/>
                                 <div>
                                     <strong>Community Service</strong>
                                     <span>Serving the community together.</span>
@@ -671,7 +671,7 @@
                             </label>
 
                             <label class="choice-card" for="cat-young-adults">
-                                <input type="checkbox" id="cat-young-adults" name="categories" value="Young Adults" />
+                                <input type="checkbox" id="cat-young-adults" name="categories" value="Young Adults" th:field="*{categories}"/>
                                 <div>
                                     <strong>Young Adults</strong>
                                     <span>Geared toward younger adult members.</span>
@@ -679,7 +679,7 @@
                             </label>
 
                             <label class="choice-card" for="cat-families">
-                                <input type="checkbox" id="cat-families" name="categories" value="Families" />
+                                <input type="checkbox" id="cat-families" name="categories" value="Families" th:field="*{categories}"/>
                                 <div>
                                     <strong>Families</strong>
                                     <span>Designed for households and parents.</span>
@@ -687,7 +687,7 @@
                             </label>
 
                             <label class="choice-card" for="cat-seniors">
-                                <input type="checkbox" id="cat-seniors" name="categories" value="Seniors" />
+                                <input type="checkbox" id="cat-seniors" name="categories" value="Seniors" th:field="*{categories}"/>
                                 <div>
                                     <strong>Seniors</strong>
                                     <span>Community for older adults.</span>
@@ -702,8 +702,7 @@
                         <a href="#" class="btn btn-ghost">Cancel</a>
                     </div>
                     <div class="actions-right">
-                        <button type="button" class="btn btn-secondary">Save Draft</button>
-                        <button type="submit" class="btn btn-primary">Create Group</button>
+                        <button type="submit" class="btn btn-primary" th:text="${isEdit} ? 'Create Group' : 'Save Edits'">Create Group</button>
                     </div>
                 </div>
             </form>

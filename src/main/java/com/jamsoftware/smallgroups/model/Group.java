@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Group {
-    private long id;
+    private Long id;
     private String title;
     private String description;
     private String schedule;

@@ -85,8 +85,10 @@ INSERT INTO groups (title, description, schedule, location, address, frequency, 
 ('4 Study', 'test 4 downtown.', '4444444 7pm', '2nd Church',
     '444 4 St', 'DAILY', 2, 1);
 
-INSERT INTO group_ages (group_id, age_id) VALUES (1, 1); -- ALL_ADULT_AGES
-INSERT INTO group_ages (group_id, age_id) VALUES (1, 2); -- TWENTIES
+INSERT INTO group_ages (group_id, age_id) VALUES (1, 1);
+INSERT INTO group_ages (group_id, age_id) VALUES (1, 2);
+INSERT INTO group_ages (group_id, age_id) VALUES (2, 3);
+INSERT INTO group_ages (group_id, age_id) VALUES (2, 4);
 
 -- INSERT INTO group_members (group_id, member_id) VALUES (1, 1);
 
@@ -97,6 +99,8 @@ INSERT INTO group_leaders (group_id, member_id) VALUES (4, 2);
 
 INSERT INTO group_categories (group_id, category_id) VALUES (1,1);
 INSERT INTO group_categories (group_id, category_id) VALUES (1,2);
+INSERT INTO group_categories (group_id, category_id) VALUES (2,1);
+INSERT INTO group_categories (group_id, category_id) VALUES (2,2);
 
 
 
