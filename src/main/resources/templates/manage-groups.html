@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,110 +7,166 @@
 
     <th:block th:insert="fragments/navbar :: navbarCss"></th:block>
 
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
     <style>
+        :root {
+            --bg: #f4f7f8;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #dbe3ea;
+            --dark: #10171a;
+            --accent: #1fc07a;
+            --accent-dark: #16a366;
+            --accent-soft: #e8fbf2;
+            --shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+            --radius-xl: 20px;
+            --radius-lg: 14px;
+            --radius-md: 10px;
+        }
+
         * {
             box-sizing: border-box;
         }
 
-        html {
-            height: 100vh;
-        }
-
         body {
-            height: 100vh;
             margin: 0;
-            padding: 0;
-            background: #f4f7f8;
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-            color: #222;
-            display: flex;
-            flex-direction: column;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(31, 192, 122, 0.1), transparent 30%),
+                linear-gradient(180deg, #f8fbfc 0%, var(--bg) 100%);
+            color: var(--text);
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
+        .page-shell {
+            width: min(1200px, calc(100% - 32px));
+            margin: 28px auto 46px;
+        }
 
-        /* Sidebar filters card */
-        .filters-card {
-            background: #10171a;
+        .page-header {
+            background: linear-gradient(135deg, #10171a 0%, #1b2a31 100%);
             color: #fff;
-            border-radius: 12px;
-            padding: 1.25rem;
-            box-shadow: 0 6px 18px rgba(15, 22, 27, .25);
-        }
-
-        .filters-card .section-title {
-            font-weight: 700;
-            font-size: 1.05rem;
-            margin-bottom: .75rem;
-            display: flex;
-            align-items: center;
-            gap: .5rem;
-        }
-
-        .filters-card .form-control,
-        .filters-card .btn {
-            border-radius: 999px;
-        }
-
-        .filters-card .small-muted {
-            color: rgba(255, 255, 255, .6);
-            font-size: .9rem;
-        }
-
-        .filter-row {
-            border-top: 1px solid rgba(255, 255, 255, .06);
-            padding-top: .8rem;
-            margin-top: .6rem;
-        }
-
-        .toggle {
-            width: 42px;
-            height: 24px;
-            border-radius: 999px;
-            background: #e6e6e6;
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            margin-bottom: 22px;
+            box-shadow: 0 14px 36px rgba(16, 23, 26, 0.2);
             position: relative;
-            display: inline-block;
-            vertical-align: middle;
+            overflow: hidden;
         }
 
-        .toggle::after {
+        .page-header::after {
             content: "";
-            width: 18px;
-            height: 18px;
-            background: white;
+            width: 210px;
+            height: 210px;
             border-radius: 50%;
+            background: rgba(31, 192, 122, 0.14);
             position: absolute;
-            left: 3px;
-            top: 3px;
-            transition: left .18s;
+            right: -70px;
+            bottom: -70px;
         }
 
-        .toggle.on {
-            background: #1fc07a;
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #d7fbe9;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
         }
 
-        .toggle.on::after {
-            left: 21px;
+        .page-header h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.8rem, 3.8vw, 2.5rem);
         }
 
-        /* Results area */
+        .page-header p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.84);
+            max-width: 760px;
+            line-height: 1.6;
+        }
+
+        .toolbar,
+        .groups-card {
+            background: var(--surface);
+            border: 1px solid rgba(219, 227, 234, 0.9);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow);
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: center;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
         .results-count {
+            margin: 0;
+            color: #475569;
             font-weight: 600;
-            color: #4b5563;
-            margin-bottom: .5rem;
+        }
+
+        .btn-pill {
+            border: none;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+            text-decoration: none;
+        }
+
+        .btn-pill:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary-soft {
+            background: var(--accent);
+            color: #062b19;
+            box-shadow: 0 8px 20px rgba(31, 192, 122, 0.24);
+        }
+
+        .btn-primary-soft:hover {
+            background: var(--accent-dark);
+            color: #fff;
+        }
+
+        .groups-card {
+            padding: 18px;
+        }
+
+        .results-grid {
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .results-grid > .col {
+            width: 100%;
         }
 
         .group-card {
-            border-radius: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
             background: #fff;
             padding: 1.15rem;
-            box-shadow: 0 6px 18px rgba(18, 22, 24, .06);
             position: relative;
             min-height: 170px;
-            margin-bottom: 20px;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
         }
 
         .group-card--with-actions {
@@ -119,7 +174,8 @@
         }
 
         .group-card:hover {
-            box-shadow: 0 8px 24px rgba(18, 22, 24, .12);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+            transform: translateY(-1px);
             cursor: pointer;
         }
 
@@ -145,6 +201,7 @@
             border: 1px solid #bfdbfe;
             padding: .45rem .8rem;
             white-space: nowrap;
+            text-decoration: none;
         }
 
         .group-card-delete-btn:hover,
@@ -155,35 +212,33 @@
 
         .group-card-delete-btn {
             background: #dc2626;
+            border-color: #dc2626;
             color: #fff;
         }
 
         .group-card-delete-btn:hover {
             background: #b91c1c;
+            border-color: #b91c1c;
+            color: #fff;
         }
 
         .group-card-edit-btn:hover {
             background: #eff6ff;
-        }
-
-        .group-card .star {
-            position: absolute;
-            right: 14px;
-            top: 12px;
-            color: #9aa4a9;
+            color: #1e40af;
         }
 
         .group-title {
             font-weight: 800;
             font-size: 1.25rem;
             margin-bottom: .5rem;
+            color: #0f172a;
         }
 
         .badges .badge {
             margin-right: .35rem;
-            background: #e7f6ee;
+            background: var(--accent-soft);
             color: #0a6b3d;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .meta-line {
@@ -206,220 +261,13 @@
             padding: .25rem .5rem;
             font-weight: 600;
             margin-right: .35rem;
+            margin-bottom: .35rem;
             display: inline-block;
         }
 
-        .filter-option {
-            padding-left: 2em;
-        }
-
-        /* Collapsible filter sections */
-        .filter-header {
-            cursor: pointer;
-            user-select: none;
-            /* margin-bottom: 1rem; */
-        }
-
-        .filter-header i {
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .filter-header.collapsed i {
-            transform: rotate(90deg);
-        }
-
-        .filter-checkbox-group {
-            display: grid;
-            flex-direction: column;
-            gap: 0.6rem;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            margin-top: .5rem;
-            gap: 16px;
-        }
-
-        .filter-checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
-        .filter-checkbox-item input[type="radio"],
-        .filter-checkbox-item input[type="checkbox"] {
-            cursor: pointer;
-            accent-color: #1fc07a;
-        }
-
-        .filter-checkbox-item label {
-            cursor: pointer;
-            margin: 0;
-            font-size: 0.9rem;
-        }
-
-        /* Mobile filter button */
-        .mobile-filter-header {
-            display: none;
-            background: #fff;
-            padding: 1rem;
-            border-bottom: 1px solid #e5e7eb;
-            margin-bottom: 1rem;
-        }
-
-        .filter-toggle-btn {
-            background: #10171a;
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .filter-toggle-btn:hover {
-            background: #1a2428;
-        }
-
-        /* Offcanvas for mobile filters */
-        .offcanvas-filter {
-            width: auto;
-            max-width: none;
-        }
-
-        .offcanvas-filter .offcanvas-header {
-            background: #10171a;
-            color: #fff;
-            border-bottom: 1px solid rgba(255, 255, 255, .1);
-        }
-
-        .offcanvas-filter .offcanvas-body {
-            padding: 0;
-            background: #10171a;
-        }
-
-        .offcanvas-filter .filters-card {
-            box-shadow: none;
-            border-radius: 0;
-        }
-
-        /* Masonry-style results grid */
-        .results-grid {
-            display: block;
-            column-count: 2;
-            column-gap: 20px;
-            margin-left: 0;
-            margin-right: 0;
-            margin-bottom: 20px;
-        }
-
-        .results-grid>.col {
-            break-inside: avoid;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-
-        .desktop-filters {
-            flex: 0 0 auto;
-            width: 100%;
-            max-width: 33.333%;
-            position: sticky;
-            top: 20px;
-            align-self: flex-start;
-        }
-
-        @media (max-width: 767.98px) {
-            .results-grid {
-                column-count: 1;
-            }
-        }
-
-        @media (max-width: 991.99px) {
-            .offcanvas-filter {
-                width: 85% !important;
-                max-width: 320px;
-            }
-
-            .mobile-filter-header {
-                display: block;
-                position: fixed;
-                z-index: 10000;
-                width: 100%;
-            }
-
-            .desktop-filters {
-                display: none !important;
-            }
-
-            #content-body {
-                margin-top: 30px;
-            }
-        }
-
-        @media (min-width: 992px) {
-            .offcanvas-filter {
-                position: relative !important;
-                width: 100% !important;
-                max-width: none !important;
-                transform: none !important;
-                visibility: visible !important;
-                border: none !important;
-            }
-
-            .offcanvas-filter .offcanvas-header {
-                display: none;
-            }
-
-            .mobile-filter-header {
-                display: none !important;
-            }
-
-            .offcanvas-filter .offcanvas-body {
-                overflow: visible !important;
-            }
-
-            #filterOffcanvas {
-                display: none !important;
-            }
-        }
-
-        /* Blur everything behind the overlay */
-        #overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(8px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        /* Centered cloned element */
-        #preview {
-            background: white;
-            padding: 32px;
-            border-radius: 8px;
-            margin: 15px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        /* Close button inside preview */
-        .preview-close-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            z-index: 1100;
-        }
-
-        /* Category badges (new) */
         .category-name {
             background: #eef2ff;
-            /* subtle indigo tint */
             color: #3730a3;
-            /* darker indigo */
             border-radius: 999px;
             padding: .22rem .6rem;
             font-weight: 700;
@@ -433,53 +281,94 @@
             margin-top: .45rem;
             margin-bottom: .45rem;
         }
+
+        #overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        #preview {
+            background: white;
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            width: min(860px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .preview-close-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 1100;
+        }
+
+        @media (max-width: 900px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .page-shell {
+                width: min(calc(100% - 20px), 1200px);
+                margin-top: 16px;
+            }
+
+            .page-header,
+            .toolbar,
+            .groups-card {
+                border-radius: 16px;
+                padding: 16px;
+            }
+        }
     </style>
-
 </head>
-
 <body>
-
 <th:block th:insert="fragments/navbar :: navbar('manageGroups')"></th:block>
 
-<!-- Overlay Controller -->
 <div id="overlay" onclick="closePreview()">
     <div id="preview">
-        <!-- Persistent close button in the top-right of the preview -->
         <button type="button" class="btn-close preview-close-btn" aria-label="Close"
                 onclick="event.stopPropagation(); closePreview();"></button>
-        <!-- Inner container where cloned group-card will be inserted so the close button isn't removed -->
         <div id="preview-inner"></div>
     </div>
 </div>
 
-<!-- Mobile Filter Button Go Here-->
+<main class="page-shell">
+    <section class="page-header">
+        <span class="eyebrow"><i class="fa-solid fa-people-group"></i> Group Management</span>
+        <h1>Manage Groups</h1>
+        <p>
+            View and maintain your small groups in one place. Click any group card for a quick expanded preview,
+            or use the actions on each card to edit group details.
+        </p>
+    </section>
 
-<!-- Offcanvas for mobile Go Here-->
+    <section class="toolbar">
+        <p class="results-count">[[${groups.size}]] Results</p>
+        <a class="btn-pill btn-primary-soft d-inline-flex align-items-center" th:href="@{/groups/create}">
+            <i class="fa-solid fa-plus me-1"></i>Create Group
+        </a>
+    </section>
 
-
-<div class="pt-5 flex-grow-1 d-flex px-3 px-lg-4" id="content-body">
-    <div style="display: flex; flex: 1; max-width: 1400px; margin: 0 auto;">
-        <!-- Left Filters Go Here-->
-
-        <!-- Right: Results -->
-        <div class="d-flex flex-column overflow-auto" style="flex: 1; min-width: 0;">
-            <div class="mb-3 d-flex justify-content-center">
-                <a class="btn btn-primary btn-lg px-5 py-2 d-inline-flex align-items-center" th:href="@{/groups/create}">
-                    <i class="fa-solid fa-plus me-1"></i>Create Group
-                </a>
-            </div>
-            <div class="mb-3">
-                <div class="results-count mb-0">[[${groups.size}]] Results:</div>
-            </div>
-
-            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
-                <div class="col" th:each="group : ${groups}" th:object="${group}">
-                    <th:block th:insert="fragments/group-card :: groupCard(${group}, true)"></th:block>
-                </div>
+    <section class="groups-card" aria-label="Group list">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
+            <div class="col" th:each="group : ${groups}" th:object="${group}">
+                <th:block th:insert="fragments/group-card :: groupCard(${group}, true)"></th:block>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script th:src="@{/js/directory.js}"></script>
