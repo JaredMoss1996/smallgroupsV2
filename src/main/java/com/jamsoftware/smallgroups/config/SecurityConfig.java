@@ -23,9 +23,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**", "/h2-console/**", "/register", "/register/**", "/directory", "/error", "/errors/403").permitAll()
-                        .requestMatchers("/leader/**").hasAnyRole("LEADER", "CHURCH_ADMIN", "SUPER_ADMIN")
-                        .requestMatchers("/church-admin/**").hasAnyRole("CHURCH_ADMIN", "SUPER_ADMIN")
-                        .requestMatchers("/super-admin/**").hasRole("SUPER_ADMIN")
+                        .requestMatchers("/groups/**").hasAuthority("CREATE_EDIT_GROUP")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception

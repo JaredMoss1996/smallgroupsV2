@@ -1,14 +1,13 @@
 package com.jamsoftware.smallgroups.repository;
 
-import com.jamsoftware.smallgroups.model.Group;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SecurityRepository {
+public class AuthorizationRepository {
     private final JdbcClient jdbcClient;
 
-    public SecurityRepository(JdbcClient jdbcClient) {
+    public AuthorizationRepository(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
     }
 

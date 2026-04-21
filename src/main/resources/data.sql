@@ -9,15 +9,9 @@ INSERT INTO roles (name) VALUES ('LEADER');
 INSERT INTO roles (name) VALUES ('CHURCH_ADMIN');
 INSERT INTO roles (name) VALUES ('SUPER_ADMIN');
 
-INSERT INTO permissions (name) VALUES ('GROUP_JOIN');
-INSERT INTO permissions (name) VALUES ('GROUP_CREATE');
-INSERT INTO permissions (name) VALUES ('GROUP_EDIT');
-INSERT INTO permissions (name) VALUES ('GROUP_DELETE');
-INSERT INTO permissions (name) VALUES ('LEADER_ASSIGN');
-INSERT INTO permissions (name) VALUES ('LEADER_REMOVE');
-INSERT INTO permissions (name) VALUES ('CHURCH_EDIT');
-INSERT INTO permissions (name) VALUES ('CHURCH_ADD');
-INSERT INTO permissions (name) VALUES ('CHURCH_REMOVE');
+INSERT INTO permissions (name) VALUES ('JOIN_LEAVE_GROUP');
+INSERT INTO permissions (name) VALUES ('CREATE_EDIT_GROUP');
+INSERT INTO permissions (name) VALUES ('ASSIGN_REMOVE_LEADER');
 
 INSERT INTO ages (name) VALUES ('ALL_ADULT_AGES');
 INSERT INTO ages (name) VALUES ('TWENTIES');
@@ -27,27 +21,12 @@ INSERT INTO ages (name) VALUES ('FIFTIES');
 INSERT INTO ages (name) VALUES ('SIXTIES');
 INSERT INTO ages (name) VALUES ('SEVENTIES_AND_UP');
 
-INSERT INTO role_permissions (role_id, permission_id) VALUES (1, 1); -- USER can join groups
-INSERT INTO role_permissions (role_id, permission_id) VALUES (2, 1); -- LEADER can join groups
-INSERT INTO role_permissions (role_id, permission_id) VALUES (2, 2); -- LEADER can create groups
-INSERT INTO role_permissions (role_id, permission_id) VALUES (2, 3); -- LEADER can edit groups
-INSERT INTO role_permissions (role_id, permission_id) VALUES (2, 4); -- LEADER can delete groups
-INSERT INTO role_permissions (role_id, permission_id) VALUES (3, 1); -- CHURCH_ADMIN can join groups
-INSERT INTO role_permissions (role_id, permission_id) VALUES (3, 2); -- CHURCH_ADMIN can create groups
-INSERT INTO role_permissions (role_id, permission_id) VALUES (3, 3); -- CHURCH_ADMIN can edit groups
-INSERT INTO role_permissions (role_id, permission_id) VALUES (3, 4); -- CHURCH_ADMIN can delete groups
-INSERT INTO role_permissions (role_id, permission_id) VALUES (3, 5); -- CHURCH_ADMIN can assign leaders
-INSERT INTO role_permissions (role_id, permission_id) VALUES (3, 6); -- CHURCH_ADMIN can remove leaders
-INSERT INTO role_permissions (role_id, permission_id) VALUES (3, 7); -- CHURCH_ADMIN can edit church
-INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 1); -- SUPER_ADMIN can join groups
-INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 2); -- SUPER_ADMIN can create groups
-INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 3); -- SUPER_ADMIN can edit groups
-INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 4); -- SUPER_ADMIN can delete groups
-INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 5); -- SUPER_ADMIN can assign leaders
-INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 6); -- SUPER_ADMIN can remove leaders
-INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 7); -- SUPER_ADMIN can edit church
-INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 8); -- SUPER_ADMIN can add church
-INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 9); -- SUPER_ADMIN can remove church
+INSERT INTO role_permissions (role_id, permission_id) VALUES (1, 1);
+INSERT INTO role_permissions (role_id, permission_id) VALUES (2, 1);
+INSERT INTO role_permissions (role_id, permission_id) VALUES (2, 2);
+INSERT INTO role_permissions (role_id, permission_id) VALUES (3, 1);
+INSERT INTO role_permissions (role_id, permission_id) VALUES (3, 2);
+INSERT INTO role_permissions (role_id, permission_id) VALUES (3, 3);
 
 
 INSERT INTO category (name) VALUES ('Bible Study');
@@ -65,12 +44,14 @@ INSERT INTO genders (name) VALUES ('BOTH');
 
 INSERT INTO churches (name, address, contact_info) VALUES ('First Church', '123 Main St', 'contact info here');
 
-INSERT INTO app_user (email, password, role_id) VALUES ('alice@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
 -- password 1234
-INSERT INTO app_user (email, password, role_id) VALUES ('john@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 2);
+INSERT INTO app_user (email, password, role_id) VALUES ('user@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
+INSERT INTO app_user (email, password, role_id) VALUES ('leader@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 2);
+INSERT INTO app_user (email, password, role_id) VALUES ('churchadmin@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 3);
 
 INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Alice', 'Smith', 1, 1);
 INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('John', 'Crab', 1, 2);
+INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Smiggle', 'Dorf', 1, 3);
 
 INSERT INTO groups (title, description, schedule, location, address, frequency, gender_id, church_id) VALUES
 ('Downtown Bible Study', 'A weekly Bible study in downtown.', 'Thursdays 7pm', 'Downtown Church',
