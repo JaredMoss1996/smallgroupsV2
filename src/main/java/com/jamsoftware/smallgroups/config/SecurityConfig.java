@@ -24,6 +24,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**", "/h2-console/**", "/register", "/register/**", "/directory", "/error", "/errors/403").permitAll()
                         .requestMatchers("/groups/**").hasAuthority("CREATE_EDIT_GROUP")
+                        .requestMatchers("/leaders/**").hasAuthority("ASSIGN_REMOVE_LEADER")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception
@@ -31,6 +32,7 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
+                        .defaultSuccessUrl("/", false)
                         .permitAll()
                 )
                 .logout(logout -> logout.permitAll())

@@ -1,10 +1,383 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Manage Leaders</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #f4f7f8;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #dbe3ea;
+            --dark: #10171a;
+            --accent: #1fc07a;
+            --accent-dark: #16a366;
+            --accent-soft: #e8fbf2;
+            --shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+            --radius-xl: 20px;
+            --radius-lg: 14px;
+            --radius-md: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(31, 192, 122, 0.1), transparent 30%),
+                linear-gradient(180deg, #f8fbfc 0%, var(--bg) 100%);
+            color: var(--text);
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .sg-navbar {
+            background: #10171a;
+            box-shadow: 0 6px 18px rgba(15, 22, 27, 0.25);
+        }
+
+        .sg-navbar .navbar-brand {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .sg-navbar .navbar-brand:hover,
+        .sg-navbar .navbar-brand:focus {
+            color: #fff;
+        }
+
+        .sg-navbar .nav-link {
+            color: rgba(255, 255, 255, 0.82);
+            font-weight: 600;
+            border-radius: 999px;
+            padding: 0.45rem 0.85rem;
+        }
+
+        .sg-navbar .nav-link:hover,
+        .sg-navbar .nav-link:focus {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .sg-navbar .nav-link.active {
+            color: #10171a;
+            background: var(--accent);
+        }
+
+        .page-shell {
+            width: min(1120px, calc(100% - 32px));
+            margin: 28px auto 46px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #10171a 0%, #1b2a31 100%);
+            color: #fff;
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            margin-bottom: 22px;
+            box-shadow: 0 14px 36px rgba(16, 23, 26, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::after {
+            content: "";
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            background: rgba(31, 192, 122, 0.14);
+            position: absolute;
+            right: -70px;
+            bottom: -70px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #d7fbe9;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .page-header h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.8rem, 3.8vw, 2.5rem);
+        }
+
+        .page-header p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.84);
+            max-width: 760px;
+            line-height: 1.6;
+        }
+
+        .toolbar,
+        .leaders-card {
+            background: var(--surface);
+            border: 1px solid rgba(219, 227, 234, 0.9);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow);
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: center;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
+        .results-note {
+            margin: 0;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .btn-pill {
+            border: none;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+        }
+
+        .btn-pill:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary-soft {
+            background: var(--accent);
+            color: #062b19;
+            box-shadow: 0 8px 20px rgba(31, 192, 122, 0.24);
+        }
+
+        .btn-primary-soft:hover {
+            background: var(--accent-dark);
+            color: #fff;
+        }
+
+        .leaders-card {
+            padding: 18px;
+        }
+
+        .leader-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .leader-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            background: #fff;
+            padding: 16px;
+        }
+
+        .leader-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .leader-name {
+            margin: 0;
+            font-size: 1.06rem;
+            font-weight: 800;
+        }
+
+        .member-id {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .church-pill {
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            background: var(--accent-soft);
+            color: #0a6b3d;
+            white-space: nowrap;
+        }
+
+        .leader-details {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 8px;
+        }
+
+        .leader-details li {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            color: #334155;
+            font-size: 0.93rem;
+        }
+
+        .leader-details i {
+            width: 16px;
+            color: #0b4e78;
+        }
+
+        @media (max-width: 900px) {
+            .leader-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .page-shell {
+                width: min(calc(100% - 20px), 1120px);
+                margin-top: 16px;
+            }
+
+            .page-header,
+            .toolbar,
+            .leaders-card {
+                border-radius: 16px;
+                padding: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
+<th:block th:insert="fragments/navbar :: navbar('manageLeaders')"></th:block>
 
+<main class="page-shell">
+    <section class="page-header">
+        <span class="eyebrow"><i class="fa-solid fa-users"></i> Leader Management</span>
+        <h1>Manage Leaders</h1>
+        <p>
+            Static preview page for leader administration. This layout mirrors your management pages and shows
+            the current `Member` fields so backend wiring can be added later.
+        </p>
+    </section>
+
+    <section class="toolbar">
+        <p class="results-note">6 Leaders</p>
+        <button type="button" class="btn-pill btn-primary-soft">
+            <i class="fa-solid fa-plus me-1"></i>Add Leader
+        </button>
+    </section>
+
+    <section class="leaders-card" aria-label="Leader list">
+        <div class="leader-grid">
+            <article class="leader-item">
+                <div class="leader-head">
+                    <div>
+                        <h2 class="leader-name">Ava Thompson</h2>
+                        <p class="member-id">Member ID: 101</p>
+                    </div>
+                    <span class="church-pill">Church 1</span>
+                </div>
+                <ul class="leader-details">
+                    <li><i class="fa-solid fa-envelope"></i>ava.thompson@example.com</li>
+                    <li><i class="fa-solid fa-mobile-screen"></i>(555) 210-8841</li>
+                    <li><i class="fa-solid fa-phone"></i>(555) 210-8842</li>
+                </ul>
+            </article>
+
+            <article class="leader-item">
+                <div class="leader-head">
+                    <div>
+                        <h2 class="leader-name">Noah Brooks</h2>
+                        <p class="member-id">Member ID: 102</p>
+                    </div>
+                    <span class="church-pill">Church 1</span>
+                </div>
+                <ul class="leader-details">
+                    <li><i class="fa-solid fa-envelope"></i>noah.brooks@example.com</li>
+                    <li><i class="fa-solid fa-mobile-screen"></i>(555) 320-1112</li>
+                    <li><i class="fa-solid fa-phone"></i>(555) 320-1113</li>
+                </ul>
+            </article>
+
+            <article class="leader-item">
+                <div class="leader-head">
+                    <div>
+                        <h2 class="leader-name">Emma Collins</h2>
+                        <p class="member-id">Member ID: 103</p>
+                    </div>
+                    <span class="church-pill">Church 2</span>
+                </div>
+                <ul class="leader-details">
+                    <li><i class="fa-solid fa-envelope"></i>emma.collins@example.com</li>
+                    <li><i class="fa-solid fa-mobile-screen"></i>(555) 487-9010</li>
+                    <li><i class="fa-solid fa-phone"></i>(555) 487-9011</li>
+                </ul>
+            </article>
+
+            <article class="leader-item">
+                <div class="leader-head">
+                    <div>
+                        <h2 class="leader-name">Liam Rivera</h2>
+                        <p class="member-id">Member ID: 104</p>
+                    </div>
+                    <span class="church-pill">Church 2</span>
+                </div>
+                <ul class="leader-details">
+                    <li><i class="fa-solid fa-envelope"></i>liam.rivera@example.com</li>
+                    <li><i class="fa-solid fa-mobile-screen"></i>(555) 602-4481</li>
+                    <li><i class="fa-solid fa-phone"></i>(555) 602-4482</li>
+                </ul>
+            </article>
+
+            <article class="leader-item">
+                <div class="leader-head">
+                    <div>
+                        <h2 class="leader-name">Sophia Patel</h2>
+                        <p class="member-id">Member ID: 105</p>
+                    </div>
+                    <span class="church-pill">Church 3</span>
+                </div>
+                <ul class="leader-details">
+                    <li><i class="fa-solid fa-envelope"></i>sophia.patel@example.com</li>
+                    <li><i class="fa-solid fa-mobile-screen"></i>(555) 773-2190</li>
+                    <li><i class="fa-solid fa-phone"></i>(555) 773-2191</li>
+                </ul>
+            </article>
+
+            <article class="leader-item">
+                <div class="leader-head">
+                    <div>
+                        <h2 class="leader-name">Mason Lee</h2>
+                        <p class="member-id">Member ID: 106</p>
+                    </div>
+                    <span class="church-pill">Church 3</span>
+                </div>
+                <ul class="leader-details">
+                    <li><i class="fa-solid fa-envelope"></i>mason.lee@example.com</li>
+                    <li><i class="fa-solid fa-mobile-screen"></i>(555) 889-1405</li>
+                    <li><i class="fa-solid fa-phone"></i>(555) 889-1406</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
