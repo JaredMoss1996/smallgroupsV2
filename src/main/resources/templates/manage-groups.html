@@ -381,7 +381,7 @@
     <div sec:authorize="hasAuthority('MANAGE_LEADERS')" style="margin: 22px 0 12px;">
         <h2 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--text);">Your Leader's Groups</h2>
     </div>
-    <section sec:authorize="hasAuthority('MANAGE_LEADERS')" class="groups-card" aria-label="Group list">
+    <section sec:authorize="hasAuthority('MANAGE_LEADERS')" class="groups-card" aria-label="Group list" style="margin: 22px 0 12px;">
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
             <div class="col" th:each="group : ${leaderGroups}" th:object="${group}">
                 <th:block th:insert="~{fragments/group-card :: groupCard(${group}, true)}"></th:block>

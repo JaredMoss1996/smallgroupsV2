@@ -132,6 +132,30 @@ public class GroupRepository {
         return categoryNames;
     }
 
+    public List<Group> findJoinedGroupsByMemberId(long memberId) {
+        String sql = """
+                    SELECT  gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
+                    FROM groups gr
+                    LEFT JOIN genders ge ON ge.id = gr.id
+                    JOIN group_members gm ON gm.group_id = gr.id
+                    where member_id = :memberId
+                """;
+
+        List<Group> result = jdbcClient.sql(sql)
+                .param("memberId", memberId)
+                .query((rs, rowNum) -> mapToGroupList(rs))
+                .list();
+
+        for (Group group : result) {
+            group.setLeaders(findLeadersByGroupId(group.getId()));
+            group.setCategories(findCategoriesByGroupId(group.getId()));
+            group.setAges(findAgesByGroupId(group.getId()));
+            group.setMembers(findMembersByGroupId(group.getId()));
+        }
+
+        return result;
+    }
+
 
     public List<Group> findAllByLeaderMemberId(Long memberLeaderId) {
         String sql = """

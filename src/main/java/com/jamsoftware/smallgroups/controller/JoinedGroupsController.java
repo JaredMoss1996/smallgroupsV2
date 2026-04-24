@@ -22,8 +22,7 @@ public class JoinedGroupsController {
     @GetMapping({"", "/"})
     public String getJoinedGroups(Model model) {
         Member currentMember = currentMemberService.getCurrentMember();
-//        model.addAttribute("groups", groupService.findAllByLeaderId(currentMember.getId()));
-        model.addAttribute("groups", groupService.findAll());
+        model.addAttribute("groups", groupService.findJoinedGroupsByMemberId(currentMember.getId()));
         return "joined-groups";
     }
 }

@@ -48,10 +48,16 @@ INSERT INTO churches (name, address, contact_info) VALUES ('First Church', '123 
 INSERT INTO app_user (email, password, role_id) VALUES ('user@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
 INSERT INTO app_user (email, password, role_id) VALUES ('leader@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 2);
 INSERT INTO app_user (email, password, role_id) VALUES ('churchadmin@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 3);
+INSERT INTO app_user (email, password, role_id) VALUES ('user1@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
+INSERT INTO app_user (email, password, role_id) VALUES ('user2@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
+INSERT INTO app_user (email, password, role_id) VALUES ('user3@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
 
 INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Alice', 'Smith', 1, 1);
 INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('John', 'Crab', 1, 2);
 INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Smiggle', 'Dorf', 1, 3);
+INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Balice', 'Smith', 1, 4);
+INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Chalice', 'Smith', 1, 5);
+INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Dalice', 'Smith', 1, 6);
 
 INSERT INTO groups (title, description, schedule, location, address, frequency, gender_id, church_id) VALUES
 ('Downtown Bible Study', 'A weekly Bible study in downtown.', 'Thursdays 7pm', 'Downtown Church',
@@ -83,6 +89,18 @@ INSERT INTO group_leaders (group_id, member_id) VALUES (1, 2);
 INSERT INTO group_leaders (group_id, member_id) VALUES (2, 2);
 INSERT INTO group_leaders (group_id, member_id) VALUES (3, 1);
 INSERT INTO group_leaders (group_id, member_id) VALUES (4, 2);
+INSERT INTO group_leaders (group_id, member_id) VALUES (3, 2);
+INSERT INTO group_leaders (group_id, member_id) VALUES (4, 3);
+INSERT INTO group_leaders (group_id, member_id) VALUES (2, 3);
+
+INSERT INTO group_members (group_id, member_id) VALUES (1, 4);
+INSERT INTO group_members (group_id, member_id) VALUES (1, 5);
+INSERT INTO group_members (group_id, member_id) VALUES (1, 6);
+INSERT INTO group_members (group_id, member_id) VALUES (2, 2);
+INSERT INTO group_members (group_id, member_id) VALUES (3, 3);
+INSERT INTO group_members (group_id, member_id) VALUES (3, 4);
+INSERT INTO group_members (group_id, member_id) VALUES (3, 1);
+INSERT INTO group_members (group_id, member_id) VALUES (4, 3);
 
 INSERT INTO group_categories (group_id, category_id) VALUES (1,1);
 INSERT INTO group_categories (group_id, category_id) VALUES (1,2);
