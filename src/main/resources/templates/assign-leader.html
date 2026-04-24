@@ -146,13 +146,13 @@
 <th:block th:insert="~{fragments/navbar :: navbar('manageGroups')}"></th:block>
 
 <main class="page-shell">
-    <section class="hero-card" th:object="${group}">
+    <section class="hero-card">
         <h1>Add Leader to Group</h1>
         <p class="hero-copy">Search by leader email, pick a result, and review all leader details below.</p>
     </section>
 
     <div class="mb-3">
-        <a class="btn btn-outline-secondary" th:href="@{/groups/edit/{id}(id=${group.id})}">
+        <a class="btn btn-outline-secondary" >
             <i class="fa-solid fa-arrow-left me-1"></i>Back to Group Edit
         </a>
     </div>
@@ -169,7 +169,6 @@
                placeholder="leader@church.org"
                autocomplete="off"
                data-hx-get="/groups/0/leaders/search"
-               th:attr="data-hx-get=@{/groups/{groupId}/leaders/search(groupId=${group.id})}"
                data-hx-trigger="input changed delay:300ms, search"
                data-hx-target="#leader-search-results"
                data-hx-swap="innerHTML"

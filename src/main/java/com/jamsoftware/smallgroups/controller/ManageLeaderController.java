@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/leaders")
 public class ManageLeaderController {
+
     @GetMapping({"", "/"})
     public String getDirectory(Model model) {
-//        model.addAttribute("leaders", memberServive.getLeaderByChurchId());
         return "manage-leaders";
     }
 
@@ -22,8 +22,4 @@ public class ManageLeaderController {
         return "assign-leader";
     }
 
-    @PostMapping("/create")
-    public String createGroupSubmit(@ModelAttribute Group groupData, Model model) {
-        return "manage-leaders";
-    }
 }
