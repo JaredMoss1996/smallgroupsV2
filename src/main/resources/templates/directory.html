@@ -13,68 +13,271 @@
     <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <style>
+        :root {
+            --bg: #f4f7f8;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #dbe3ea;
+            --dark: #10171a;
+            --accent: #1fc07a;
+            --accent-dark: #16a366;
+            --accent-soft: #e8fbf2;
+            --shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+            --radius-xl: 20px;
+            --radius-lg: 14px;
+            --radius-md: 10px;
+        }
+
         * {
             box-sizing: border-box;
         }
 
-        html {
-            height: 100vh;
-        }
-
         body {
-            height: 100vh;
             margin: 0;
-            padding: 0;
-            background: #f4f7f8;
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-            color: #222;
-            display: flex;
-            flex-direction: column;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(31, 192, 122, 0.1), transparent 30%),
+                linear-gradient(180deg, #f8fbfc 0%, var(--bg) 100%);
+            color: var(--text);
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
+        .page-shell {
+            width: min(1200px, calc(100% - 32px));
+            margin: 28px auto 46px;
+        }
 
-        /* Sidebar filters card */
-        .filters-card {
-            background: #10171a;
+        .page-header {
+            background: linear-gradient(135deg, #10171a 0%, #1b2a31 100%);
             color: #fff;
-            border-radius: 12px;
-            padding: 1.25rem;
-            box-shadow: 0 6px 18px rgba(15, 22, 27, .25);
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            margin-bottom: 22px;
+            box-shadow: 0 14px 36px rgba(16, 23, 26, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
-        .filters-card .section-title {
+        .page-header::after {
+            content: "";
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            background: rgba(31, 192, 122, 0.14);
+            position: absolute;
+            right: -70px;
+            bottom: -70px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #d7fbe9;
+            font-size: 0.8rem;
             font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .page-header h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.8rem, 3.8vw, 2.5rem);
+        }
+
+        .page-header p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.84);
+            max-width: 760px;
+            line-height: 1.6;
+        }
+
+        .toolbar,
+        .filters-card,
+        .groups-card {
+            background: var(--surface);
+            border: 1px solid rgba(219, 227, 234, 0.9);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow);
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: center;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
+        .results-count {
+            margin: 0;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .toolbar-copy {
+            margin: 4px 0 0;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .btn-pill {
+            border: none;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+            text-decoration: none;
+        }
+
+        .btn-pill:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary-soft {
+            background: var(--accent);
+            color: #062b19;
+            box-shadow: 0 8px 20px rgba(31, 192, 122, 0.24);
+        }
+
+        .btn-primary-soft:hover {
+            background: var(--accent-dark);
+            color: #fff;
+        }
+
+        .btn-outline-soft {
+            background: #fff;
+            color: #0f172a;
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline-soft:hover {
+            background: #f8fafc;
+            color: #0f172a;
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.08);
+        }
+
+        .content-layout {
+            display: grid;
+            grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
+            gap: 18px;
+            align-items: start;
+        }
+
+        .desktop-filters {
+            position: sticky;
+            top: 20px;
+        }
+
+        .filters-card {
+            padding: 18px;
+        }
+
+        .section-title {
+            font-weight: 800;
             font-size: 1.05rem;
-            margin-bottom: .75rem;
+            margin-bottom: .3rem;
             display: flex;
             align-items: center;
             gap: .5rem;
+            color: #0f172a;
+        }
+
+        .section-subtitle {
+            margin: 0 0 1rem;
+            color: var(--muted);
+            font-size: .92rem;
         }
 
         .filters-card .form-control,
+        .filters-card .input-group-text,
         .filters-card .btn {
             border-radius: 999px;
         }
 
-        .filters-card .small-muted {
-            color: rgba(255, 255, 255, .6);
+        .filters-card .input-group-text {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-right: none;
+            color: var(--muted);
+        }
+
+        .filters-card .form-control {
+            border-color: var(--border);
+            border-left: none;
+            box-shadow: none;
+        }
+
+        .small-muted {
+            color: var(--muted);
             font-size: .9rem;
         }
 
         .filter-row {
-            border-top: 1px solid rgba(255, 255, 255, .06);
-            padding-top: .8rem;
-            margin-top: .6rem;
+            border-top: 1px solid #e8eef4;
+            padding-top: .95rem;
+            margin-top: .95rem;
+        }
+
+        .filter-header {
+            cursor: pointer;
+            user-select: none;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .filter-header i {
+            transition: transform 0.2s ease-in-out;
+            color: var(--muted);
+        }
+
+        .filter-header.collapsed i {
+            transform: rotate(-90deg);
+        }
+
+        .filter-checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin-top: .75rem;
+            gap: 12px 16px;
+        }
+
+        .filter-checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .filter-checkbox-item input[type="radio"],
+        .filter-checkbox-item input[type="checkbox"] {
+            cursor: pointer;
+            accent-color: var(--accent);
+        }
+
+        .filter-checkbox-item label {
+            cursor: pointer;
+            margin: 0;
+            font-size: 0.9rem;
+            color: #334155;
         }
 
         .toggle {
             width: 42px;
             height: 24px;
             border-radius: 999px;
-            background: #e6e6e6;
+            background: #dbe4ea;
             position: relative;
             display: inline-block;
             vertical-align: middle;
+            transition: background-color .18s ease;
         }
 
         .toggle::after {
@@ -86,57 +289,61 @@
             position: absolute;
             left: 3px;
             top: 3px;
-            transition: left .18s;
+            transition: left .18s ease;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
         }
 
         .toggle.on {
-            background: #1fc07a;
+            background: var(--accent);
         }
 
         .toggle.on::after {
             left: 21px;
         }
 
-        /* Results area */
-        .results-count {
-            font-weight: 600;
-            color: #4b5563;
-            margin-bottom: .5rem;
+        .groups-card {
+            padding: 18px;
+        }
+
+        .results-grid {
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .results-grid > .col {
+            width: 100%;
         }
 
         .group-card {
-            border-radius: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
             background: #fff;
             padding: 1.15rem;
-            box-shadow: 0 6px 18px rgba(18, 22, 24, .06);
             position: relative;
             min-height: 170px;
-            margin-bottom: 20px;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
         }
 
         .group-card:hover {
-            box-shadow: 0 8px 24px rgba(18, 22, 24, .12);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+            transform: translateY(-1px);
             cursor: pointer;
-        }
-
-        .group-card .star {
-            position: absolute;
-            right: 14px;
-            top: 12px;
-            color: #9aa4a9;
         }
 
         .group-title {
             font-weight: 800;
             font-size: 1.25rem;
             margin-bottom: .5rem;
+            color: #0f172a;
         }
 
         .badges .badge {
             margin-right: .35rem;
-            background: #e7f6ee;
+            background: var(--accent-soft);
             color: #0a6b3d;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .meta-line {
@@ -159,220 +366,13 @@
             padding: .25rem .5rem;
             font-weight: 600;
             margin-right: .35rem;
+            margin-bottom: .35rem;
             display: inline-block;
         }
 
-        .filter-option {
-            padding-left: 2em;
-        }
-
-        /* Collapsible filter sections */
-        .filter-header {
-            cursor: pointer;
-            user-select: none;
-            /* margin-bottom: 1rem; */
-        }
-
-        .filter-header i {
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .filter-header.collapsed i {
-            transform: rotate(90deg);
-        }
-
-        .filter-checkbox-group {
-            display: grid;
-            flex-direction: column;
-            gap: 0.6rem;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            margin-top: .5rem;
-            gap: 16px;
-        }
-
-        .filter-checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
-        .filter-checkbox-item input[type="radio"],
-        .filter-checkbox-item input[type="checkbox"] {
-            cursor: pointer;
-            accent-color: #1fc07a;
-        }
-
-        .filter-checkbox-item label {
-            cursor: pointer;
-            margin: 0;
-            font-size: 0.9rem;
-        }
-
-        /* Mobile filter button */
-        .mobile-filter-header {
-            display: none;
-            background: #fff;
-            padding: 1rem;
-            border-bottom: 1px solid #e5e7eb;
-            margin-bottom: 1rem;
-        }
-
-        .filter-toggle-btn {
-            background: #10171a;
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .filter-toggle-btn:hover {
-            background: #1a2428;
-        }
-
-        /* Offcanvas for mobile filters */
-        .offcanvas-filter {
-            width: auto;
-            max-width: none;
-        }
-
-        .offcanvas-filter .offcanvas-header {
-            background: #10171a;
-            color: #fff;
-            border-bottom: 1px solid rgba(255, 255, 255, .1);
-        }
-
-        .offcanvas-filter .offcanvas-body {
-            padding: 0;
-            background: #10171a;
-        }
-
-        .offcanvas-filter .filters-card {
-            box-shadow: none;
-            border-radius: 0;
-        }
-
-        /* Masonry-style results grid */
-        .results-grid {
-            display: block;
-            column-count: 2;
-            column-gap: 20px;
-            margin-left: 0;
-            margin-right: 0;
-            margin-bottom: 20px;
-        }
-
-        .results-grid>.col {
-            break-inside: avoid;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-
-        .desktop-filters {
-            flex: 0 0 auto;
-            width: 100%;
-            max-width: 33.333%;
-            position: sticky;
-            top: 20px;
-            align-self: flex-start;
-        }
-
-        @media (max-width: 767.98px) {
-            .results-grid {
-                column-count: 1;
-            }
-        }
-
-        @media (max-width: 991.99px) {
-            .offcanvas-filter {
-                width: 85% !important;
-                max-width: 320px;
-            }
-
-            .mobile-filter-header {
-                display: block;
-                position: fixed;
-                z-index: 10000;
-                width: 100%;
-            }
-
-            .desktop-filters {
-                display: none !important;
-            }
-
-            #content-body {
-                margin-top: 30px;
-            }
-        }
-
-        @media (min-width: 992px) {
-            .offcanvas-filter {
-                position: relative !important;
-                width: 100% !important;
-                max-width: none !important;
-                transform: none !important;
-                visibility: visible !important;
-                border: none !important;
-            }
-
-            .offcanvas-filter .offcanvas-header {
-                display: none;
-            }
-
-            .mobile-filter-header {
-                display: none !important;
-            }
-
-            .offcanvas-filter .offcanvas-body {
-                overflow: visible !important;
-            }
-
-            #filterOffcanvas {
-                display: none !important;
-            }
-        }
-
-        /* Blur everything behind the overlay */
-        #overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(8px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        /* Centered cloned element */
-        #preview {
-            background: white;
-            padding: 32px;
-            border-radius: 8px;
-            margin: 15px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        /* Close button inside preview */
-        .preview-close-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            z-index: 1100;
-        }
-
-        /* Category badges (new) */
         .category-name {
             background: #eef2ff;
-            /* subtle indigo tint */
             color: #3730a3;
-            /* darker indigo */
             border-radius: 999px;
             padding: .22rem .6rem;
             font-weight: 700;
@@ -386,48 +386,381 @@
             margin-top: .45rem;
             margin-bottom: .45rem;
         }
+
+        .mobile-toolbar-action {
+            display: none;
+        }
+
+        .offcanvas-filter {
+            width: min(92vw, 360px) !important;
+        }
+
+        .offcanvas-filter .offcanvas-header {
+            background: linear-gradient(135deg, #10171a 0%, #1b2a31 100%);
+            color: #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .offcanvas-filter .offcanvas-body {
+            background: linear-gradient(180deg, #f8fbfc 0%, var(--bg) 100%);
+            padding: 18px;
+        }
+
+        .offcanvas-filter .filters-card {
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+        }
+
+        #overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        #preview {
+            background: white;
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            width: min(860px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .preview-close-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 1100;
+        }
+
+        @media (max-width: 991.98px) {
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .desktop-filters {
+                display: none;
+            }
+
+            .mobile-toolbar-action {
+                display: inline-flex;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .page-shell {
+                width: min(calc(100% - 20px), 1200px);
+                margin-top: 16px;
+            }
+
+            .page-header,
+            .toolbar,
+            .filters-card,
+            .groups-card {
+                border-radius: 16px;
+                padding: 16px;
+            }
+
+            .filter-checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 
 </head>
 
 <body>
-
 <th:block th:insert="fragments/navbar :: navbar('directory')"></th:block>
 
-    <!-- Overlay Controller -->
-    <div id="overlay" onclick="closePreview()">
-        <div id="preview">
-            <!-- Persistent close button in the top-right of the preview -->
-            <button type="button" class="btn-close preview-close-btn" aria-label="Close"
-                    onclick="event.stopPropagation(); closePreview();"></button>
-            <!-- Inner container where cloned group-card will be inserted so the close button isn't removed -->
-            <div id="preview-inner"></div>
-        </div>
+<div id="overlay" onclick="closePreview()">
+    <div id="preview">
+        <button type="button" class="btn-close preview-close-btn" aria-label="Close"
+                onclick="event.stopPropagation(); closePreview();"></button>
+        <div id="preview-inner"></div>
     </div>
+</div>
 
-    <!-- Mobile Filter Button Go Here-->
+<div class="offcanvas offcanvas-start offcanvas-filter" tabindex="-1" id="filterOffcanvas"
+     aria-labelledby="filterOffcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="filterOffcanvasLabel">
+            <i class="fa-solid fa-filter me-2"></i>Filters
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="filters-card">
+            <div class="section-title">
+                <i class="fa-solid fa-sliders"></i> Refine Directory
+            </div>
+            <p class="section-subtitle">Narrow the list by schedule, age, language, and accessibility needs.</p>
 
-    <!-- Offcanvas for mobile Go Here-->
-
-
-    <div class="pt-5 flex-grow-1 d-flex px-3 px-lg-4" id="content-body">
-        <div style="display: flex; flex: 1; max-width: 1400px; margin: 0 auto;">
-            <!-- Left Filters Go Here-->
-
-            <!-- Right: Results -->
-            <div class="d-flex flex-column overflow-auto" style="flex: 1; min-width: 0;">
-                <div class="mb-3">
-                    <div class="results-count">[[${groups.size}]] Results:</div>
+            <div class="mb-3">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <input class="form-control" placeholder="Search groups" aria-label="Search groups" />
                 </div>
+            </div>
 
-                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
-                    <div class="col" th:each="group : ${groups}" th:object="${group}">
-                        <th:block th:insert="fragments/group-card :: groupCard(${group}, false)"></th:block>
+            <div class="d-flex gap-2 mb-3">
+                <button class="btn btn-outline-soft btn-sm w-50" id="joined-button" type="button">Joined</button>
+                <button class="btn btn-outline-soft btn-sm w-50" type="button">
+                    <i class="fa-solid fa-map-location-dot me-1"></i>Show Map
+                </button>
+            </div>
+
+            <div class="small-muted">Location <a href="#" class="small-muted ms-2">Set Location Filter</a></div>
+
+            <div class="filter-row">
+                <div class="filter-header collapsed d-flex justify-content-between align-items-center"
+                     data-bs-toggle="collapse" data-bs-target="#denomination-filter-content">
+                    <div>Denomination</div>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div id="denomination-filter-content" class="filter-content collapse">
+                    <div class="filter-checkbox-group">
+                        <div class="filter-checkbox-item">
+                            <input type="checkbox" id="denom-baptist" name="denomination" />
+                            <label for="denom-baptist">Baptist</label>
+                        </div>
+                        <div class="filter-checkbox-item">
+                            <input type="checkbox" id="denom-methodist" name="denomination" />
+                            <label for="denom-methodist">Methodist</label>
+                        </div>
+                        <div class="filter-checkbox-item">
+                            <input type="checkbox" id="denom-presbyterian" name="denomination" />
+                            <label for="denom-presbyterian">Presbyterian</label>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="filter-row">
+                <div class="filter-header collapsed d-flex justify-content-between align-items-center"
+                     data-bs-toggle="collapse" data-bs-target="#day-filter-content">
+                    <div>Day of the Week</div>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div id="day-filter-content" class="filter-content collapse">
+                    <div class="filter-checkbox-group">
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-sunday" name="day_of_week" /><label for="day-sunday">Sunday</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-monday" name="day_of_week" /><label for="day-monday">Monday</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-tuesday" name="day_of_week" /><label for="day-tuesday">Tuesday</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-wednesday" name="day_of_week" /><label for="day-wednesday">Wednesday</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-thursday" name="day_of_week" /><label for="day-thursday">Thursday</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-friday" name="day_of_week" /><label for="day-friday">Friday</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-saturday" name="day_of_week" /><label for="day-saturday">Saturday</label></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-row">
+                <div class="filter-header collapsed d-flex justify-content-between align-items-center"
+                     data-bs-toggle="collapse" data-bs-target="#age-filter-content">
+                    <div>Age Range</div>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div id="age-filter-content" class="filter-content collapse">
+                    <div class="filter-checkbox-group">
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-teens" name="age_range" /><label for="age-teens">Teens</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-20s" name="age_range" /><label for="age-20s">20s</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-30s" name="age_range" /><label for="age-30s">30s</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-40s" name="age_range" /><label for="age-40s">40s</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-50s" name="age_range" /><label for="age-50s">50s</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-60plus" name="age_range" /><label for="age-60plus">60+</label></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-row">
+                <div class="filter-header collapsed d-flex justify-content-between align-items-center"
+                     data-bs-toggle="collapse" data-bs-target="#language-filter-content">
+                    <div>Languages</div>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div id="language-filter-content" class="filter-content collapse">
+                    <div class="filter-checkbox-group">
+                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-english" name="language" /><label for="lang-english">English</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-spanish" name="language" /><label for="lang-spanish">Spanish</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-french" name="language" /><label for="lang-french">French</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-other" name="language" /><label for="lang-other">Other</label></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-row">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="small-muted">Kids Welcome</div>
+                    <div class="toggle on" role="switch" aria-checked="true"></div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <div class="small-muted">Childcare Provided</div>
+                    <div class="toggle" role="switch" aria-checked="false"></div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <div class="small-muted">Handicap Accessible</div>
+                    <div class="toggle on" role="switch" aria-checked="true"></div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<main class="page-shell">
+    <section class="page-header">
+        <span class="eyebrow"><i class="fa-solid fa-compass"></i> Group Directory</span>
+        <h1>Find a Small Group</h1>
+        <p>
+            Explore available groups with the same polished management layout, then open any card for a quick
+            full-detail preview.
+        </p>
+    </section>
+
+    <section class="toolbar">
+        <div>
+            <p class="results-count">[[${groups.size}]] Results</p>
+            <p class="toolbar-copy">Browse by schedule, age range, language, and accessibility preferences.</p>
+        </div>
+        <button class="btn-pill btn-outline-soft mobile-toolbar-action d-inline-flex align-items-center"
+                type="button" data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas"
+                aria-controls="filterOffcanvas">
+            <i class="fa-solid fa-filter me-1"></i>Filters
+        </button>
+    </section>
+
+    <div class="content-layout">
+        <aside class="desktop-filters" aria-label="Directory filters">
+            <div class="filters-card">
+                <div class="section-title">
+                    <i class="fa-solid fa-sliders"></i> Refine Directory
+                </div>
+                <p class="section-subtitle">Narrow the list by schedule, age, language, and accessibility needs.</p>
+
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <input class="form-control" placeholder="Search groups" aria-label="Search groups" />
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mb-3">
+                    <button class="btn btn-outline-soft btn-sm w-50" type="button">Joined</button>
+                    <button class="btn btn-outline-soft btn-sm w-50" type="button">
+                        <i class="fa-solid fa-map-location-dot me-1"></i>Show Map
+                    </button>
+                </div>
+
+                <div class="small-muted">Location <a href="#" class="small-muted ms-2">Set Location Filter</a></div>
+
+                <div class="filter-row">
+                    <div class="filter-header collapsed d-flex justify-content-between align-items-center"
+                         data-bs-toggle="collapse" data-bs-target="#denomination-filter-content-desktop">
+                        <div>Denomination</div>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div id="denomination-filter-content-desktop" class="filter-content collapse">
+                        <div class="filter-checkbox-group">
+                            <div class="filter-checkbox-item"><input type="checkbox" id="denom-baptist-desktop" name="denomination" /><label for="denom-baptist-desktop">Baptist</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="denom-methodist-desktop" name="denomination" /><label for="denom-methodist-desktop">Methodist</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="denom-presbyterian-desktop" name="denomination" /><label for="denom-presbyterian-desktop">Presbyterian</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <div class="filter-header collapsed d-flex justify-content-between align-items-center"
+                         data-bs-toggle="collapse" data-bs-target="#day-filter-content-desktop">
+                        <div>Day of the Week</div>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div id="day-filter-content-desktop" class="filter-content collapse">
+                        <div class="filter-checkbox-group">
+                            <div class="filter-checkbox-item"><input type="checkbox" id="day-sunday-desktop" name="day_of_week_desktop" /><label for="day-sunday-desktop">Sunday</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="day-monday-desktop" name="day_of_week_desktop" /><label for="day-monday-desktop">Monday</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="day-tuesday-desktop" name="day_of_week_desktop" /><label for="day-tuesday-desktop">Tuesday</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="day-wednesday-desktop" name="day_of_week_desktop" /><label for="day-wednesday-desktop">Wednesday</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="day-thursday-desktop" name="day_of_week_desktop" /><label for="day-thursday-desktop">Thursday</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="day-friday-desktop" name="day_of_week_desktop" /><label for="day-friday-desktop">Friday</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="day-saturday-desktop" name="day_of_week_desktop" /><label for="day-saturday-desktop">Saturday</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <div class="filter-header collapsed d-flex justify-content-between align-items-center"
+                         data-bs-toggle="collapse" data-bs-target="#age-filter-content-desktop">
+                        <div>Age Range</div>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div id="age-filter-content-desktop" class="filter-content collapse">
+                        <div class="filter-checkbox-group">
+                            <div class="filter-checkbox-item"><input type="checkbox" id="age-teens-desktop" name="age_range" /><label for="age-teens-desktop">Teens</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="age-20s-desktop" name="age_range" /><label for="age-20s-desktop">20s</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="age-30s-desktop" name="age_range" /><label for="age-30s-desktop">30s</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="age-40s-desktop" name="age_range" /><label for="age-40s-desktop">40s</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="age-50s-desktop" name="age_range" /><label for="age-50s-desktop">50s</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="age-60plus-desktop" name="age_range" /><label for="age-60plus-desktop">60+</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <div class="filter-header collapsed d-flex justify-content-between align-items-center"
+                         data-bs-toggle="collapse" data-bs-target="#language-filter-content-desktop">
+                        <div>Languages</div>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div id="language-filter-content-desktop" class="filter-content collapse">
+                        <div class="filter-checkbox-group">
+                            <div class="filter-checkbox-item"><input type="checkbox" id="lang-english-desktop" name="language" /><label for="lang-english-desktop">English</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="lang-spanish-desktop" name="language" /><label for="lang-spanish-desktop">Spanish</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="lang-french-desktop" name="language" /><label for="lang-french-desktop">French</label></div>
+                            <div class="filter-checkbox-item"><input type="checkbox" id="lang-other-desktop" name="language" /><label for="lang-other-desktop">Other</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="small-muted">Kids Welcome</div>
+                        <div class="toggle on" role="switch" aria-checked="true"></div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <div class="small-muted">Childcare Provided</div>
+                        <div class="toggle" role="switch" aria-checked="false"></div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <div class="small-muted">Handicap Accessible</div>
+                        <div class="toggle on" role="switch" aria-checked="true"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="groups-card" aria-label="Directory results">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
+                <div class="col" th:each="group : ${groups}" th:object="${group}">
+                    <th:block th:insert="fragments/group-card :: groupCard(${group}, false)"></th:block>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/js/directory.js}"></script>
