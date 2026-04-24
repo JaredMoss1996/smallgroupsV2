@@ -23,7 +23,9 @@
 
         body {
             margin: 0;
-            background: #f4f7f8;
+            background:
+                radial-gradient(circle at top left, rgba(31, 192, 122, 0.1), transparent 30%),
+                linear-gradient(180deg, #f8fbfc 0%, #f4f7f8 100%);
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: #222;
             display: flex;
@@ -139,93 +141,90 @@
                 grid-template-columns: 1fr;
             }
         }
+
+
+        .page-header {
+            background: linear-gradient(135deg, #10171a 0%, #1b2a31 100%);
+            color: #fff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 16px 40px rgba(16, 23, 26, 0.20);
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::after {
+            content: "";
+            position: absolute;
+            inset: auto -80px -80px auto;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(31, 192, 122, 0.12);
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.10);
+            color: #d7fbe9;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .page-header h1 {
+            margin: 0 0 10px;
+            font-size: clamp(1.9rem, 4vw, 2.7rem);
+            line-height: 1.1;
+        }
+
+        .page-header p {
+            margin: 0;
+            max-width: 760px;
+            color: rgba(255, 255, 255, 0.82);
+            line-height: 1.65;
+        }
+
     </style>
 </head>
 
 <body>
-<th:block th:insert="~{fragments/navbar :: navbar('manageGroups')}"></th:block>
+<th:block th:insert="~{fragments/navbar :: navbar('manageLeaders')}"></th:block>
 
 <main class="page-shell">
-    <section class="hero-card">
-        <h1>Add Leader to Group</h1>
-        <p class="hero-copy">Search by leader email, pick a result, and review all leader details below.</p>
+    <section class="page-header">
+        <span class="eyebrow"><i class="fa-solid fa-compass"></i> Group Directory</span>
+        <h1>Assign User as Leader</h1>
+        <p>
+            Filter by user email. Only users that are members of your church will be shown.
+        </p>
     </section>
 
     <div class="mb-3">
-        <a class="btn btn-outline-secondary" >
-            <i class="fa-solid fa-arrow-left me-1"></i>Back to Group Edit
+        <a class="btn btn-outline-secondary" th:href="@{/leaders}">
+            <i class="fa-solid fa-arrow-left me-1"></i>Back to Manage Leaders
         </a>
     </div>
 
     <section class="surface-card">
         <h2 class="section-title">Find a Leader</h2>
-        <p class="section-subtitle">Start typing an email address to search leaders in real time.</p>
+        <p class="section-subtitle">Start typing an email address to filter leaders.</p>
 
-        <label class="form-label visually-hidden" for="leaderEmailSearch">Leader email</label>
-        <input id="leaderEmailSearch"
+        <label class="form-label visually-hidden" for="userEmailSearch">Leader email</label>
+        <input id="userEmailSearch"
                name="email"
                type="search"
                class="form-control search-input"
-               placeholder="leader@church.org"
-               autocomplete="off"
-               data-hx-get="/groups/0/leaders/search"
-               data-hx-trigger="input changed delay:300ms, search"
-               data-hx-target="#leader-search-results"
-               data-hx-swap="innerHTML"
-               data-hx-indicator="#search-loading" />
-
-        <div class="mt-2 small text-muted d-flex align-items-center gap-2" id="search-loading">
-            <span class="spinner-border spinner-border-sm htmx-indicator" role="status" aria-hidden="true"></span>
-            <span class="htmx-indicator">Searching...</span>
-        </div>
-
-        <div id="leader-search-results" class="results-wrap">
-            <div class="empty-state">
-                <i class="fa-regular fa-envelope me-1"></i>
-                Results will appear here as you type.
-            </div>
-        </div>
-    </section>
-
-    <section class="surface-card" id="leader-preview">
-        <h2 class="section-title">Selected Leader</h2>
-        <p class="section-subtitle">When you select a leader above, all profile details load here via HTMX.</p>
-
-        <div class="empty-state">
-            <i class="fa-regular fa-circle-user me-1"></i>
-            Select a leader from the search results to view full details.
-        </div>
-
-        <div class="preview-grid mt-3 opacity-50">
-            <div class="preview-item">
-                <span class="preview-label">First Name</span>
-                <div class="preview-value">-</div>
-            </div>
-            <div class="preview-item">
-                <span class="preview-label">Last Name</span>
-                <div class="preview-value">-</div>
-            </div>
-            <div class="preview-item">
-                <span class="preview-label">Email</span>
-                <div class="preview-value">-</div>
-            </div>
-            <div class="preview-item">
-                <span class="preview-label">Mobile Phone</span>
-                <div class="preview-value">-</div>
-            </div>
-            <div class="preview-item">
-                <span class="preview-label">Home Phone</span>
-                <div class="preview-value">-</div>
-            </div>
-            <div class="preview-item">
-                <span class="preview-label">Member ID</span>
-                <div class="preview-value">-</div>
-            </div>
-        </div>
+               placeholder="user@church.org"
+               autocomplete="off">
     </section>
 </main>
 
-<script src="https://unpkg.com/htmx.org@1.9.12"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
