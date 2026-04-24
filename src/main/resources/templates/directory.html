@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Find Groups Directory</title>
 
-    <th:block th:insert="fragments/navbar :: navbarCss"></th:block>
+    <th:block th:insert="~{fragments/navbar :: navbarCss}"></th:block>
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -484,7 +484,7 @@
 </head>
 
 <body>
-<th:block th:insert="fragments/navbar :: navbar('directory')"></th:block>
+<th:block th:insert="~{fragments/navbar :: navbar('directory')}"></th:block>
 
 <div id="overlay" onclick="closePreview()">
     <div id="preview">
@@ -755,7 +755,7 @@
         <section class="groups-card" aria-label="Directory results">
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
                 <div class="col" th:each="group : ${groups}" th:object="${group}">
-                    <th:block th:insert="fragments/group-card :: groupCard(${group}, false)"></th:block>
+                    <th:block th:insert="~{fragments/group-card :: groupCard(${group}, false)}"></th:block>
                 </div>
             </div>
         </section>
