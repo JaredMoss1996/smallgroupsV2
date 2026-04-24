@@ -66,7 +66,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="mainNavbar" sec:authorize="isAuthenticated()">
-            <ul class="navbar-nav ms-auto gap-1 py-2 py-lg-0">
+            <ul class="navbar-nav gap-1 py-2 py-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/directory}"
                        th:classappend="${activePage == 'directory'} ? ' active' : ''">Directory</a>
@@ -83,8 +83,15 @@
                     <a class="nav-link" th:href="@{/leaders}"
                        th:classappend="${activePage == 'manageLeaders'} ? ' active' : ''">Manage Leaders</a>
                 </li>
+            </ul>
+
+            <ul class="navbar-nav ms-lg-auto gap-1 py-2 py-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/logout}">Sign Out</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/profile}"
+                       th:classappend="${activePage == 'profile'} ? ' active' : ''">Profile</a>
                 </li>
             </ul>
         </div>

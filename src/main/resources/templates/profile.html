@@ -1,0 +1,163 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Profile</title>
+    <th:block th:insert="~{fragments/navbar :: navbarCss}"></th:block>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #f4f7f8;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #dbe3ea;
+            --shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+            --radius-xl: 20px;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(31, 192, 122, 0.1), transparent 30%),
+                linear-gradient(180deg, #f8fbfc 0%, var(--bg) 100%);
+            color: var(--text);
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .page-shell {
+            width: min(900px, calc(100% - 32px));
+            margin: 28px auto 46px;
+        }
+        .page-header {
+            background: linear-gradient(135deg, #10171a 0%, #1b2a31 100%);
+            color: #fff;
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            margin-bottom: 22px;
+            box-shadow: 0 14px 36px rgba(16, 23, 26, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .page-header::after {
+            content: "";
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            background: rgba(31, 192, 122, 0.14);
+            position: absolute;
+            right: -70px;
+            bottom: -70px;
+        }
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #d7fbe9;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+        .page-header h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.8rem, 3.8vw, 2.5rem);
+        }
+        .page-header p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.84);
+            max-width: 760px;
+            line-height: 1.6;
+        }
+        .profile-card {
+            background: var(--surface);
+            border: 1px solid rgba(219, 227, 234, 0.9);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow);
+            padding: 8px;
+        }
+        .profile-row {
+            display: grid;
+            grid-template-columns: 170px 1fr;
+            gap: 16px;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding: 16px;
+        }
+        .profile-row:last-child {
+            border-bottom: none;
+        }
+        .profile-label {
+            margin: 0;
+            font-size: 0.86rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: var(--muted);
+            font-weight: 700;
+        }
+        .profile-value {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text);
+            font-weight: 600;
+            word-break: break-word;
+        }
+        .muted-value {
+            color: var(--muted);
+            font-weight: 500;
+        }
+        @media (max-width: 720px) {
+            .page-shell {
+                width: min(calc(100% - 20px), 900px);
+                margin-top: 16px;
+            }
+            .page-header {
+                border-radius: 16px;
+                padding: 16px;
+            }
+            .profile-row {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+<th:block th:insert="~{fragments/navbar :: navbar('profile')}"></th:block>
+<main class="page-shell">
+    <section class="page-header">
+        <span class="eyebrow"><i class="fa-solid fa-user"></i> Account</span>
+        <h1>My Profile</h1>
+        <p>Review your profile details and contact information.</p>
+    </section>
+    <section class="profile-card" aria-label="Profile details">
+        <div class="profile-row">
+            <p class="profile-label">Full Name</p>
+            <p class="profile-value" th:text="${member.firstName + ' ' + member.lastName}">Name</p>
+        </div>
+        <div class="profile-row">
+            <p class="profile-label">Email</p>
+            <p class="profile-value" th:text="${member.email}">email</p>
+        </div>
+        <div class="profile-row">
+            <p class="profile-label">Mobile Phone</p>
+            <p class="profile-value" th:text="${member.mobilePhone ?: 'Not provided'}">Not provided</p>
+        </div>
+        <div class="profile-row">
+            <p class="profile-label">Home Phone</p>
+            <p class="profile-value" th:text="${member.homePhone ?: 'Not provided'}">Not provided</p>
+        </div>
+        <div class="profile-row">
+            <p class="profile-label">Church ID</p>
+            <p class="profile-value muted-value" th:text="${member.church_id}">0</p>
+        </div>
+    </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
