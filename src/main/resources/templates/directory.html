@@ -2,16 +2,16 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Find Groups Directory</title>
 
     <th:block th:insert="~{fragments/navbar :: navbarCss}"></th:block>
 
     <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- Font Awesome for icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
     <style>
         :root {
             --bg: #f4f7f8;
@@ -37,8 +37,8 @@
             margin: 0;
             min-height: 100vh;
             background:
-                radial-gradient(circle at top left, rgba(31, 192, 122, 0.1), transparent 30%),
-                linear-gradient(180deg, #f8fbfc 0%, var(--bg) 100%);
+            radial-gradient(circle at top left, rgba(31, 192, 122, 0.1), transparent 30%),
+            linear-gradient(180deg, #f8fbfc 0%, var(--bg) 100%);
             color: var(--text);
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
@@ -513,7 +513,7 @@
             <div class="mb-3">
                 <div class="input-group">
                     <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                    <input class="form-control" placeholder="Search groups" aria-label="Search groups" />
+                    <input class="form-control" placeholder="Search groups" aria-label="Search groups"/>
                 </div>
             </div>
 
@@ -535,15 +535,15 @@
                 <div id="denomination-filter-content" class="filter-content collapse">
                     <div class="filter-checkbox-group">
                         <div class="filter-checkbox-item">
-                            <input type="checkbox" id="denom-baptist" name="denomination" />
+                            <input type="checkbox" id="denom-baptist" name="denomination"/>
                             <label for="denom-baptist">Baptist</label>
                         </div>
                         <div class="filter-checkbox-item">
-                            <input type="checkbox" id="denom-methodist" name="denomination" />
+                            <input type="checkbox" id="denom-methodist" name="denomination"/>
                             <label for="denom-methodist">Methodist</label>
                         </div>
                         <div class="filter-checkbox-item">
-                            <input type="checkbox" id="denom-presbyterian" name="denomination" />
+                            <input type="checkbox" id="denom-presbyterian" name="denomination"/>
                             <label for="denom-presbyterian">Presbyterian</label>
                         </div>
                     </div>
@@ -558,13 +558,26 @@
                 </div>
                 <div id="day-filter-content" class="filter-content collapse">
                     <div class="filter-checkbox-group">
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-sunday" name="day_of_week" /><label for="day-sunday">Sunday</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-monday" name="day_of_week" /><label for="day-monday">Monday</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-tuesday" name="day_of_week" /><label for="day-tuesday">Tuesday</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-wednesday" name="day_of_week" /><label for="day-wednesday">Wednesday</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-thursday" name="day_of_week" /><label for="day-thursday">Thursday</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-friday" name="day_of_week" /><label for="day-friday">Friday</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-saturday" name="day_of_week" /><label for="day-saturday">Saturday</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-sunday"
+                                                                 name="day_of_week"/><label
+                                for="day-sunday">Sunday</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-monday"
+                                                                 name="day_of_week"/><label
+                                for="day-monday">Monday</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-tuesday"
+                                                                 name="day_of_week"/><label
+                                for="day-tuesday">Tuesday</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-wednesday" name="day_of_week"/><label
+                                for="day-wednesday">Wednesday</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-thursday"
+                                                                 name="day_of_week"/><label
+                                for="day-thursday">Thursday</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-friday"
+                                                                 name="day_of_week"/><label
+                                for="day-friday">Friday</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="day-saturday"
+                                                                 name="day_of_week"/><label
+                                for="day-saturday">Saturday</label></div>
                     </div>
                 </div>
             </div>
@@ -577,12 +590,19 @@
                 </div>
                 <div id="age-filter-content" class="filter-content collapse">
                     <div class="filter-checkbox-group">
-                        <div class="filter-checkbox-item"><input type="checkbox" id="age-teens" name="age_range" /><label for="age-teens">Teens</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="age-20s" name="age_range" /><label for="age-20s">20s</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="age-30s" name="age_range" /><label for="age-30s">30s</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="age-40s" name="age_range" /><label for="age-40s">40s</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="age-50s" name="age_range" /><label for="age-50s">50s</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="age-60plus" name="age_range" /><label for="age-60plus">60+</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-teens" name="age_range"/><label
+                                for="age-teens">Teens</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-20s" name="age_range"/><label
+                                for="age-20s">20s</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-30s" name="age_range"/><label
+                                for="age-30s">30s</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-40s" name="age_range"/><label
+                                for="age-40s">40s</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-50s" name="age_range"/><label
+                                for="age-50s">50s</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-60plus"
+                                                                 name="age_range"/><label for="age-60plus">60+</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -595,10 +615,17 @@
                 </div>
                 <div id="language-filter-content" class="filter-content collapse">
                     <div class="filter-checkbox-group">
-                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-english" name="language" /><label for="lang-english">English</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-spanish" name="language" /><label for="lang-spanish">Spanish</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-french" name="language" /><label for="lang-french">French</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-other" name="language" /><label for="lang-other">Other</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-english"
+                                                                 name="language"/><label
+                                for="lang-english">English</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-spanish"
+                                                                 name="language"/><label
+                                for="lang-spanish">Spanish</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-french"
+                                                                 name="language"/><label
+                                for="lang-french">French</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-other" name="language"/><label
+                                for="lang-other">Other</label></div>
                     </div>
                 </div>
             </div>
@@ -643,127 +670,17 @@
         </button>
     </section>
 
-    <div class="content-layout">
-        <aside class="desktop-filters" aria-label="Directory filters">
-            <div class="filters-card">
-                <div class="section-title">
-                    <i class="fa-solid fa-sliders"></i> Refine Directory
-                </div>
-                <p class="section-subtitle">Narrow the list by schedule, age, language, and accessibility needs.</p>
-
-                <div class="mb-3">
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                        <input class="form-control" placeholder="Search groups" aria-label="Search groups" />
-                    </div>
-                </div>
-
-                <div class="d-flex gap-2 mb-3">
-                    <button class="btn btn-outline-soft btn-sm w-50" type="button">Joined</button>
-                    <button class="btn btn-outline-soft btn-sm w-50" type="button">
-                        <i class="fa-solid fa-map-location-dot me-1"></i>Show Map
-                    </button>
-                </div>
-
-                <div class="small-muted">Location <a href="#" class="small-muted ms-2">Set Location Filter</a></div>
-
-                <div class="filter-row">
-                    <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                         data-bs-toggle="collapse" data-bs-target="#denomination-filter-content-desktop">
-                        <div>Denomination</div>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div id="denomination-filter-content-desktop" class="filter-content collapse">
-                        <div class="filter-checkbox-group">
-                            <div class="filter-checkbox-item"><input type="checkbox" id="denom-baptist-desktop" name="denomination" /><label for="denom-baptist-desktop">Baptist</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="denom-methodist-desktop" name="denomination" /><label for="denom-methodist-desktop">Methodist</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="denom-presbyterian-desktop" name="denomination" /><label for="denom-presbyterian-desktop">Presbyterian</label></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="filter-row">
-                    <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                         data-bs-toggle="collapse" data-bs-target="#day-filter-content-desktop">
-                        <div>Day of the Week</div>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div id="day-filter-content-desktop" class="filter-content collapse">
-                        <div class="filter-checkbox-group">
-                            <div class="filter-checkbox-item"><input type="checkbox" id="day-sunday-desktop" name="day_of_week_desktop" /><label for="day-sunday-desktop">Sunday</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="day-monday-desktop" name="day_of_week_desktop" /><label for="day-monday-desktop">Monday</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="day-tuesday-desktop" name="day_of_week_desktop" /><label for="day-tuesday-desktop">Tuesday</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="day-wednesday-desktop" name="day_of_week_desktop" /><label for="day-wednesday-desktop">Wednesday</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="day-thursday-desktop" name="day_of_week_desktop" /><label for="day-thursday-desktop">Thursday</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="day-friday-desktop" name="day_of_week_desktop" /><label for="day-friday-desktop">Friday</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="day-saturday-desktop" name="day_of_week_desktop" /><label for="day-saturday-desktop">Saturday</label></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="filter-row">
-                    <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                         data-bs-toggle="collapse" data-bs-target="#age-filter-content-desktop">
-                        <div>Age Range</div>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div id="age-filter-content-desktop" class="filter-content collapse">
-                        <div class="filter-checkbox-group">
-                            <div class="filter-checkbox-item"><input type="checkbox" id="age-teens-desktop" name="age_range" /><label for="age-teens-desktop">Teens</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="age-20s-desktop" name="age_range" /><label for="age-20s-desktop">20s</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="age-30s-desktop" name="age_range" /><label for="age-30s-desktop">30s</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="age-40s-desktop" name="age_range" /><label for="age-40s-desktop">40s</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="age-50s-desktop" name="age_range" /><label for="age-50s-desktop">50s</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="age-60plus-desktop" name="age_range" /><label for="age-60plus-desktop">60+</label></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="filter-row">
-                    <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                         data-bs-toggle="collapse" data-bs-target="#language-filter-content-desktop">
-                        <div>Languages</div>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div id="language-filter-content-desktop" class="filter-content collapse">
-                        <div class="filter-checkbox-group">
-                            <div class="filter-checkbox-item"><input type="checkbox" id="lang-english-desktop" name="language" /><label for="lang-english-desktop">English</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="lang-spanish-desktop" name="language" /><label for="lang-spanish-desktop">Spanish</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="lang-french-desktop" name="language" /><label for="lang-french-desktop">French</label></div>
-                            <div class="filter-checkbox-item"><input type="checkbox" id="lang-other-desktop" name="language" /><label for="lang-other-desktop">Other</label></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="filter-row">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="small-muted">Kids Welcome</div>
-                        <div class="toggle on" role="switch" aria-checked="true"></div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-2">
-                        <div class="small-muted">Childcare Provided</div>
-                        <div class="toggle" role="switch" aria-checked="false"></div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-2">
-                        <div class="small-muted">Handicap Accessible</div>
-                        <div class="toggle on" role="switch" aria-checked="true"></div>
-                    </div>
-                </div>
+    <section class="groups-card" aria-label="Directory results">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
+            <div class="col" th:each="group : ${groups}" th:object="${group}">
+                <th:block th:insert="~{fragments/group-card :: groupCard(${group}, false)}"></th:block>
             </div>
-        </aside>
-
-        <section class="groups-card" aria-label="Directory results">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
-                <div class="col" th:each="group : ${groups}" th:object="${group}">
-                    <th:block th:insert="~{fragments/group-card :: groupCard(${group}, false)}"></th:block>
-                </div>
-            </div>
-        </section>
-    </div>
+        </div>
+    </section>
 </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script th:src="@{/js/directory.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/directory.js}"></script>
 </body>
 
 </html>

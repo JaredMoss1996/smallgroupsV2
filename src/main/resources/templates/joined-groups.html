@@ -1,0 +1,333 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Joined Groups</title>
+
+    <th:block th:insert="~{fragments/navbar :: navbarCss}"></th:block>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #f4f7f8;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #dbe3ea;
+            --dark: #10171a;
+            --accent: #1fc07a;
+            --accent-dark: #16a366;
+            --accent-soft: #e8fbf2;
+            --shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+            --radius-xl: 20px;
+            --radius-lg: 14px;
+            --radius-md: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(31, 192, 122, 0.1), transparent 30%),
+                linear-gradient(180deg, #f8fbfc 0%, var(--bg) 100%);
+            color: var(--text);
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .page-shell {
+            width: min(1200px, calc(100% - 32px));
+            margin: 28px auto 46px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #10171a 0%, #1b2a31 100%);
+            color: #fff;
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            margin-bottom: 22px;
+            box-shadow: 0 14px 36px rgba(16, 23, 26, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::after {
+            content: "";
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            background: rgba(31, 192, 122, 0.14);
+            position: absolute;
+            right: -70px;
+            bottom: -70px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #d7fbe9;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .page-header h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.8rem, 3.8vw, 2.5rem);
+        }
+
+        .page-header p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.84);
+            max-width: 760px;
+            line-height: 1.6;
+        }
+
+        .toolbar,
+        .groups-card {
+            background: var(--surface);
+            border: 1px solid rgba(219, 227, 234, 0.9);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow);
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: center;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
+        .results-count {
+            margin: 0;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .toolbar-copy {
+            margin: 4px 0 0;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .btn-pill {
+            border: none;
+            border-radius: 999px;
+            padding: 10px 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+            text-decoration: none;
+        }
+
+        .btn-pill:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary-soft {
+            background: var(--accent);
+            color: #062b19;
+            box-shadow: 0 8px 20px rgba(31, 192, 122, 0.24);
+        }
+
+        .btn-primary-soft:hover {
+            background: var(--accent-dark);
+            color: #fff;
+        }
+
+        .groups-card {
+            padding: 18px;
+        }
+
+        .results-grid {
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .results-grid > .col {
+            width: 100%;
+        }
+
+        .group-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            background: #fff;
+            padding: 1.15rem;
+            position: relative;
+            min-height: 170px;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .group-card:hover {
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+            transform: translateY(-1px);
+            cursor: pointer;
+        }
+
+        .group-title {
+            font-weight: 800;
+            font-size: 1.25rem;
+            margin-bottom: .5rem;
+            color: #0f172a;
+        }
+
+        .badges .badge {
+            margin-right: .35rem;
+            background: var(--accent-soft);
+            color: #0a6b3d;
+            font-weight: 700;
+        }
+
+        .meta-line {
+            color: #2563eb;
+            margin-bottom: .3rem;
+            display: flex;
+            gap: .5rem;
+            align-items: center;
+        }
+
+        .meta-desc {
+            color: #334155;
+            margin-top: .5rem;
+        }
+
+        .leader-pill {
+            background: #eef6fb;
+            color: #0b4e78;
+            border-radius: 999px;
+            padding: .25rem .5rem;
+            font-weight: 600;
+            margin-right: .35rem;
+            margin-bottom: .35rem;
+            display: inline-block;
+        }
+
+        .category-name {
+            background: #eef2ff;
+            color: #3730a3;
+            border-radius: 999px;
+            padding: .22rem .6rem;
+            font-weight: 700;
+            font-size: .8rem;
+            margin-right: .35rem;
+            display: inline-block;
+            margin-top: .35rem;
+        }
+
+        .group-card .categories {
+            margin-top: .45rem;
+            margin-bottom: .45rem;
+        }
+
+        #overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        #preview {
+            background: white;
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            width: min(860px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .preview-close-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 1100;
+        }
+
+        @media (max-width: 900px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .page-shell {
+                width: min(calc(100% - 20px), 1200px);
+                margin-top: 16px;
+            }
+
+            .page-header,
+            .toolbar,
+            .groups-card {
+                border-radius: 16px;
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<th:block th:insert="~{fragments/navbar :: navbar('joinedGroups')}"></th:block>
+
+<div id="overlay" onclick="closePreview()">
+    <div id="preview">
+        <button type="button" class="btn-close preview-close-btn" aria-label="Close"
+                onclick="event.stopPropagation(); closePreview();"></button>
+        <div id="preview-inner"></div>
+    </div>
+</div>
+
+<main class="page-shell">
+    <section class="page-header">
+        <span class="eyebrow"><i class="fa-solid fa-hand-fist"></i> Your Groups</span>
+        <h1>Joined Groups</h1>
+        <p>
+            View all the groups you've joined. Click any group card to see more details or take action.
+        </p>
+    </section>
+
+    <section class="toolbar">
+        <div>
+            <p class="results-count">[[${groups.size}]] Results</p>
+            <p class="toolbar-copy">Groups you're currently a member of.</p>
+        </div>
+    </section>
+
+    <section class="groups-card" aria-label="Joined groups list">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
+            <div class="col" th:each="group : ${groups}" th:object="${group}">
+                <th:block th:insert="~{fragments/group-card :: groupCard(${group}, false)}"></th:block>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/directory.js}"></script>
+</body>
+
+</html>
+
