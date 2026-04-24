@@ -13,13 +13,13 @@ INSERT INTO permissions (name) VALUES ('JOIN_LEAVE_GROUP');
 INSERT INTO permissions (name) VALUES ('MANAGE_GROUPS');
 INSERT INTO permissions (name) VALUES ('MANAGE_LEADERS');
 
-INSERT INTO ages (name) VALUES ('ALL_ADULT_AGES');
-INSERT INTO ages (name) VALUES ('TWENTIES');
-INSERT INTO ages (name) VALUES ('THIRTIES');
-INSERT INTO ages (name) VALUES ('FORTIES');
-INSERT INTO ages (name) VALUES ('FIFTIES');
-INSERT INTO ages (name) VALUES ('SIXTIES');
-INSERT INTO ages (name) VALUES ('SEVENTIES_AND_UP');
+INSERT INTO ages (name) VALUES ('All Adults');
+INSERT INTO ages (name) VALUES ('20s');
+INSERT INTO ages (name) VALUES ('30s');
+INSERT INTO ages (name) VALUES ('40s');
+INSERT INTO ages (name) VALUES ('50s');
+INSERT INTO ages (name) VALUES ('60s');
+INSERT INTO ages (name) VALUES ('70s and Up');
 
 INSERT INTO role_permissions (role_id, permission_id) VALUES (1, 1);
 INSERT INTO role_permissions (role_id, permission_id) VALUES (2, 1);
@@ -70,6 +70,12 @@ INSERT INTO group_ages (group_id, age_id) VALUES (1, 1);
 INSERT INTO group_ages (group_id, age_id) VALUES (1, 2);
 INSERT INTO group_ages (group_id, age_id) VALUES (2, 3);
 INSERT INTO group_ages (group_id, age_id) VALUES (2, 4);
+INSERT INTO group_ages (group_id, age_id) VALUES (3, 1);
+INSERT INTO group_ages (group_id, age_id) VALUES (3, 2);
+INSERT INTO group_ages (group_id, age_id) VALUES (3, 3);
+INSERT INTO group_ages (group_id, age_id) VALUES (3, 4);
+INSERT INTO group_ages (group_id, age_id) VALUES (3, 5);
+INSERT INTO group_ages (group_id, age_id) VALUES (4, 5);
 
 -- INSERT INTO group_members (group_id, member_id) VALUES (1, 1);
 
@@ -82,6 +88,10 @@ INSERT INTO group_categories (group_id, category_id) VALUES (1,1);
 INSERT INTO group_categories (group_id, category_id) VALUES (1,2);
 INSERT INTO group_categories (group_id, category_id) VALUES (2,1);
 INSERT INTO group_categories (group_id, category_id) VALUES (2,2);
+INSERT INTO group_categories (group_id, category_id) VALUES (3,1);
+INSERT INTO group_categories (group_id, category_id) VALUES (3,3);
+INSERT INTO group_categories (group_id, category_id) VALUES (3,4);
+INSERT INTO group_categories (group_id, category_id) VALUES (4,5);
 
 
 
