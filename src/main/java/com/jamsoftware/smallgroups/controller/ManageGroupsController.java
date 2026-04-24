@@ -43,6 +43,7 @@ public class ManageGroupsController {
     @GetMapping("/edit/{id}")
     @PreAuthorize("@authz.canEditGroup(#id)")
     public String editGroup(@PathVariable Long id, Model model) {
+
         model.addAttribute("groupData", groupService.findById(id));
         model.addAttribute("isCreate", false);
         return "create-edit-group";

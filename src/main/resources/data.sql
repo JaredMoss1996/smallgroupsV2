@@ -42,106 +42,134 @@ INSERT INTO genders (name) VALUES ('BOTH');
 --
 ---------------- Test Data ----------------
 
-INSERT INTO churches (name, address, contact_info) VALUES ('First Church', '123 Main St', 'contact info here');
+INSERT INTO churches (name, address, contact_info) VALUES
+('Grace Community Church', '123 Main St, Springfield, IL 62701', 'office@gracecommunity.org | (217) 555-0110'),
+('Riverstone Fellowship', '845 Oak Ave, Springfield, IL 62703', 'hello@riverstonefellowship.org | (217) 555-0134'),
+('New Hope Church', '2200 Lincoln Blvd, Springfield, IL 62704', 'connect@newhopechurch.org | (217) 555-0178');
 
 -- password 1234
 INSERT INTO app_user (email, password, role_id) VALUES ('user@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
 INSERT INTO app_user (email, password, role_id) VALUES ('leader@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 2);
 INSERT INTO app_user (email, password, role_id) VALUES ('churchadmin@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 3);
-INSERT INTO app_user (email, password, role_id) VALUES ('user1@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
-INSERT INTO app_user (email, password, role_id) VALUES ('user2@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
-INSERT INTO app_user (email, password, role_id) VALUES ('user3@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
+INSERT INTO app_user (email, password, role_id) VALUES ('emma.johnson@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
+INSERT INTO app_user (email, password, role_id) VALUES ('noah.williams@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
+INSERT INTO app_user (email, password, role_id) VALUES ('olivia.brown@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
+INSERT INTO app_user (email, password, role_id) VALUES ('liam.martinez@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 2);
+INSERT INTO app_user (email, password, role_id) VALUES ('ava.thomas@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
+INSERT INTO app_user (email, password, role_id) VALUES ('mason.jackson@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
+INSERT INTO app_user (email, password, role_id) VALUES ('sophia.white@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 2);
+INSERT INTO app_user (email, password, role_id) VALUES ('ethan.harris@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
+INSERT INTO app_user (email, password, role_id) VALUES ('mia.clark@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
+INSERT INTO app_user (email, password, role_id) VALUES ('james.lewis@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 3);
+INSERT INTO app_user (email, password, role_id) VALUES ('isabella.walker@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
+INSERT INTO app_user (email, password, role_id) VALUES ('benjamin.hall@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 2);
+INSERT INTO app_user (email, password, role_id) VALUES ('charlotte.allen@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
 
-INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Alice', 'Smith', 1, 1);
-INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('John', 'Crab', 1, 2);
-INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Smiggle', 'Dorf', 1, 3);
-INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Balice', 'Smith', 1, 4);
-INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Chalice', 'Smith', 1, 5);
-INSERT INTO members (first_name, last_name, church_id, app_user_id) VALUES ('Dalice', 'Smith', 1, 6);
+INSERT INTO members (first_name, last_name, email, home_phone, mobile_phone, church_id, app_user_id) VALUES
+('Alice', 'Smith', 'alice.smith@gmail.com', '(217) 555-1001', '(217) 555-2001', 1, 1),
+('John', 'Carter', 'leader@gmail.com', '(217) 555-1002', '(217) 555-2002', 1, 2),
+('Samuel', 'Ortiz', 'churchadmin@gmail.com', '(217) 555-1003', '(217) 555-2003', 1, 3),
+('Emma', 'Johnson', 'emma.johnson@gmail.com', '(217) 555-1004', '(217) 555-2004', 1, 4),
+('Noah', 'Williams', 'noah.williams@gmail.com', '(217) 555-1005', '(217) 555-2005', 1, 5),
+('Olivia', 'Brown', 'olivia.brown@gmail.com', '(217) 555-1006', '(217) 555-2006', 1, 6),
+('Liam', 'Martinez', 'liam.martinez@gmail.com', '(217) 555-1007', '(217) 555-2007', 1, 7),
+('Ava', 'Thomas', 'ava.thomas@gmail.com', '(217) 555-1008', '(217) 555-2008', 1, 8),
+('Mason', 'Jackson', 'mason.jackson@gmail.com', '(217) 555-1009', '(217) 555-2009', 2, 9),
+('Sophia', 'White', 'sophia.white@gmail.com', '(217) 555-1010', '(217) 555-2010', 2, 10),
+('Ethan', 'Harris', 'ethan.harris@gmail.com', '(217) 555-1011', '(217) 555-2011', 2, 11),
+('Mia', 'Clark', 'mia.clark@gmail.com', '(217) 555-1012', '(217) 555-2012', 2, 12),
+('James', 'Lewis', 'james.lewis@gmail.com', '(217) 555-1013', '(217) 555-2013', 3, 13),
+('Isabella', 'Walker', 'isabella.walker@gmail.com', '(217) 555-1014', '(217) 555-2014', 3, 14),
+('Benjamin', 'Hall', 'benjamin.hall@gmail.com', '(217) 555-1015', '(217) 555-2015', 3, 15),
+('Charlotte', 'Allen', 'charlotte.allen@gmail.com', '(217) 555-1016', '(217) 555-2016', 3, 16);
 
 INSERT INTO groups (title, description, schedule, location, address, frequency, gender_id, church_id) VALUES
-('Downtown Bible Study', 'A weekly Bible study in downtown.', 'Thursdays 7pm', 'Downtown Church',
- '123 Main St', 'DAILY', 1, 1);
-INSERT INTO groups (title, description, schedule, location, address, frequency, gender_id, church_id) VALUES
-('2 Study', 'test 2 downtown.', '222222 7pm', '2nd Church',
-    '222 2nd St', 'DAILY', 2, 1);
-INSERT INTO groups (title, description, schedule, location, address, frequency, gender_id, church_id) VALUES
-('3 Study', 'test 3 downtown.', '3333 7pm', '3nd Church',
-    '333 3nd St', 'DAILY', 2, 1);
-INSERT INTO groups (title, description, schedule, location, address, frequency, gender_id, church_id) VALUES
-('4 Study', 'test 4 downtown.', '4444444 7pm', '2nd Church',
-    '444 4 St', 'DAILY', 2, 1);
+('Downtown Bible Study', 'Verse-by-verse Bible study for adults who work downtown.', 'Thursdays 7:00 PM', 'Grace Community Church - Room 204', '123 Main St, Springfield, IL 62701', 'WEEKLY', 3, 1),
+('Mens Discipleship Breakfast', 'Prayer, accountability, and practical discipleship over breakfast.', 'Saturdays 7:30 AM', 'Grace Community Church Fellowship Hall', '123 Main St, Springfield, IL 62701', 'WEEKLY', 1, 1),
+('Young Adults Connect', 'Conversation-based study for college students and young professionals.', 'Wednesdays 6:30 PM', 'The Lantern Cafe', '410 Market St, Springfield, IL 62702', 'WEEKLY', 3, 1),
+('Family Fellowship Night', 'A small group for families with shared dinner and discussion.', 'Sundays 5:00 PM', 'Johnson Home', '1780 Maple Ridge Dr, Springfield, IL 62703', 'BIWEEKLY', 3, 1),
+('Riverstone Moms Prayer', 'Support and prayer for moms in all stages of parenting.', 'Tuesdays 9:30 AM', 'Riverstone Fellowship - Classroom B', '845 Oak Ave, Springfield, IL 62703', 'WEEKLY', 2, 2),
+('Saturday Community Outreach', 'Serve local shelters and food pantry partners across the city.', 'Saturdays 9:00 AM', 'Riverstone Fellowship Lobby', '845 Oak Ave, Springfield, IL 62703', 'MONTHLY', 3, 2),
+('New Hope Seniors Circle', 'Coffee, devotional reading, and encouragement for senior adults.', 'Fridays 10:00 AM', 'New Hope Church - Senior Center', '2200 Lincoln Blvd, Springfield, IL 62704', 'WEEKLY', 3, 3),
+('Worship and Prayer Night', 'Extended worship and intercessory prayer for the whole church.', 'First Monday 6:45 PM', 'New Hope Church Sanctuary', '2200 Lincoln Blvd, Springfield, IL 62704', 'MONTHLY', 3, 3);
 
 INSERT INTO group_ages (group_id, age_id) VALUES (1, 1);
 INSERT INTO group_ages (group_id, age_id) VALUES (1, 2);
+INSERT INTO group_ages (group_id, age_id) VALUES (1, 3);
 INSERT INTO group_ages (group_id, age_id) VALUES (2, 3);
 INSERT INTO group_ages (group_id, age_id) VALUES (2, 4);
-INSERT INTO group_ages (group_id, age_id) VALUES (3, 1);
+INSERT INTO group_ages (group_id, age_id) VALUES (2, 5);
 INSERT INTO group_ages (group_id, age_id) VALUES (3, 2);
 INSERT INTO group_ages (group_id, age_id) VALUES (3, 3);
-INSERT INTO group_ages (group_id, age_id) VALUES (3, 4);
-INSERT INTO group_ages (group_id, age_id) VALUES (3, 5);
-INSERT INTO group_ages (group_id, age_id) VALUES (4, 5);
-
--- INSERT INTO group_members (group_id, member_id) VALUES (1, 1);
+INSERT INTO group_ages (group_id, age_id) VALUES (4, 1);
+INSERT INTO group_ages (group_id, age_id) VALUES (4, 2);
+INSERT INTO group_ages (group_id, age_id) VALUES (4, 3);
+INSERT INTO group_ages (group_id, age_id) VALUES (4, 4);
+INSERT INTO group_ages (group_id, age_id) VALUES (5, 3);
+INSERT INTO group_ages (group_id, age_id) VALUES (5, 4);
+INSERT INTO group_ages (group_id, age_id) VALUES (6, 1);
+INSERT INTO group_ages (group_id, age_id) VALUES (6, 2);
+INSERT INTO group_ages (group_id, age_id) VALUES (6, 3);
+INSERT INTO group_ages (group_id, age_id) VALUES (7, 6);
+INSERT INTO group_ages (group_id, age_id) VALUES (7, 7);
+INSERT INTO group_ages (group_id, age_id) VALUES (8, 1);
+INSERT INTO group_ages (group_id, age_id) VALUES (8, 2);
+INSERT INTO group_ages (group_id, age_id) VALUES (8, 3);
+INSERT INTO group_ages (group_id, age_id) VALUES (8, 4);
+INSERT INTO group_ages (group_id, age_id) VALUES (8, 5);
 
 INSERT INTO group_leaders (group_id, member_id) VALUES (1, 2);
 INSERT INTO group_leaders (group_id, member_id) VALUES (2, 2);
-INSERT INTO group_leaders (group_id, member_id) VALUES (3, 1);
-INSERT INTO group_leaders (group_id, member_id) VALUES (4, 2);
-INSERT INTO group_leaders (group_id, member_id) VALUES (3, 2);
+INSERT INTO group_leaders (group_id, member_id) VALUES (3, 7);
+INSERT INTO group_leaders (group_id, member_id) VALUES (3, 3);
 INSERT INTO group_leaders (group_id, member_id) VALUES (4, 3);
-INSERT INTO group_leaders (group_id, member_id) VALUES (2, 3);
+INSERT INTO group_leaders (group_id, member_id) VALUES (5, 10);
+INSERT INTO group_leaders (group_id, member_id) VALUES (6, 10);
+INSERT INTO group_leaders (group_id, member_id) VALUES (7, 15);
+INSERT INTO group_leaders (group_id, member_id) VALUES (8, 15);
 
+INSERT INTO group_members (group_id, member_id) VALUES (1, 1);
 INSERT INTO group_members (group_id, member_id) VALUES (1, 4);
 INSERT INTO group_members (group_id, member_id) VALUES (1, 5);
 INSERT INTO group_members (group_id, member_id) VALUES (1, 6);
+INSERT INTO group_members (group_id, member_id) VALUES (1, 8);
 INSERT INTO group_members (group_id, member_id) VALUES (2, 2);
+INSERT INTO group_members (group_id, member_id) VALUES (2, 5);
+INSERT INTO group_members (group_id, member_id) VALUES (2, 7);
 INSERT INTO group_members (group_id, member_id) VALUES (3, 3);
 INSERT INTO group_members (group_id, member_id) VALUES (3, 4);
-INSERT INTO group_members (group_id, member_id) VALUES (3, 1);
+INSERT INTO group_members (group_id, member_id) VALUES (3, 7);
+INSERT INTO group_members (group_id, member_id) VALUES (3, 8);
 INSERT INTO group_members (group_id, member_id) VALUES (4, 3);
+INSERT INTO group_members (group_id, member_id) VALUES (4, 4);
+INSERT INTO group_members (group_id, member_id) VALUES (4, 5);
+INSERT INTO group_members (group_id, member_id) VALUES (4, 6);
+INSERT INTO group_members (group_id, member_id) VALUES (5, 9);
+INSERT INTO group_members (group_id, member_id) VALUES (5, 10);
+INSERT INTO group_members (group_id, member_id) VALUES (5, 11);
+INSERT INTO group_members (group_id, member_id) VALUES (5, 12);
+INSERT INTO group_members (group_id, member_id) VALUES (6, 9);
+INSERT INTO group_members (group_id, member_id) VALUES (6, 10);
+INSERT INTO group_members (group_id, member_id) VALUES (6, 11);
+INSERT INTO group_members (group_id, member_id) VALUES (6, 12);
+INSERT INTO group_members (group_id, member_id) VALUES (7, 13);
+INSERT INTO group_members (group_id, member_id) VALUES (7, 14);
+INSERT INTO group_members (group_id, member_id) VALUES (7, 15);
+INSERT INTO group_members (group_id, member_id) VALUES (7, 16);
+INSERT INTO group_members (group_id, member_id) VALUES (8, 13);
+INSERT INTO group_members (group_id, member_id) VALUES (8, 14);
+INSERT INTO group_members (group_id, member_id) VALUES (8, 15);
+INSERT INTO group_members (group_id, member_id) VALUES (8, 16);
 
-INSERT INTO group_categories (group_id, category_id) VALUES (1,1);
-INSERT INTO group_categories (group_id, category_id) VALUES (1,2);
-INSERT INTO group_categories (group_id, category_id) VALUES (2,1);
-INSERT INTO group_categories (group_id, category_id) VALUES (2,2);
-INSERT INTO group_categories (group_id, category_id) VALUES (3,1);
-INSERT INTO group_categories (group_id, category_id) VALUES (3,3);
-INSERT INTO group_categories (group_id, category_id) VALUES (3,4);
-INSERT INTO group_categories (group_id, category_id) VALUES (4,5);
-
-
-
-
---
---
--- -- Leaders
--- -- INSERT INTO group_leaders (group_id, leader_id) VALUES (1, 1);
---
--- INSERT INTO category (name) VALUES ('Bible Study');
--- INSERT INTO category (name) VALUES ('Community Service');
--- INSERT INTO category (name) VALUES ('Young Adults');
--- INSERT INTO category (name) VALUES ('Families');
--- INSERT INTO category (name) VALUES ('Seniors');
---
--- -- Categories
--- INSERT INTO group_categories (group_id, category_id) VALUES (1,1);
--- INSERT INTO group_categories (group_id, category_id) VALUES (1,2);
--- INSERT INTO group_categories (group_id, category_id) VALUES (2,2);
--- INSERT INTO group_categories (group_id, category_id) VALUES (2,3);
--- INSERT INTO group_categories (group_id, category_id) VALUES (3,5);
--- INSERT INTO group_categories (group_id, category_id) VALUES (3,1);
--- INSERT INTO group_categories (group_id, category_id) VALUES (3,4);
--- INSERT INTO group_categories (group_id, category_id) VALUES (4,4);
--- INSERT INTO group_categories (group_id, category_id) VALUES (5,4);
--- INSERT INTO group_categories (group_id, category_id) VALUES (5,3);
---
---
-
--- ('Young Adults Connect', 'Young adults fellowship and study.', 'Wednesdays 6:30pm', 'Cafe Corner', '789 Pine Rd', 'carol@example.com', 'FEMALE', 'TWENTIES', 'WEEKLY'),
--- ('Family Fellowship', 'Groups for families with kids.', 'Sundays 5pm', 'Parish Hall', '101 Maple Dr', 'david@example.com', 'FEMALE', 'FIFTIES', 'BIWEEKLY'),
--- ('Seniors Breakfast', 'Breakfast and discussion for seniors. faucibus augue at, ultrices libero. Curabitur in scelerisque lectus. Praesent tincidunt nisl vitae consequat congue. Nunc a finibus sem. Duis quam sem, faucibus ut vestibulum non, blandit ut leo. Duis consectetur sapien eu tortor eleifend, nec malesuada lacus sagittis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed pulvinar, justo et eleifend rutrum, justo velit pretium sem, eget suscipit nibh turpis feugiat felis. Maecenas iaculis dui dignissim orci tincidunt condimentum. In hac habitasse platea dictumst. Phasellus ante lacus, dignissim ac placerat at, cursus ac odio. Sed sodales, nisi at porttitor tincidunt, arcu mauris lacinia ex, sit amet iaculis nisl mi sed massa. Etiam vehicula, nulla ac pretium sodales, quam arcu sodales nulla, sed sempe',
---  'Fridays 8am', 'Senior Center', '202 Elm St', 'eve@example.com', 'BOTH', 'SEVENTIES_AND_UP', 'VARIES');
-
---
+INSERT INTO group_categories (group_id, category_id) VALUES (1, 1);
+INSERT INTO group_categories (group_id, category_id) VALUES (2, 1);
+INSERT INTO group_categories (group_id, category_id) VALUES (3, 1);
+INSERT INTO group_categories (group_id, category_id) VALUES (3, 3);
+INSERT INTO group_categories (group_id, category_id) VALUES (4, 1);
+INSERT INTO group_categories (group_id, category_id) VALUES (4, 4);
+INSERT INTO group_categories (group_id, category_id) VALUES (5, 4);
+INSERT INTO group_categories (group_id, category_id) VALUES (6, 2);
+INSERT INTO group_categories (group_id, category_id) VALUES (7, 1);
+INSERT INTO group_categories (group_id, category_id) VALUES (7, 5);
+INSERT INTO group_categories (group_id, category_id) VALUES (8, 1);
+INSERT INTO group_categories (group_id, category_id) VALUES (8, 3);
