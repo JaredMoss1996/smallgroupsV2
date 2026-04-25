@@ -89,7 +89,7 @@ public class GroupRepository {
                         .email(rs.getString("email"))
                         .homePhone(rs.getString("home_phone"))
                         .id(rs.getLong("id"))
-                        .church_id(rs.getLong("church_id"))
+                        .churchId(rs.getLong("church_id"))
                         .mobilePhone(rs.getString("mobile_phone"))
                         .build())
                 .list();
@@ -111,7 +111,7 @@ public class GroupRepository {
                         .email(rs.getString("email"))
                         .homePhone(rs.getString("home_phone"))
                         .id(rs.getLong("id"))
-                        .church_id(rs.getLong("church_id"))
+                        .churchId(rs.getLong("church_id"))
                         .mobilePhone(rs.getString("mobile_phone"))
                         .build())
                 .list();
@@ -156,6 +156,29 @@ public class GroupRepository {
         return result;
     }
 
+    public List<Group> findAllByChurchIdAndLeaderMemberIdNot(Long churchId, Long leaderId) {
+        String sql = """
+                SELECT DISTINCT  gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
+                FROM group_leaders gl
+                JOIN groups gr on gr.id = gl.group_id
+                LEFT JOIN genders ge ON ge.id = gr.id
+                WHERE gr.church_id = :churchId
+                AND NOT gl.member_id = :leaderId;
+                """;
+
+        List<Group> result = jdbcClient.sql(sql)
+                .param("churchId", churchId)
+                .param("leaderId", leaderId)
+                .query((rs, rowNum) -> mapToGroupList(rs))
+                .list();
+
+        for (Group group : result) {
+            group.setLeaders(findLeadersByGroupId(group.getId()));
+            group.setCategories(findCategoriesByGroupId(group.getId()));
+        }
+
+        return result;
+    }
 
     public List<Group> findAllByLeaderMemberId(Long memberLeaderId) {
         String sql = """

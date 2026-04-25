@@ -22,6 +22,10 @@ public class GroupService {
          return groupRepository.findAllByLeaderMemberId(memberLeaderId);
     }
 
+    public List<Group> findAllByChurchIdAndLeaderIdNot(Long churchId, Long memberLeaderId) {
+        return groupRepository.findAllByChurchIdAndLeaderMemberIdNot(churchId, memberLeaderId);
+    }
+
     public List<Group> findJoinedGroupsByMemberId(Long memberId) {
         return groupRepository.findJoinedGroupsByMemberId(memberId);
     }

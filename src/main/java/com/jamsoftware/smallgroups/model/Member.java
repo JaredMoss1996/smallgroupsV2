@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class Member {
     long id;
-    long church_id;
+    long churchId;
     String firstName;
     String lastName;
     String email;

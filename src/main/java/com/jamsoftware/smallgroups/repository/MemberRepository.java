@@ -29,7 +29,7 @@ public class MemberRepository {
                         .email(rs.getString("email"))
                         .homePhone(rs.getString("home_phone"))
                         .mobilePhone(rs.getString("mobile_phone"))
-                        .church_id(rs.getLong("church_id"))
+                        .churchId(rs.getLong("church_id"))
                         .build())
                 .optional();
     }

@@ -5,10 +5,12 @@ import com.jamsoftware.smallgroups.model.Member;
 import com.jamsoftware.smallgroups.service.CurrentMemberService;
 import com.jamsoftware.smallgroups.service.GroupService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 
 @Controller
 @RequestMapping("/groups")
@@ -25,6 +27,11 @@ public class ManageGroupsController {
     public String getDirectory(Model model) {
         Member currentMember = currentMemberService.getCurrentMember();
         model.addAttribute("groups", groupService.findAllByLeaderId(currentMember.getId()));
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("MANAGE_LEADERS"))) {
+            model.addAttribute("leaderGroups", groupService.findAllByChurchIdAndLeaderIdNot(currentMember.getChurchId(), currentMember.getId()));
+        }
         return "manage-groups";
     }
 
@@ -43,7 +50,6 @@ public class ManageGroupsController {
     @GetMapping("/edit/{id}")
     @PreAuthorize("@authz.canEditGroup(#id)")
     public String editGroup(@PathVariable Long id, Model model) {
-
         model.addAttribute("groupData", groupService.findById(id));
         model.addAttribute("isCreate", false);
         return "create-edit-group";
