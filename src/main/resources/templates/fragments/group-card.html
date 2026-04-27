@@ -1,22 +1,6 @@
 
 
-<th:block th:fragment="groupCardStyles">
-    <style>
-        .age-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .4rem .6rem;
-            margin-bottom: .3rem;
-        }
-
-        .age-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: .35rem;
-            color: #2563eb;
-        }
-    </style>
-</th:block>
+<th:block th:fragment="groupCardStyles"></th:block>
 
 <div th:fragment="groupCard(group, showActions)" class="group-card"
      th:classappend="${showActions} ? ' group-card--with-actions' : ''">
