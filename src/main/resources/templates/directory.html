@@ -226,7 +226,8 @@
             <div class="mb-3">
                 <div class="input-group">
                     <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                    <input class="form-control" placeholder="Search groups" aria-label="Search groups"/>
+                    <input id="directory-search" class="form-control" placeholder="Search groups"
+                           aria-label="Search groups"/>
                 </div>
             </div>
 
@@ -247,19 +248,13 @@
                 </div>
                 <div id="age-filter-content" class="filter-content collapse">
                     <div class="filter-checkbox-group">
-                        <div class="filter-checkbox-item"><input type="checkbox" id="age-teens" name="age_range"/><label
-                                for="age-teens">Teens</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="age-20s" name="age_range"/><label
-                                for="age-20s">20s</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="age-30s" name="age_range"/><label
-                                for="age-30s">30s</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="age-40s" name="age_range"/><label
-                                for="age-40s">40s</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="age-50s" name="age_range"/><label
-                                for="age-50s">50s</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="age-60plus"
-                                                                 name="age_range"/><label for="age-60plus">60+</label>
-                        </div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-teens" name="age_range"/><label for="age-teens">Teens</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-20s" name="age_range"/><label for="age-20s">20s</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-30s" name="age_range"/><label for="age-30s">30s</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-40s" name="age_range"/><label for="age-40s">40s</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-50s" name="age_range"/><label for="age-50s">50s</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-60s" name="age_range"/><label for="age-60s">60s</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="age-70sandup" name="age_range"/><label for="age-70sandup">70s and Up</label></div>
                     </div>
                 </div>
             </div>
@@ -329,6 +324,10 @@
                 <div id="gender-filter-content" class="filter-content collapse">
                     <div class="filter-checkbox-group">
                         <div class="filter-checkbox-item">
+                            <input type="radio" id="gender-any" name="gender" checked/>
+                            <label for="gender-any">Any</label>
+                        </div>
+                        <div class="filter-checkbox-item">
                             <input type="radio" id="gender-male" name="gender"/>
                             <label for="gender-male">Male</label>
                         </div>
@@ -371,15 +370,191 @@
 
     <section class="groups-card" aria-label="Directory results">
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
-            <div class="col" th:each="group : ${groups}" th:object="${group}">
+            <div class="col" th:each="group : ${groups}" th:object="${group}"
+                 th:data-title="*{title}"
+                 th:data-description="*{description}"
+                 th:data-schedule="*{schedule}"
+                 th:data-location="*{location}"
+                 th:data-gender="*{gender}"
+                 th:data-ages="${group.ages != null ? #strings.listJoin(group.ages, ',') : ''}"
+                 th:data-categories="${group.categories != null ? #strings.listJoin(group.categories, ',') : ''}"
+                 th:data-leaders="${group.leaders != null ? #strings.listJoin(group.leaders.![firstName + ' ' + lastName], ',') : ''}"
+                 th:data-members="${group.members != null ? #strings.listJoin(group.members.![email], ',') : ''}"
+                 th:data-joined="${#authentication != null and #authentication.name != 'anonymousUser' and group.members != null and #lists.contains(group.members.![email], #authentication.name)}"
+                 th:data-search="${(group.title != null ? group.title : '') + ' ' + (group.description != null ? group.description : '') + ' ' + (group.schedule != null ? group.schedule : '') + ' ' + (group.location != null ? group.location : '') + ' ' + (group.categories != null ? #strings.listJoin(group.categories, ' ') : '') + ' ' + (group.ages != null ? #strings.listJoin(group.ages, ' ') : '') + ' ' + (group.leaders != null ? #strings.listJoin(group.leaders.![firstName + ' ' + lastName], ' ') : '')}">
                 <th:block th:insert="~{fragments/group-card :: groupCard(${group}, false)}"></th:block>
             </div>
         </div>
+        <p id="directory-empty-state" class="small-muted mt-3 mb-0" style="display: none;">
+            No groups match your current filters.
+        </p>
     </section>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script th:src="@{/js/directory.js}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const resultsGrid = document.querySelector('.results-grid');
+        const resultCountEl = document.querySelector('.results-count');
+        const emptyStateEl = document.getElementById('directory-empty-state');
+        const searchInput = document.getElementById('directory-search');
+        const joinedButton = document.getElementById('joined-button');
+        const groupCols = Array.from(document.querySelectorAll('.results-grid > .col'));
+
+        if (!resultsGrid || groupCols.length === 0) {
+            return;
+        }
+
+        function normalizeText(value) {
+            return (value || '')
+                .toString()
+                .toLowerCase()
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function splitCsv(value) {
+            return normalizeText(value)
+                .split(',')
+                .map(function (item) {
+                    return item.trim();
+                })
+                .filter(Boolean);
+        }
+
+        function getLabelTextForInput(input) {
+            const label = document.querySelector('label[for="' + input.id + '"]');
+            return normalizeText(label ? label.textContent : input.value);
+        }
+
+        function getCheckedValues(name) {
+            return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(getLabelTextForInput);
+        }
+
+        function getSelectedGender() {
+            const selected = document.querySelector('input[name="gender"]:checked');
+            if (!selected) {
+                return '';
+            }
+
+            if (selected.id === 'gender-any') {
+                return 'any';
+            }
+            if (selected.id === 'gender-male') {
+                return 'male';
+            }
+            if (selected.id === 'gender-female') {
+                return 'female';
+            }
+            return 'both';
+        }
+
+        function isJoinedOnlyActive() {
+            return Boolean(joinedButton && joinedButton.classList.contains('btn-light'));
+        }
+
+        function matchesGender(groupGender, selectedGender) {
+            if (!selectedGender) {
+                return true;
+            }
+
+            if (selectedGender === 'any') {
+                return true;
+            }
+
+            const gender = normalizeText(groupGender);
+            const isBoth = gender.includes('both') || gender.includes('coed') || gender.includes('mixed');
+
+            if (selectedGender === 'both') {
+                return isBoth;
+            }
+            if (selectedGender === 'male') {
+                return gender.includes('male') || gender.includes('men') || isBoth;
+            }
+            return gender.includes('female') || gender.includes('women') || isBoth;
+        }
+
+        function matchesAnyToken(haystack, needles) {
+            if (needles.length === 0) {
+                return true;
+            }
+
+            const normalizedHaystack = normalizeText(haystack);
+            return needles.some(function (needle) {
+                return normalizedHaystack.includes(needle);
+            });
+        }
+
+        function applyFilters() {
+            const query = normalizeText(searchInput ? searchInput.value : '');
+            const selectedAges = getCheckedValues('age_range');
+            const selectedCategories = getCheckedValues('categories');
+            const selectedChurches = getCheckedValues('churches');
+            const selectedGender = getSelectedGender();
+            const joinedOnly = isJoinedOnlyActive();
+
+            let visibleCount = 0;
+
+            groupCols.forEach(function (col) {
+                const groupSearchText = normalizeText(col.dataset.search)
+                    || normalizeText(col.dataset.title + ' ' + col.dataset.description + ' ' + col.textContent);
+                const groupAges = splitCsv(col.dataset.ages);
+                const groupCategories = splitCsv(col.dataset.categories);
+                const churchSource = normalizeText(col.dataset.location + ' ' + col.dataset.search);
+                const groupJoined = normalizeText(col.dataset.joined) === 'true';
+
+                const matchesSearch = !query || groupSearchText.includes(query);
+                const matchesAge = selectedAges.length === 0 || selectedAges.some(function (age) {
+                    return groupAges.some(function (groupAge) {
+                        return groupAge.includes(age) || age.includes(groupAge);
+                    });
+                });
+                const matchesCategory = selectedCategories.length === 0 || selectedCategories.some(function (category) {
+                    return groupCategories.some(function (groupCategory) {
+                        return groupCategory.includes(category) || category.includes(groupCategory);
+                    });
+                });
+                const matchesChurch = matchesAnyToken(churchSource, selectedChurches);
+                const genderMatches = matchesGender(col.dataset.gender, selectedGender);
+                const joinedMatches = !joinedOnly || groupJoined;
+
+                const isVisible = matchesSearch && matchesAge && matchesCategory && matchesChurch && genderMatches && joinedMatches;
+                col.style.display = isVisible ? '' : 'none';
+
+                if (isVisible) {
+                    visibleCount += 1;
+                }
+            });
+
+            if (resultCountEl) {
+                resultCountEl.textContent = visibleCount + ' Result' + (visibleCount === 1 ? '' : 's');
+            }
+
+            if (emptyStateEl) {
+                emptyStateEl.style.display = visibleCount === 0 ? 'block' : 'none';
+            }
+        }
+
+        const filterInputs = document.querySelectorAll('input[name="age_range"], input[name="categories"], input[name="churches"], input[name="gender"]');
+
+        if (searchInput) {
+            searchInput.addEventListener('input', applyFilters);
+        }
+
+        filterInputs.forEach(function (input) {
+            input.addEventListener('change', applyFilters);
+        });
+
+        if (joinedButton) {
+            joinedButton.addEventListener('click', function () {
+                requestAnimationFrame(applyFilters);
+            });
+        }
+
+        applyFilters();
+    });
+</script>
 </body>
 
 </html>
