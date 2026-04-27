@@ -467,6 +467,28 @@
             return Boolean(joinedButton && joinedButton.classList.contains('btn-light'));
         }
 
+        function getGenderCategory(value) {
+            const gender = normalizeText(value).replace(/[^a-z]+/g, ' ').trim();
+
+            if (!gender) {
+                return '';
+            }
+
+            if (/\b(both|coed|co ed|mixed)\b/.test(gender)) {
+                return 'both';
+            }
+
+            if (/\b(female|women|woman|ladies)\b/.test(gender)) {
+                return 'female';
+            }
+
+            if (/\b(male|men|man|guys)\b/.test(gender)) {
+                return 'male';
+            }
+
+            return gender;
+        }
+
         function matchesGender(groupGender, selectedGender) {
             if (!selectedGender) {
                 return true;
@@ -476,16 +498,7 @@
                 return true;
             }
 
-            const gender = normalizeText(groupGender);
-            const isBoth = gender.includes('both') || gender.includes('coed') || gender.includes('mixed');
-
-            if (selectedGender === 'both') {
-                return isBoth;
-            }
-            if (selectedGender === 'male') {
-                return gender.includes('male') || gender.includes('men') || isBoth;
-            }
-            return gender.includes('female') || gender.includes('women') || isBoth;
+            return getGenderCategory(groupGender) === selectedGender;
         }
 
         function matchesAnyToken(haystack, needles) {

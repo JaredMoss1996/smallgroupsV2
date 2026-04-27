@@ -30,8 +30,9 @@
     </div>
     <div class="meta-line"><i class="fa-solid fa-calendar-day"></i> [[*{schedule}]]</div>
     <div class="age-list">
-        <span th:each="age : *{ages}" class="age-pill">
-            <i class="fa-solid fa-user"></i> [[${age}]]
+        <span th:each="age, stat : *{ages}" class="age-pill">
+            <th:block th:unless="${stat.last}">[[${age}]],</th:block>
+            <th:block th:if="${stat.last}">[[${age}]]</th:block>
         </span>
     </div>
 

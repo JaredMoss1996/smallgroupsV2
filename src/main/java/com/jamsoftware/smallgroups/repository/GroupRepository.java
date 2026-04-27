@@ -21,7 +21,7 @@ public class GroupRepository {
         String sql = """
                     SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
                     FROM groups gr
-                    LEFT JOIN genders ge ON ge.id = gr.id
+                    LEFT JOIN genders ge ON ge.id = gr.gender_id
                     ORDER BY gr.id
                 """;
 
@@ -43,7 +43,7 @@ public class GroupRepository {
         String sql = """
                     SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
                     FROM groups gr
-                    LEFT JOIN genders ge ON ge.id = gr.id
+                    LEFT JOIN genders ge ON ge.id = gr.gender_id
                     WHERE gr.id = :id
                 """;
 
@@ -136,7 +136,7 @@ public class GroupRepository {
         String sql = """
                     SELECT  gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
                     FROM groups gr
-                    LEFT JOIN genders ge ON ge.id = gr.id
+                    LEFT JOIN genders ge ON ge.id = gr.gender_id
                     JOIN group_members gm ON gm.group_id = gr.id
                     where member_id = :memberId
                 """;
@@ -161,7 +161,7 @@ public class GroupRepository {
                 SELECT DISTINCT  gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
                 FROM group_leaders gl
                 JOIN groups gr on gr.id = gl.group_id
-                LEFT JOIN genders ge ON ge.id = gr.id
+                LEFT JOIN genders ge ON ge.id = gr.gender_id
                 WHERE gr.church_id = :churchId
                 AND NOT gl.member_id = :leaderId;
                 """;
@@ -185,7 +185,7 @@ public class GroupRepository {
                 SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
                 FROM group_leaders gl
                 JOIN groups gr on gr.id = gl.group_id
-                LEFT JOIN genders ge ON ge.id = gr.id
+                LEFT JOIN genders ge ON ge.id = gr.gender_id
                 WHERE gl.member_id = :leaderMemberId
                 """;
 
