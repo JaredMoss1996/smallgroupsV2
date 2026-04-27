@@ -43,7 +43,6 @@
                             <label for="title">Group Title</label>
                             <input  th:field="*{title}"
                                     type="text"
-                                    id="title"
                                     name="title"
                                     placeholder="Downtown Bible Study"
                                     maxlength="255"
@@ -57,7 +56,6 @@
                                 Share what the group is about, who it is for, and what a new person should expect.
                             </p>
                             <textarea th:field="*{description}"
-                                    id="description"
                                     name="description"
                                     placeholder="A welcoming weekly group focused on Scripture, prayer, and meaningful conversation."
                                     required
@@ -77,7 +75,6 @@
                             <label for="schedule">Schedule</label>
                             <input  th:field="*{schedule}"
                                     type="text"
-                                    id="schedule"
                                     name="schedule"
                                     placeholder="Thursdays at 7:00 PM"
                                     required
@@ -88,7 +85,6 @@
                             <label for="location">Location Name</label>
                             <input  th:field="*{location}"
                                     type="text"
-                                    id="location"
                                     name="location"
                                     placeholder="Downtown Church"
                                     required
@@ -99,7 +95,6 @@
                             <label for="address">Street Address <span class="legend-hint">Optional - leave blank if not applicable</span></label>
                             <input  th:field="*{address}"
                                     type="text"
-                                    id="address"
                                     name="address"
                                     placeholder="123 Main St, Springfield, IL"
                             />
@@ -117,7 +112,7 @@
                         <legend class="field-legend legend-row">Gender</legend>
                         <div class="choice-grid three">
                             <label class="choice-card" for="gender-male">
-                                <input type="radio" id="gender-male" name="gender" value="MALE" th:field="*{gender}" required/>
+                                <input type="radio" name="gender" value="MALE" th:field="*{gender}" required/>
                                 <div>
                                     <strong>Male</strong>
                                     <span>Intended for men.</span>
@@ -125,7 +120,7 @@
                             </label>
 
                             <label class="choice-card" for="gender-female">
-                                <input type="radio" id="gender-female" name="gender" value="FEMALE" th:field="*{gender}"/>
+                                <input type="radio" name="gender" value="FEMALE" th:field="*{gender}"/>
                                 <div>
                                     <strong>Female</strong>
                                     <span>Intended for women.</span>
@@ -133,7 +128,7 @@
                             </label>
 
                             <label class="choice-card" for="gender-both">
-                                <input type="radio" id="gender-both" name="gender" value="BOTH" th:field="*{gender}"/>
+                                <input type="radio" name="gender" value="BOTH" th:field="*{gender}"/>
                                 <div>
                                     <strong>Both</strong>
                                     <span>Open to everyone.</span>
@@ -146,7 +141,7 @@
                         <legend class="field-legend legend-row">Age Range <span class="legend-hint">Select all that apply</span></legend>
                         <div class="choice-grid two">
                             <label class="choice-card" for="age-all-adult">
-                                <input type="checkbox" id="age-all-adult" name="ages" value="ALL_ADULT_AGES" th:field="*{ages}"/>
+                                <input type="checkbox" name="ages" value="ALL_ADULT_AGES" th:field="*{ages}"/>
                                 <div>
                                     <strong>All Adult Ages</strong>
                                     <span>Broad adult audience.</span>
@@ -154,7 +149,7 @@
                             </label>
 
                             <label class="choice-card" for="age-twenties">
-                                <input type="checkbox" id="age-twenties" name="ages" value="TWENTIES" th:field="*{ages}"/>
+                                <input type="checkbox" name="ages" value="TWENTIES" th:field="*{ages}"/>
                                 <div>
                                     <strong>Twenties</strong>
                                     <span>Focused on people in their 20s.</span>
