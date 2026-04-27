@@ -93,6 +93,10 @@
             gap: 12px 16px;
         }
 
+        .filter-checkbox-group.single-column {
+            grid-template-columns: 1fr;
+        }
+
         .filter-checkbox-item {
             display: flex;
             align-items: center;
@@ -237,62 +241,6 @@
 
             <div class="filter-row">
                 <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                     data-bs-toggle="collapse" data-bs-target="#denomination-filter-content">
-                    <div>Denomination</div>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <div id="denomination-filter-content" class="filter-content collapse">
-                    <div class="filter-checkbox-group">
-                        <div class="filter-checkbox-item">
-                            <input type="checkbox" id="denom-baptist" name="denomination"/>
-                            <label for="denom-baptist">Baptist</label>
-                        </div>
-                        <div class="filter-checkbox-item">
-                            <input type="checkbox" id="denom-methodist" name="denomination"/>
-                            <label for="denom-methodist">Methodist</label>
-                        </div>
-                        <div class="filter-checkbox-item">
-                            <input type="checkbox" id="denom-presbyterian" name="denomination"/>
-                            <label for="denom-presbyterian">Presbyterian</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="filter-row">
-                <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                     data-bs-toggle="collapse" data-bs-target="#day-filter-content">
-                    <div>Day of the Week</div>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <div id="day-filter-content" class="filter-content collapse">
-                    <div class="filter-checkbox-group">
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-sunday"
-                                                                 name="day_of_week"/><label
-                                for="day-sunday">Sunday</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-monday"
-                                                                 name="day_of_week"/><label
-                                for="day-monday">Monday</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-tuesday"
-                                                                 name="day_of_week"/><label
-                                for="day-tuesday">Tuesday</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-wednesday" name="day_of_week"/><label
-                                for="day-wednesday">Wednesday</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-thursday"
-                                                                 name="day_of_week"/><label
-                                for="day-thursday">Thursday</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-friday"
-                                                                 name="day_of_week"/><label
-                                for="day-friday">Friday</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="day-saturday"
-                                                                 name="day_of_week"/><label
-                                for="day-saturday">Saturday</label></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="filter-row">
-                <div class="filter-header collapsed d-flex justify-content-between align-items-center"
                      data-bs-toggle="collapse" data-bs-target="#age-filter-content">
                     <div>Age Range</div>
                     <i class="fa-solid fa-chevron-down"></i>
@@ -318,39 +266,81 @@
 
             <div class="filter-row">
                 <div class="filter-header collapsed d-flex justify-content-between align-items-center"
-                     data-bs-toggle="collapse" data-bs-target="#language-filter-content">
-                    <div>Languages</div>
+                     data-bs-toggle="collapse" data-bs-target="#categories-filter-content">
+                    <div>Categories</div>
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
-                <div id="language-filter-content" class="filter-content collapse">
+                <div id="categories-filter-content" class="filter-content collapse">
                     <div class="filter-checkbox-group">
-                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-english"
-                                                                 name="language"/><label
-                                for="lang-english">English</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-spanish"
-                                                                 name="language"/><label
-                                for="lang-spanish">Spanish</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-french"
-                                                                 name="language"/><label
-                                for="lang-french">French</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="lang-other" name="language"/><label
-                                for="lang-other">Other</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="category-bible-study" name="categories"/><label
+                                for="category-bible-study">Bible Study</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="category-prayer" name="categories"/><label
+                                for="category-prayer">Prayer</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="category-fellowship" name="categories"/><label
+                                for="category-fellowship">Fellowship</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="category-young-adults" name="categories"/><label
+                                for="category-young-adults">Young Adults</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="category-couples" name="categories"/><label
+                                for="category-couples">Couples</label></div>
+                        <div class="filter-checkbox-item"><input type="checkbox" id="category-outreach" name="categories"/><label
+                                for="category-outreach">Outreach</label></div>
                     </div>
                 </div>
             </div>
 
             <div class="filter-row">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="small-muted">Kids Welcome</div>
-                    <div class="toggle on" role="switch" aria-checked="true"></div>
+                <div class="filter-header collapsed d-flex justify-content-between align-items-center"
+                     data-bs-toggle="collapse" data-bs-target="#churches-filter-content">
+                    <div>Churches</div>
+                    <i class="fa-solid fa-chevron-down"></i>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mt-2">
-                    <div class="small-muted">Childcare Provided</div>
-                    <div class="toggle" role="switch" aria-checked="false"></div>
+                <div id="churches-filter-content" class="filter-content collapse">
+                    <div class="filter-checkbox-group single-column">
+                        <div class="filter-checkbox-item">
+                            <input type="checkbox" id="church-grace-community" name="churches"/>
+                            <label for="church-grace-community">Grace Community Church</label>
+                        </div>
+                        <div class="filter-checkbox-item">
+                            <input type="checkbox" id="church-river-city" name="churches"/>
+                            <label for="church-river-city">River City Church</label>
+                        </div>
+                        <div class="filter-checkbox-item">
+                            <input type="checkbox" id="church-hope-fellowship" name="churches"/>
+                            <label for="church-hope-fellowship">Hope Fellowship</label>
+                        </div>
+                        <div class="filter-checkbox-item">
+                            <input type="checkbox" id="church-new-life" name="churches"/>
+                            <label for="church-new-life">New Life Church</label>
+                        </div>
+                        <div class="filter-checkbox-item">
+                            <input type="checkbox" id="church-cornerstone" name="churches"/>
+                            <label for="church-cornerstone">Cornerstone Church</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mt-2">
-                    <div class="small-muted">Handicap Accessible</div>
-                    <div class="toggle on" role="switch" aria-checked="true"></div>
+            </div>
+
+            <div class="filter-row">
+                <div class="filter-header collapsed d-flex justify-content-between align-items-center"
+                     data-bs-toggle="collapse" data-bs-target="#gender-filter-content">
+                    <div>Gender</div>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div id="gender-filter-content" class="filter-content collapse">
+                    <div class="filter-checkbox-group">
+                        <div class="filter-checkbox-item">
+                            <input type="radio" id="gender-male" name="gender"/>
+                            <label for="gender-male">Male</label>
+                        </div>
+                        <div class="filter-checkbox-item">
+                            <input type="radio" id="gender-female" name="gender"/>
+                            <label for="gender-female">Female</label>
+                        </div>
+                        <div class="filter-checkbox-item">
+                            <input type="radio" id="gender-both" name="gender"/>
+                            <label for="gender-both">Both</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
