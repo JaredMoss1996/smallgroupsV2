@@ -80,6 +80,7 @@
     </style>
 </head>
 <body>
+
 <th:block th:insert="~{fragments/navbar :: navbar('manageLeaders')}"></th:block>
 
 <main class="page-shell">
@@ -101,93 +102,16 @@
 
     <section class="leaders-card" aria-label="Leader list">
         <div class="leader-grid">
-            <article class="leader-item">
+            <article class="leader-item" th:each="leader : ${leaders}" th:object="${leader}">
                 <div class="leader-head">
                     <div>
-                        <h2 class="leader-name">Ava Thompson</h2>
-                        <p class="member-id">Member ID: 101</p>
+                        <h2 class="leader-name">[[*{firstName}]] [[*{lastName}]]</h2>
                     </div>
-                    <span class="church-pill">Church 1</span>
                 </div>
                 <ul class="leader-details">
-                    <li><i class="fa-solid fa-envelope"></i>ava.thompson@example.com</li>
-                    <li><i class="fa-solid fa-mobile-screen"></i>(555) 210-8841</li>
-                    <li><i class="fa-solid fa-phone"></i>(555) 210-8842</li>
-                </ul>
-            </article>
-
-            <article class="leader-item">
-                <div class="leader-head">
-                    <div>
-                        <h2 class="leader-name">Noah Brooks</h2>
-                        <p class="member-id">Member ID: 102</p>
-                    </div>
-                    <span class="church-pill">Church 1</span>
-                </div>
-                <ul class="leader-details">
-                    <li><i class="fa-solid fa-envelope"></i>noah.brooks@example.com</li>
-                    <li><i class="fa-solid fa-mobile-screen"></i>(555) 320-1112</li>
-                    <li><i class="fa-solid fa-phone"></i>(555) 320-1113</li>
-                </ul>
-            </article>
-
-            <article class="leader-item">
-                <div class="leader-head">
-                    <div>
-                        <h2 class="leader-name">Emma Collins</h2>
-                        <p class="member-id">Member ID: 103</p>
-                    </div>
-                    <span class="church-pill">Church 2</span>
-                </div>
-                <ul class="leader-details">
-                    <li><i class="fa-solid fa-envelope"></i>emma.collins@example.com</li>
-                    <li><i class="fa-solid fa-mobile-screen"></i>(555) 487-9010</li>
-                    <li><i class="fa-solid fa-phone"></i>(555) 487-9011</li>
-                </ul>
-            </article>
-
-            <article class="leader-item">
-                <div class="leader-head">
-                    <div>
-                        <h2 class="leader-name">Liam Rivera</h2>
-                        <p class="member-id">Member ID: 104</p>
-                    </div>
-                    <span class="church-pill">Church 2</span>
-                </div>
-                <ul class="leader-details">
-                    <li><i class="fa-solid fa-envelope"></i>liam.rivera@example.com</li>
-                    <li><i class="fa-solid fa-mobile-screen"></i>(555) 602-4481</li>
-                    <li><i class="fa-solid fa-phone"></i>(555) 602-4482</li>
-                </ul>
-            </article>
-
-            <article class="leader-item">
-                <div class="leader-head">
-                    <div>
-                        <h2 class="leader-name">Sophia Patel</h2>
-                        <p class="member-id">Member ID: 105</p>
-                    </div>
-                    <span class="church-pill">Church 3</span>
-                </div>
-                <ul class="leader-details">
-                    <li><i class="fa-solid fa-envelope"></i>sophia.patel@example.com</li>
-                    <li><i class="fa-solid fa-mobile-screen"></i>(555) 773-2190</li>
-                    <li><i class="fa-solid fa-phone"></i>(555) 773-2191</li>
-                </ul>
-            </article>
-
-            <article class="leader-item">
-                <div class="leader-head">
-                    <div>
-                        <h2 class="leader-name">Mason Lee</h2>
-                        <p class="member-id">Member ID: 106</p>
-                    </div>
-                    <span class="church-pill">Church 3</span>
-                </div>
-                <ul class="leader-details">
-                    <li><i class="fa-solid fa-envelope"></i>mason.lee@example.com</li>
-                    <li><i class="fa-solid fa-mobile-screen"></i>(555) 889-1405</li>
-                    <li><i class="fa-solid fa-phone"></i>(555) 889-1406</li>
+                    <li><i class="fa-solid fa-envelope"></i>[[*{email}]]</li>
+                    <li><i class="fa-solid fa-mobile-screen"></i>[[*{mobilePhone}]]</li>
+                    <li><i class="fa-solid fa-phone"></i>[[*{homePhone}]]</li>
                 </ul>
             </article>
         </div>
