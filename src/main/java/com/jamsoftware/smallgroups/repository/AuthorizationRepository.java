@@ -11,7 +11,7 @@ public class AuthorizationRepository {
         this.jdbcClient = jdbcClient;
     }
 
-    public boolean isGroupLeader(long group_id, Long member_id) {
+    public boolean isGroupLeader(Long group_id, Long member_id) {
         String sql = """
                     SELECT 1
                     FROM group_leaders
@@ -28,5 +28,13 @@ public class AuthorizationRepository {
         return isGroupLeader;
     }
 
+//    public boolean isAdminOfLeader(Long leaderId, Long adminId, Long churchId) {
+//        String sql = """
+//                    SELECT 1
+//                    FROM group_leaders
+//                    WHERE group_id = :group_id
+//                    AND member_id = :member_id
+//                """;
+//    }
 
 }

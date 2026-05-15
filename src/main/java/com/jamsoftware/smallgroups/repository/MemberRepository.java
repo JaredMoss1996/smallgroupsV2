@@ -18,7 +18,7 @@ public class MemberRepository {
 
     public List<Member> getLeadersByChurchId(long churchId) {
         String sql = """
-                SELECT m.id, m.first_name, m.last_name, m.email, m.home_phone, m.mobile_phone, m.church_id
+                SELECT m.id, m.first_name, m.last_name, m.email, m.home_phone, m.mobile_phone, m.church_id, app_user_id
                 FROM members m
                 JOIN app_user au ON au.id = m.app_user_id
                 JOIN roles r on r.id = au.role_id
@@ -34,13 +34,35 @@ public class MemberRepository {
                         .homePhone(rs.getString("home_phone"))
                         .mobilePhone(rs.getString("mobile_phone"))
                         .churchId(rs.getLong("church_id"))
+                        .appUserId(rs.getString("app_user_id"))
                         .build())
                 .list();
     }
 
+    public Optional<Member> getMemberById(long memberId) {
+        String sql = """
+                SELECT id, first_name, last_name, email, home_phone, mobile_phone, church_id, app_user_id
+                FROM members
+                WHERE id = :memberId
+                """;
+        return jdbcClient.sql(sql)
+                .param("memberId", memberId)
+                .query((rs, rowNum) -> Member.builder()
+                        .id(rs.getLong("id"))
+                        .firstName(rs.getString("first_name"))
+                        .lastName(rs.getString("last_name"))
+                        .email(rs.getString("email"))
+                        .homePhone(rs.getString("home_phone"))
+                        .mobilePhone(rs.getString("mobile_phone"))
+                        .churchId(rs.getLong("church_id"))
+                        .appUserId(rs.getString("app_user_id"))
+                        .build())
+                .optional();
+    }
+
     public Optional<Member> getMemberByUserId(Long userId) {
         String sql = """
-                SELECT id, first_name, last_name, email, home_phone, mobile_phone, church_id
+                SELECT id, first_name, last_name, email, home_phone, mobile_phone, church_id, app_user_id
                 FROM members
                 WHERE app_user_id = :userId
                 """;
@@ -54,6 +76,7 @@ public class MemberRepository {
                         .homePhone(rs.getString("home_phone"))
                         .mobilePhone(rs.getString("mobile_phone"))
                         .churchId(rs.getLong("church_id"))
+                        .appUserId(rs.getString("app_user_id"))
                         .build())
                 .optional();
     }

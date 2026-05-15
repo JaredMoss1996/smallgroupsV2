@@ -97,4 +97,17 @@ public class UserRepository {
                 .query((rs, rowNum) -> rs.getString("name"))
                 .list();
     }
+
+    public Optional<String> getUserRole(Long userId) {
+        String sql = """
+                SELECT r.name
+                FROM app_user au
+                JOIN roles r ON r.id = au.role_id
+                WHERE au.id = :userId
+                """;
+        return jdbcClient.sql(sql)
+                .param("userId", userId)
+                .query(String.class)
+                .optional();
+    }
 }

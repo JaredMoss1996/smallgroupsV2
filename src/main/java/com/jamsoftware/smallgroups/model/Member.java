@@ -13,5 +13,5 @@ public class Member {
     String email;
     String homePhone;
     String mobilePhone;
-    //TODO later add a profile pic
+    long appUserId;
 }
