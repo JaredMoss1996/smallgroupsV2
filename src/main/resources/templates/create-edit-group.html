@@ -1,11 +1,11 @@
 ﻿<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Create Group</title>
     <th:block th:insert="~{fragments/css-links :: cssLinks}"></th:block>
-    <link rel="stylesheet" th:href="@{/css/forms.css}" href="/css/forms.css" />
+    <link rel="stylesheet" th:href="@{/css/forms.css}" href="/css/forms.css"/>
 </head>
 <body>
 <th:block th:insert="~{fragments/navbar :: navbar('manageGroups')}"></th:block>
@@ -17,19 +17,19 @@
             Add the core details for your small group below. This version is intentionally plain HTML and CSS only,
             so you can wire in your own Thymeleaf bindings and controller actions afterward.
         </p>
-    </section>
-
-    <div class="mb-3">
-        <a class="btn btn-outline-secondary" th:href="@{/groups}">
-            <i class="fa-solid fa-arrow-left me-1"></i>Back to Manage Leaders
+        <a href="/groups" class="btn btn-outline-light btn-sm mt-3">
+            <i class="fa-solid fa-arrow-left me-1"></i> Back to Manage Groups
         </a>
-    </div>
+        <button class="btn btn-danger btn-sm mt-3 ms-2">
+            <i class="fa-solid fa-user-minus me-1"></i> Remove Group
+        </button>
+    </section>
 
     <div class="form-layout">
         <section class="form-card">
             <form th:action="${isCreate} ? @{/groups/create} : @{/groups/edit}"
                   th:object="${groupData}" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" th:field="*{id}" />
+                <input type="hidden" name="id" th:field="*{id}"/>
 
                 <div class="form-section">
                     <div class="pill-note" th:text="${isCreate} ? 'New group setup' : 'Edit group setup'"></div>
@@ -41,12 +41,13 @@
                     <div class="grid">
                         <div class="field">
                             <label for="title">Group Title</label>
-                            <input  th:field="*{title}"
-                                    type="text"
-                                    name="title"
-                                    placeholder="Downtown Bible Study"
-                                    maxlength="255"
-                                    required
+                            <input th:field="*{title}"
+                                   type="text"
+                                   name="title"
+                                   id="title"
+                                   placeholder="Downtown Bible Study"
+                                   maxlength="255"
+                                   required
                             />
                         </div>
 
@@ -56,9 +57,10 @@
                                 Share what the group is about, who it is for, and what a new person should expect.
                             </p>
                             <textarea th:field="*{description}"
-                                    name="description"
-                                    placeholder="A welcoming weekly group focused on Scripture, prayer, and meaningful conversation."
-                                    required
+                                      name="description"
+                                      id="description"
+                                      placeholder="A welcoming weekly group focused on Scripture, prayer, and meaningful conversation."
+                                      required
                             ></textarea>
                         </div>
                     </div>
@@ -73,30 +75,33 @@
                     <div class="grid two-col">
                         <div class="field">
                             <label for="schedule">Schedule</label>
-                            <input  th:field="*{schedule}"
-                                    type="text"
-                                    name="schedule"
-                                    placeholder="Thursdays at 7:00 PM"
-                                    required
+                            <input th:field="*{schedule}"
+                                   type="text"
+                                   name="schedule"
+                                   id="schedule"
+                                   placeholder="Thursdays at 7:00 PM"
+                                   required
                             />
                         </div>
 
                         <div class="field">
                             <label for="location">Location Name</label>
-                            <input  th:field="*{location}"
-                                    type="text"
-                                    name="location"
-                                    placeholder="Downtown Church"
-                                    required
+                            <input th:field="*{location}"
+                                   type="text"
+                                   name="location"
+                                   id="location"
+                                   placeholder="Downtown Church"
+                                   required
                             />
                         </div>
 
                         <div class="field">
                             <label for="address">Street Address <span class="legend-hint">Optional - leave blank if not applicable</span></label>
-                            <input  th:field="*{address}"
-                                    type="text"
-                                    name="address"
-                                    placeholder="123 Main St, Springfield, IL"
+                            <input th:field="*{address}"
+                                   type="text"
+                                   name="address"
+                                   id="address"
+                                   placeholder="123 Main St, Springfield, IL"
                             />
                         </div>
                     </div>
@@ -112,7 +117,7 @@
                         <legend class="field-legend legend-row">Gender</legend>
                         <div class="choice-grid three">
                             <label class="choice-card" for="gender-male">
-                                <input type="radio" name="gender" value="MALE" th:field="*{gender}" required/>
+                                <input type="radio" name="gender" id="gender-male" value="MALE" th:field="*{gender}" required/>
                                 <div>
                                     <strong>Male</strong>
                                     <span>Intended for men.</span>
@@ -120,7 +125,7 @@
                             </label>
 
                             <label class="choice-card" for="gender-female">
-                                <input type="radio" name="gender" value="FEMALE" th:field="*{gender}"/>
+                                <input type="radio" name="gender" id="gender-female" value="FEMALE" th:field="*{gender}"/>
                                 <div>
                                     <strong>Female</strong>
                                     <span>Intended for women.</span>
@@ -128,7 +133,7 @@
                             </label>
 
                             <label class="choice-card" for="gender-both">
-                                <input type="radio" name="gender" value="BOTH" th:field="*{gender}"/>
+                                <input type="radio" name="gender" id="gender-both" value="BOTH" th:field="*{gender}"/>
                                 <div>
                                     <strong>Both</strong>
                                     <span>Open to everyone.</span>
@@ -138,10 +143,11 @@
                     </fieldset>
 
                     <fieldset class="field clean-fieldset spaced">
-                        <legend class="field-legend legend-row">Age Range <span class="legend-hint">Select all that apply</span></legend>
+                        <legend class="field-legend legend-row">Age Range <span class="legend-hint">Select all that apply</span>
+                        </legend>
                         <div class="choice-grid two">
                             <label class="choice-card" for="age-all-adult">
-                                <input type="checkbox" name="ages" value="ALL_ADULT_AGES" th:field="*{ages}"/>
+                                <input type="checkbox" name="ages" id="age-all-adult" value="ALL_ADULT_AGES" th:field="*{ages}"/>
                                 <div>
                                     <strong>All Adult Ages</strong>
                                     <span>Broad adult audience.</span>
@@ -149,7 +155,7 @@
                             </label>
 
                             <label class="choice-card" for="age-twenties">
-                                <input type="checkbox" name="ages" value="TWENTIES" th:field="*{ages}"/>
+                                <input type="checkbox" name="ages" id="age-twenties" value="TWENTIES" th:field="*{ages}"/>
                                 <div>
                                     <strong>Twenties</strong>
                                     <span>Focused on people in their 20s.</span>
@@ -157,7 +163,8 @@
                             </label>
 
                             <label class="choice-card" for="age-thirties">
-                                <input type="checkbox" id="age-thirties" name="ages" value="THIRTIES" th:field="*{ages}"/>
+                                <input type="checkbox" id="age-thirties" name="ages" value="THIRTIES"
+                                       th:field="*{ages}"/>
                                 <div>
                                     <strong>Thirties</strong>
                                     <span>Focused on people in their 30s.</span>
@@ -189,7 +196,8 @@
                             </label>
 
                             <label class="choice-card" for="age-seventies">
-                                <input type="checkbox" id="age-seventies" name="ages" value="SEVENTIES_AND_UP" th:field="*{ages}"/>
+                                <input type="checkbox" id="age-seventies" name="ages" value="SEVENTIES_AND_UP"
+                                       th:field="*{ages}"/>
                                 <div>
                                     <strong>Seventies and Up</strong>
                                     <span>Focused on seniors.</span>
@@ -199,10 +207,12 @@
                     </fieldset>
 
                     <fieldset class="field clean-fieldset compact">
-                        <legend class="field-legend legend-row">Categories <span class="legend-hint">Select all that apply</span></legend>
+                        <legend class="field-legend legend-row">Categories <span class="legend-hint">Select all that apply</span>
+                        </legend>
                         <div class="choice-grid two">
                             <label class="choice-card" for="cat-bible-study">
-                                <input type="checkbox" id="cat-bible-study" name="categories" value="Bible Study" th:field="*{categories}"/>
+                                <input type="checkbox" id="cat-bible-study" name="categories" value="Bible Study"
+                                       th:field="*{categories}"/>
                                 <div>
                                     <strong>Bible Study</strong>
                                     <span>Scripture-focused teaching and discussion.</span>
@@ -210,7 +220,8 @@
                             </label>
 
                             <label class="choice-card" for="cat-community-service">
-                                <input type="checkbox" id="cat-community-service" name="categories" value="Community Service" th:field="*{categories}"/>
+                                <input type="checkbox" id="cat-community-service" name="categories"
+                                       value="Community Service" th:field="*{categories}"/>
                                 <div>
                                     <strong>Community Service</strong>
                                     <span>Serving the community together.</span>
@@ -218,7 +229,8 @@
                             </label>
 
                             <label class="choice-card" for="cat-young-adults">
-                                <input type="checkbox" id="cat-young-adults" name="categories" value="Young Adults" th:field="*{categories}"/>
+                                <input type="checkbox" id="cat-young-adults" name="categories" value="Young Adults"
+                                       th:field="*{categories}"/>
                                 <div>
                                     <strong>Young Adults</strong>
                                     <span>Geared toward younger adult members.</span>
@@ -226,7 +238,8 @@
                             </label>
 
                             <label class="choice-card" for="cat-families">
-                                <input type="checkbox" id="cat-families" name="categories" value="Families" th:field="*{categories}"/>
+                                <input type="checkbox" id="cat-families" name="categories" value="Families"
+                                       th:field="*{categories}"/>
                                 <div>
                                     <strong>Families</strong>
                                     <span>Designed for households and parents.</span>
@@ -234,7 +247,8 @@
                             </label>
 
                             <label class="choice-card" for="cat-seniors">
-                                <input type="checkbox" id="cat-seniors" name="categories" value="Seniors" th:field="*{categories}"/>
+                                <input type="checkbox" id="cat-seniors" name="categories" value="Seniors"
+                                       th:field="*{categories}"/>
                                 <div>
                                     <strong>Seniors</strong>
                                     <span>Community for older adults.</span>
@@ -249,376 +263,9 @@
                         <a href="#" class="btn btn-ghost">Cancel</a>
                     </div>
                     <div class="actions-right">
-                        <button type="submit" class="btn btn-primary" th:text="${isCreate} ? 'Create Group' : 'Save Edits'">Create Group</button>
-                    </div>
-                </div>
-            </form>
-        </section>
-
-        <aside class="info-card">
-            <h2>Form Notes</h2>
-            <p>
-                This layout is intentionally presentation-only so you can add your own server-side bindings later.
-            </p>
-
-            <ul class="mini-list">
-                <li>
-                    <div class="mini-icon">1</div>
-                    <div>
-                        <strong>Names already line up</strong>
-                        <span>
-                            Inputs use names like <code>title</code>, <code>description</code>, <code>schedule</code>,
-                            <code>frequency</code>, <code>location</code>, <code>address</code>, <code>gender</code>,
-                            <code>ages</code>, and <code>categories</code>.
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div class="mini-icon">2</div>
-                    <div>
-                        <strong>Easy to reuse for edit mode</strong>
-                        <span>
-                            Change the heading text, button label, and form action when you build the edit page.
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div class="mini-icon">3</div>
-                    <div>
-                        <strong>Leaders and members</strong>
-                        <span>
-                            I left <code>leaders</code> and <code>members</code> out of the static form because those
-                            will likely need custom UI and binding logic for <code>List&lt;Member&gt;</code>.
-                        </span>
-                    </div>
-                </li>
-            </ul>
-
-            <div class="sidebar-callout">
-                <strong>Good next step</strong>
-                <p>
-                    Once you wire this into Thymeleaf, you can prefill edit values and mark selected radio/checkbox
-                    options based on the existing group data.
-                </p>
-            </div>
-        </aside>
-    </div>
-</main>
-<script>
-    (function () {
-        const form = document.querySelector('.form-card form');
-        if (!form) {
-            return;
-        }
-
-        const groupRules = [
-            { name: 'ages', message: 'Please select at least one age range.' },
-            { name: 'categories', message: 'Please select at least one category.' }
-        ];
-
-        function validateCheckboxGroup(name, message) {
-            const checkboxes = form.querySelectorAll('input[name="' + name + '"]');
-            if (!checkboxes.length) {
-                return true;
-            }
-
-            const hasSelection = Array.prototype.some.call(checkboxes, function (checkbox) {
-                return checkbox.checked;
-            });
-
-            checkboxes[0].setCustomValidity(hasSelection ? '' : message);
-            return hasSelection;
-        }
-
-        groupRules.forEach(function (rule) {
-            const checkboxes = form.querySelectorAll('input[name="' + rule.name + '"]');
-            Array.prototype.forEach.call(checkboxes, function (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    validateCheckboxGroup(rule.name, rule.message);
-                });
-            });
-        });
-
-        form.addEventListener('submit', function (event) {
-            let valid = true;
-
-            groupRules.forEach(function (rule) {
-                if (!validateCheckboxGroup(rule.name, rule.message)) {
-                    valid = false;
-                }
-            });
-
-            if (!valid) {
-                event.preventDefault();
-                const firstInvalid = form.querySelector(':invalid');
-                if (firstInvalid && typeof firstInvalid.reportValidity === 'function') {
-                    firstInvalid.reportValidity();
-                }
-            }
-        });
-    })();
-</script>
-</body>
-</html>
-<th:block th:insert="~{fragments/navbar :: navbar('manageGroups')}"></th:block>
-<main class="page-shell">
-    <section class="page-header">
-        <span class="eyebrow">Group Management</span>
-        <h1 th:text="${isCreate} ? 'Create a New Group' : 'Edit Group'"></h1>
-        <p>
-            Add the core details for your small group below. This version is intentionally plain HTML and CSS only,
-            so you can wire in your own Thymeleaf bindings and controller actions afterward.
-        </p>
-    </section>
-
-    <div class="mb-3">
-        <a class="btn btn-outline-secondary" th:href="@{/groups}">
-            <i class="fa-solid fa-arrow-left me-1"></i>Back to Manage Leaders
-        </a>
-    </div>
-
-    <div class="form-layout">
-        <section class="form-card">
-            <form th:action="${isCreate} ? @{/groups/create} : @{/groups/edit}"
-                  th:object="${groupData}" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" th:field="*{id}" />
-
-                <div class="form-section">
-                    <div class="pill-note" th:text="${isCreate} ? 'New group setup' : 'Edit group setup'"></div>
-                    <h2 class="section-heading">Basic Information</h2>
-                    <p class="section-copy">
-                        Start with the details people will immediately see in the directory.
-                    </p>
-
-                    <div class="grid">
-                        <div class="field">
-                            <label for="title">Group Title</label>
-                            <input  th:field="*{title}"
-                                    type="text"
-                                    id="title"
-                                    name="title"
-                                    placeholder="Downtown Bible Study"
-                                    maxlength="255"
-                                    required
-                            />
-                        </div>
-
-                        <div class="field">
-                            <label for="description">Description</label>
-                            <p class="field-help">
-                                Share what the group is about, who it is for, and what a new person should expect.
-                            </p>
-                            <textarea th:field="*{description}"
-                                    id="description"
-                                    name="description"
-                                    placeholder="A welcoming weekly group focused on Scripture, prayer, and meaningful conversation."
-                                    required
-                            ></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h2 class="section-heading">Meeting Details</h2>
-                    <p class="section-copy">
-                        Add when and where the group meets.
-                    </p>
-
-                    <div class="grid two-col">
-                        <div class="field">
-                            <label for="schedule">Schedule</label>
-                            <input  th:field="*{schedule}"
-                                    type="text"
-                                    id="schedule"
-                                    name="schedule"
-                                    placeholder="Thursdays at 7:00 PM"
-                                    required
-                            />
-                        </div>
-
-<!--                        <div class="field">-->
-<!--                            <label for="frequency">Frequency</label>-->
-<!--                            <select th:field="*{frequency}" id="frequency" name="frequency" required>-->
-<!--                                <option value="">Select frequency</option>-->
-<!--                                <option value="DAILY">Daily</option>-->
-<!--                                <option value="WEEKLY">Weekly</option>-->
-<!--                                <option value="BIWEEKLY">Biweekly</option>-->
-<!--                                <option value="MONTHLY">Monthly</option>-->
-<!--                                <option value="VARIES">Varies</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-
-                        <div class="field">
-                            <label for="location">Location Name</label>
-                            <input  th:field="*{location}"
-                                    type="text"
-                                    id="location"
-                                    name="location"
-                                    placeholder="Downtown Church"
-                                    required
-                            />
-                        </div>
-
-                        <div class="field">
-                            <label for="address">Street Address <span class="legend-hint">Optional - leave blank if not applicable</span></label>
-                            <input  th:field="*{address}"
-                                    type="text"
-                                    id="address"
-                                    name="address"
-                                    placeholder="123 Main St, Springfield, IL"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h2 class="section-heading">Audience</h2>
-                    <p class="section-copy">
-                        Define who this group is intended for.
-                    </p>
-
-                    <fieldset class="field clean-fieldset spaced">
-                        <legend class="field-legend legend-row">Gender</legend>
-                        <div class="choice-grid three">
-                            <label class="choice-card" for="gender-male">
-                                <input type="radio" id="gender-male" name="gender" value="MALE" th:field="*{gender}" required/>
-                                <div>
-                                    <strong>Male</strong>
-                                    <span>Intended for men.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="gender-female">
-                                <input type="radio" id="gender-female" name="gender" value="FEMALE" th:field="*{gender}"/>
-                                <div>
-                                    <strong>Female</strong>
-                                    <span>Intended for women.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="gender-both">
-                                <input type="radio" id="gender-both" name="gender" value="BOTH" th:field="*{gender}"/>
-                                <div>
-                                    <strong>Both</strong>
-                                    <span>Open to everyone.</span>
-                                </div>
-                            </label>
-                        </div>
-                    </fieldset>
-
-                    <fieldset class="field clean-fieldset spaced">
-                        <legend class="field-legend legend-row">Age Range <span class="legend-hint">Select all that apply</span></legend>
-                        <div class="choice-grid two">
-                            <label class="choice-card" for="age-all-adult">
-                                <input type="checkbox" id="age-all-adult" name="ages" value="ALL_ADULT_AGES" th:field="*{ages}"/>
-                                <div>
-                                    <strong>All Adult Ages</strong>
-                                    <span>Broad adult audience.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="age-twenties">
-                                <input type="checkbox" id="age-twenties" name="ages" value="TWENTIES" th:field="*{ages}"/>
-                                <div>
-                                    <strong>Twenties</strong>
-                                    <span>Focused on people in their 20s.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="age-thirties">
-                                <input type="checkbox" id="age-thirties" name="ages" value="THIRTIES" th:field="*{ages}"/>
-                                <div>
-                                    <strong>Thirties</strong>
-                                    <span>Focused on people in their 30s.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="age-forties">
-                                <input type="checkbox" id="age-forties" name="ages" value="FORTIES" th:field="*{ages}"/>
-                                <div>
-                                    <strong>Forties</strong>
-                                    <span>Focused on people in their 40s.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="age-fifties">
-                                <input type="checkbox" id="age-fifties" name="ages" value="FIFTIES" th:field="*{ages}"/>
-                                <div>
-                                    <strong>Fifties</strong>
-                                    <span>Focused on people in their 50s.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="age-sixties">
-                                <input type="checkbox" id="age-sixties" name="ages" value="SIXTIES" th:field="*{ages}"/>
-                                <div>
-                                    <strong>Sixties</strong>
-                                    <span>Focused on people in their 60s.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="age-seventies">
-                                <input type="checkbox" id="age-seventies" name="ages" value="SEVENTIES_AND_UP" th:field="*{ages}"/>
-                                <div>
-                                    <strong>Seventies and Up</strong>
-                                    <span>Focused on seniors.</span>
-                                </div>
-                            </label>
-                        </div>
-                    </fieldset>
-
-                    <fieldset class="field clean-fieldset compact">
-                        <legend class="field-legend legend-row">Categories <span class="legend-hint">Select all that apply</span></legend>
-                        <div class="choice-grid two">
-                            <label class="choice-card" for="cat-bible-study">
-                                <input type="checkbox" id="cat-bible-study" name="categories" value="Bible Study" th:field="*{categories}"/>
-                                <div>
-                                    <strong>Bible Study</strong>
-                                    <span>Scripture-focused teaching and discussion.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="cat-community-service">
-                                <input type="checkbox" id="cat-community-service" name="categories" value="Community Service" th:field="*{categories}"/>
-                                <div>
-                                    <strong>Community Service</strong>
-                                    <span>Serving the community together.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="cat-young-adults">
-                                <input type="checkbox" id="cat-young-adults" name="categories" value="Young Adults" th:field="*{categories}"/>
-                                <div>
-                                    <strong>Young Adults</strong>
-                                    <span>Geared toward younger adult members.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="cat-families">
-                                <input type="checkbox" id="cat-families" name="categories" value="Families" th:field="*{categories}"/>
-                                <div>
-                                    <strong>Families</strong>
-                                    <span>Designed for households and parents.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="cat-seniors">
-                                <input type="checkbox" id="cat-seniors" name="categories" value="Seniors" th:field="*{categories}"/>
-                                <div>
-                                    <strong>Seniors</strong>
-                                    <span>Community for older adults.</span>
-                                </div>
-                            </label>
-                        </div>
-                    </fieldset>
-                </div>
-
-                <div class="actions">
-                    <div class="actions-left">
-                        <a href="#" class="btn btn-ghost">Cancel</a>
-                    </div>
-                    <div class="actions-right">
-                        <button type="submit" class="btn btn-primary" th:text="${isCreate} ? 'Create Group' : 'Save Edits'">Create Group</button>
+                        <button type="submit" class="btn btn-primary"
+                                th:text="${isCreate} ? 'Create Group' : 'Save Edits'">Create Group
+                        </button>
                     </div>
                 </div>
             </form>

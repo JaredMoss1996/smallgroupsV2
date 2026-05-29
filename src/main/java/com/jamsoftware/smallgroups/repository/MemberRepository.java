@@ -34,7 +34,7 @@ public class MemberRepository {
                         .homePhone(rs.getString("home_phone"))
                         .mobilePhone(rs.getString("mobile_phone"))
                         .churchId(rs.getLong("church_id"))
-                        .appUserId(rs.getString("app_user_id"))
+                        .appUserId(rs.getLong("app_user_id"))
                         .build())
                 .list();
     }
@@ -55,7 +55,7 @@ public class MemberRepository {
                         .homePhone(rs.getString("home_phone"))
                         .mobilePhone(rs.getString("mobile_phone"))
                         .churchId(rs.getLong("church_id"))
-                        .appUserId(rs.getString("app_user_id"))
+                        .appUserId(rs.getLong("app_user_id"))
                         .build())
                 .optional();
     }
@@ -76,7 +76,7 @@ public class MemberRepository {
                         .homePhone(rs.getString("home_phone"))
                         .mobilePhone(rs.getString("mobile_phone"))
                         .churchId(rs.getLong("church_id"))
-                        .appUserId(rs.getString("app_user_id"))
+                        .appUserId(rs.getLong("app_user_id"))
                         .build())
                 .optional();
     }

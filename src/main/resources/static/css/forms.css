@@ -290,52 +290,6 @@ textarea {
     gap: 12px;
 }
 
-.btn {
-    appearance: none;
-    border: none;
-    border-radius: 999px;
-    padding: 13px 20px;
-    font: inherit;
-    font-weight: 700;
-    text-decoration: none;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
-}
-
-.btn:hover {
-    transform: translateY(-1px);
-}
-
-.btn-primary {
-    background: var(--accent);
-    color: #062b19;
-    box-shadow: 0 10px 24px rgba(31, 192, 122, 0.24);
-}
-
-.btn-primary:hover {
-    background: var(--accent-dark);
-    color: #fff;
-}
-
-.btn-secondary {
-    background: var(--dark);
-    color: #fff;
-}
-
-.btn-secondary:hover {
-    background: #1a2428;
-}
-
-.btn-ghost {
-    background: #fff;
-    color: var(--text);
-    border: 1px solid var(--border);
-}
-
-.btn-ghost:hover {
-    border-color: var(--border-strong);
-    background: #f8fafc;
-}
 
 .info-card h2 {
     margin: 0 0 12px;

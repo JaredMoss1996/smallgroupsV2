@@ -395,7 +395,7 @@
                  th:data-members="${group.members != null ? #strings.listJoin(group.members.![email], ',') : ''}"
                  th:data-joined="${#authentication != null and #authentication.name != 'anonymousUser' and group.members != null and #lists.contains(group.members.![email], #authentication.name)}"
                  th:data-search="${(group.title != null ? group.title : '') + ' ' + (group.description != null ? group.description : '') + ' ' + (group.schedule != null ? group.schedule : '') + ' ' + (group.location != null ? group.location : '') + ' ' + (group.categories != null ? #strings.listJoin(group.categories, ' ') : '') + ' ' + (group.ages != null ? #strings.listJoin(group.ages, ' ') : '') + ' ' + (group.leaders != null ? #strings.listJoin(group.leaders.![firstName + ' ' + lastName], ' ') : '')}">
-                <th:block th:insert="~{fragments/group-card :: groupCard(${group}, false)}"></th:block>
+                <th:block th:insert="~{fragments/group-card :: groupCard(${group})}"></th:block>
             </div>
         </div>
         <p id="directory-empty-state" class="small-muted mt-3 mb-0" style="display: none;">
