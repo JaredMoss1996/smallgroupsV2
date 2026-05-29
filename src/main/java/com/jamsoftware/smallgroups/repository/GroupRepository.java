@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class GroupRepository {
@@ -19,7 +20,7 @@ public class GroupRepository {
     // ===================== SELECT ALL =====================
     public List<Group> findAll() {
         String sql = """
-                    SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
+                    SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender, gr.church_id
                     FROM groups gr
                     LEFT JOIN genders ge ON ge.id = gr.gender_id
                     ORDER BY gr.id
@@ -39,25 +40,25 @@ public class GroupRepository {
         return result;
     }
 
-    public Group findById(long id) {
+    public Optional<Group> findById(long id) {
         String sql = """
-                    SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
+                    SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender, gr.church_id
                     FROM groups gr
                     LEFT JOIN genders ge ON ge.id = gr.gender_id
                     WHERE gr.id = :id
                 """;
 
-        Group group = jdbcClient.sql(sql)
+        return jdbcClient.sql(sql)
                 .param("id", id)
                 .query((rs, rowNum) -> mapToGroupList(rs))
-                .single();
-
-        group.setLeaders(findLeadersByGroupId(group.getId()));
-        group.setCategories(findCategoriesByGroupId(group.getId()));
-        group.setAges(findAgesByGroupId(group.getId()));
-        group.setMembers(findMembersByGroupId(group.getId()));
-
-        return group;
+                .optional()
+                .map(group -> {
+                    group.setLeaders(findLeadersByGroupId(group.getId()));
+                    group.setCategories(findCategoriesByGroupId(group.getId()));
+                    group.setAges(findAgesByGroupId(group.getId()));
+                    group.setMembers(findMembersByGroupId(group.getId()));
+                    return group;
+                });
     }
 
     private List<String> findAgesByGroupId(long groupId) {
@@ -134,7 +135,7 @@ public class GroupRepository {
 
     public List<Group> findJoinedGroupsByMemberId(long memberId) {
         String sql = """
-                    SELECT  gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
+                    SELECT  gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender, gr.church_id
                     FROM groups gr
                     LEFT JOIN genders ge ON ge.id = gr.gender_id
                     JOIN group_members gm ON gm.group_id = gr.id
@@ -158,7 +159,7 @@ public class GroupRepository {
 
     public List<Group> findAllByChurchIdAndLeaderMemberIdNot(Long churchId, Long leaderId) {
         String sql = """
-                SELECT DISTINCT  gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
+                SELECT DISTINCT  gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender, gr.church_id
                 FROM group_leaders gl
                 JOIN groups gr on gr.id = gl.group_id
                 LEFT JOIN genders ge ON ge.id = gr.gender_id
@@ -182,7 +183,7 @@ public class GroupRepository {
 
     public List<Group> findAllByLeaderMemberId(Long memberLeaderId) {
         String sql = """
-                SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender
+                SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender, gr.church_id
                 FROM group_leaders gl
                 JOIN groups gr on gr.id = gl.group_id
                 LEFT JOIN genders ge ON ge.id = gr.gender_id
@@ -212,6 +213,7 @@ public class GroupRepository {
                 .address(rs.getString("address"))
                 .frequency(rs.getString("frequency"))
                 .gender(rs.getString("gender"))
+                .churchId(rs.getLong("church_id"))
                 .build();
     }
 }

@@ -5,6 +5,7 @@ import com.jamsoftware.smallgroups.repository.GroupRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupService {
@@ -30,7 +31,7 @@ public class GroupService {
         return groupRepository.findJoinedGroupsByMemberId(memberId);
     }
 
-    public Group findById(Long id) {
+    public Optional<Group> findById(Long id) {
         return groupRepository.findById(id);
     }
 

@@ -24,6 +24,7 @@ public class Group {
     private List<String> categories;
     private String gender;
     private List<String> ages;
+    private Long churchId;
 
     public String truncatedDescription() {
         if (description == null) {
