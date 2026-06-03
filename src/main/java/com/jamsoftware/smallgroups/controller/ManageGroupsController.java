@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -56,8 +57,17 @@ public class ManageGroupsController {
         return "create-edit-group";
     }
 
-    @PostMapping("/edit")
-    public String editGroupSubmit(@ModelAttribute Group groupData, Model model) {
-        return "manage-groups";
+    @PostMapping("/edit/{id}")
+    @PreAuthorize("@authz.canEditGroup(#id)")
+    public String editGroupSubmit(@PathVariable Long id, @ModelAttribute Group groupData, RedirectAttributes redirectAttributes) {
+        int rowsUpdated = groupService.editGroup(id, groupData);
+
+        if (rowsUpdated <= 0) {
+            redirectAttributes.addFlashAttribute("error", "Group update failed. Please try again.");
+            return "redirect:/groups/edit/" + id;
+        }
+
+        redirectAttributes.addFlashAttribute("success", "Group updated successfully.");
+        return "redirect:/groups";
     }
 }

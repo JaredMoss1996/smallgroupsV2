@@ -27,7 +27,9 @@
 
     <div class="form-layout">
         <section class="form-card">
-            <form th:action="${isCreate} ? @{/groups/create} : @{/groups/edit}"
+            <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
+
+            <form th:action="${isCreate} ? @{/groups/create} : @{/groups/edit/{id}(id=*{id})}"
                   th:object="${groupData}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" th:field="*{id}"/>
 

@@ -35,4 +35,8 @@ public class GroupService {
         return groupRepository.findById(id);
     }
 
+    public int editGroup(long id, Group group) {
+        return groupRepository.editGroup(id, group);
+    }
+
 }

@@ -203,6 +203,33 @@ public class GroupRepository {
         return result;
     }
 
+    public int editGroup(long id, Group group) {
+        String sql = """
+            UPDATE groups
+            SET title = :title,
+                description = :description,
+                schedule = :schedule,
+                location = :location,
+                address = :address,
+                frequency = :frequency,
+                gender_id = (SELECT g.id FROM genders g WHERE g.name = :gender),
+                church_id = :churchId
+            WHERE id = :id
+            """;
+
+        return jdbcClient.sql(sql)
+                .param("id", id)
+                .param("title", group.getTitle())
+                .param("description", group.getDescription())
+                .param("schedule", group.getSchedule())
+                .param("location", group.getLocation())
+                .param("address", group.getAddress())
+                .param("frequency", group.getFrequency())
+                .param("gender", group.getGender())
+                .param("churchId", group.getChurchId())
+                .update();
+    }
+
     private Group mapToGroupList(ResultSet rs) throws SQLException {
         return Group.builder()
                 .id(rs.getLong("id"))
