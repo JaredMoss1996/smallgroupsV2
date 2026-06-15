@@ -3,17 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Manage Leaders</title>
+    <title>Manage Churches</title>
 
     <th:block th:insert="~{fragments/css-links :: cssLinks}"></th:block>
     <style>
-        .leader-grid {
+        .church-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 14px;
         }
 
-        .leader-item {
+        .church-item {
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             background: #fff;
@@ -22,12 +22,12 @@
             cursor: pointer;
         }
 
-        .leader-item:hover {
+        .church-item:hover {
             box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
             transform: translateY(-2px);
         }
 
-        .leader-head {
+        .church-head {
             display: flex;
             justify-content: space-between;
             gap: 12px;
@@ -35,7 +35,7 @@
             margin-bottom: 10px;
         }
 
-        .leader-name {
+        .church-name {
             margin: 0;
             font-size: 1.06rem;
             font-weight: 800;
@@ -57,7 +57,7 @@
             white-space: nowrap;
         }
 
-        .leader-details {
+        .church-details {
             margin: 0;
             padding: 0;
             list-style: none;
@@ -65,7 +65,7 @@
             gap: 8px;
         }
 
-        .leader-details li {
+        .church-details li {
             display: flex;
             gap: 9px;
             align-items: center;
@@ -73,13 +73,13 @@
             font-size: 0.93rem;
         }
 
-        .leader-details i {
+        .church-details i {
             width: 16px;
             color: #0b4e78;
         }
 
         @media (max-width: 900px) {
-            .leader-grid {
+            .church-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -88,35 +88,35 @@
 </head>
 <body>
 
-<th:block th:insert="~{fragments/navbar :: navbar('manageLeaders')}"></th:block>
+<th:block th:insert="~{fragments/navbar :: navbar('manageChurches')}"></th:block>
 
 <main class="page-shell">
     <section class="page-header">
-        <span class="eyebrow"><i class="fa-solid fa-users"></i> Leader Management</span>
-        <h1>Manage Leaders</h1>
+        <span class="eyebrow"><i class="fa-solid fa-users"></i> Church Management</span>
+        <h1>Manage Churches</h1>
         <p>
-            Static preview page for leader administration. This layout mirrors your management pages and shows
+            Static preview page for church administration. This layout mirrors your management pages and shows
             the current `Member` fields so backend wiring can be added later.
         </p>
     </section>
 
     <section class="toolbar">
-        <p class="results-note">[[${leaders.size}]] Leaders</p>
-        <a href="/leaders/assign" class="btn-pill btn-pill-link btn-primary-soft">
-            <i class="fa-solid fa-plus me-1"></i>Add Leader
+        <p class="results-note">6 Churches</p>
+        <a href="/churches/assign" class="btn-pill btn-pill-link btn-primary-soft">
+            <i class="fa-solid fa-plus me-1"></i>Add Church
         </a>
     </section>
 
-    <section class="leaders-card" aria-label="Leader list">
-        <div class="leader-grid">
-            <article class="leader-item" th:each="leader : ${leaders}" th:object="${leader}"
-                th:attr="data-leader-url=@{/leaders/{id}(id=*{id})}" onclick="window.location.href = this.dataset.leaderUrl">
-                <div class="leader-head">
+    <section class="churches-card" aria-label="Church list">
+        <div class="church-grid">
+            <article class="church-item" th:each="church : ${churches}" th:object="${church}"
+                     th:attr="data-church-url=@{/churches/{id}(id=*{id})}" onclick="window.location.href = this.dataset.churchUrl">
+                <div class="church-head">
                     <div>
-                        <h2 class="leader-name">[[*{firstName}]] [[*{lastName}]]</h2>
+                        <h2 class="church-name">[[*{firstName}]] [[*{lastName}]]</h2>
                     </div>
                 </div>
-                <ul class="leader-details">
+                <ul class="church-details">
                     <li><i class="fa-solid fa-envelope"></i>[[*{email}]]</li>
                     <li><i class="fa-solid fa-mobile-screen"></i>[[*{mobilePhone}]]</li>
                     <li><i class="fa-solid fa-phone"></i>[[*{homePhone}]]</li>

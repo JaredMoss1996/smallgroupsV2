@@ -25,6 +25,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**", "/h2-console/**", "/register", "/register/**", "/directory", "/error", "/errors/403").permitAll()
                         .requestMatchers("/groups/**").hasAuthority("MANAGE_GROUPS")
                         .requestMatchers("/leaders/**").hasAuthority("MANAGE_LEADERS")
+                        .requestMatchers("/churches/**").hasAuthority("MANAGE_CHURCHES")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception

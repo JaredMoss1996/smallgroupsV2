@@ -12,6 +12,7 @@ INSERT INTO roles (name) VALUES ('SUPER_ADMIN');
 INSERT INTO permissions (name) VALUES ('JOIN_LEAVE_GROUP');
 INSERT INTO permissions (name) VALUES ('MANAGE_GROUPS');
 INSERT INTO permissions (name) VALUES ('MANAGE_LEADERS');
+INSERT INTO permissions (name) VALUES ('MANAGE_CHURCHES');
 
 INSERT INTO ages (name) VALUES ('All Adults');
 INSERT INTO ages (name) VALUES ('20s');
@@ -27,6 +28,10 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES (2, 2);
 INSERT INTO role_permissions (role_id, permission_id) VALUES (3, 1);
 INSERT INTO role_permissions (role_id, permission_id) VALUES (3, 2);
 INSERT INTO role_permissions (role_id, permission_id) VALUES (3, 3);
+INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 1);
+INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 2);
+INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 3);
+INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 4);
 
 
 INSERT INTO category (name) VALUES ('Bible Study');
@@ -64,6 +69,7 @@ INSERT INTO app_user (email, password, role_id) VALUES ('james.lewis@gmail.com',
 INSERT INTO app_user (email, password, role_id) VALUES ('isabella.walker@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
 INSERT INTO app_user (email, password, role_id) VALUES ('benjamin.hall@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 2);
 INSERT INTO app_user (email, password, role_id) VALUES ('charlotte.allen@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 1);
+INSERT INTO app_user (email, password, role_id) VALUES ('superadmin@gmail.com', '$2a$10$Z/oGzoxN3zNcgdg59y0Pbe/PMZvkkbjUpeE5HtwBEuHxLdJUe4MPO', 4);
 
 INSERT INTO members (first_name, last_name, email, home_phone, mobile_phone, church_id, app_user_id) VALUES
 ('Alice', 'Smith', 'alice.smith@gmail.com', '(217) 555-1001', '(217) 555-2001', 1, 1),
@@ -81,7 +87,8 @@ INSERT INTO members (first_name, last_name, email, home_phone, mobile_phone, chu
 ('James', 'Lewis', 'james.lewis@gmail.com', '(217) 555-1013', '(217) 555-2013', 3, 13),
 ('Isabella', 'Walker', 'isabella.walker@gmail.com', '(217) 555-1014', '(217) 555-2014', 3, 14),
 ('Benjamin', 'Hall', 'benjamin.hall@gmail.com', '(217) 555-1015', '(217) 555-2015', 3, 15),
-('Charlotte', 'Allen', 'charlotte.allen@gmail.com', '(217) 555-1016', '(217) 555-2016', 3, 16);
+('Charlotte', 'Allen', 'charlotte.allen@gmail.com', '(217) 555-1016', '(217) 555-2016', 3, 16),
+('Jared', 'Moss', 'superadmin@gmail.com', '(217) 555-1017', '(217) 555-2017', NULL, 17);
 
 INSERT INTO groups (title, description, schedule, location, address, frequency, gender_id, church_id) VALUES
 ('Downtown Bible Study', 'Verse-by-verse Bible study for adults who work downtown.', 'Thursdays 7:00 PM', 'Grace Community Church - Room 204', '123 Main St, Springfield, IL 62701', 'WEEKLY', 3, 1),

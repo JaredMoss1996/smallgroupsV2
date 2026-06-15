@@ -22,4 +22,6 @@ public class MemberService {
     public Optional<Member> getMemberById(long memberId) {
         return memberRepository.getMemberById(memberId);
     }
+
+    public List<Member> getAllLeaders() {return memberRepository.getAllLeaders();}
 }

@@ -123,10 +123,10 @@
         </div>
     </section>
 
-    <div sec:authorize="hasAuthority('MANAGE_LEADERS')" class="groups-section-title-wrap">
+    <div sec:authorize="hasAuthority('MANAGE_LEADERS') && !hasAuthority('MANAGE_CHURCHES')" class="groups-section-title-wrap">
         <h2 class="groups-section-title">Your Leader's Groups</h2>
     </div>
-    <section sec:authorize="hasAuthority('MANAGE_LEADERS')" class="groups-card groups-card-spaced" aria-label="Group list">
+    <section sec:authorize="hasAuthority('MANAGE_LEADERS') && !hasAuthority('MANAGE_CHURCHES')" class="groups-card groups-card-spaced" aria-label="Group list">
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
             <div class="col" th:each="group : ${leaderGroups}" th:object="${group}"
                  th:attr="data-edit-url=@{/groups/edit/{id}(id=*{id})}">
@@ -134,6 +134,21 @@
             </div>
             <div th:if="${#lists.isEmpty(leaderGroups)}" class="col">
                 Your Leaders Haven't Created Any Groups Yet
+            </div>
+        </div>
+    </section>
+
+    <div sec:authorize="hasAuthority('MANAGE_CHURCHES')" class="groups-section-title-wrap">
+        <h2 class="groups-section-title">All Groups</h2>
+    </div>
+    <section sec:authorize="hasAuthority('MANAGE_CHURCHES')" class="groups-card groups-card-spaced" aria-label="Group list">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
+            <div class="col" th:each="group : ${superAdminGroups}" th:object="${group}"
+                 th:attr="data-edit-url=@{/groups/edit/{id}(id=*{id})}">
+                <th:block th:insert="~{fragments/group-card :: groupCard(${group})}"></th:block>
+            </div>
+            <div th:if="${#lists.isEmpty(superAdminGroups)}" class="col">
+                There are no groups.
             </div>
         </div>
     </section>

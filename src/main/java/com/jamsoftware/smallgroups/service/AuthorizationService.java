@@ -1,5 +1,6 @@
 package com.jamsoftware.smallgroups.service;
 
+import com.jamsoftware.smallgroups.model.Group;
 import com.jamsoftware.smallgroups.model.Member;
 import com.jamsoftware.smallgroups.repository.AuthorizationRepository;
 import com.jamsoftware.smallgroups.repository.GroupRepository;
@@ -27,25 +28,42 @@ public class AuthorizationService {
         this.groupRepository = groupRepository;
     }
 
+    //returns true if
+    //member is a super admin or
+    //member is a church admin and the group is in the same church as the admin or
+    //member is a leader of the group
     public boolean canEditGroup(Long groupId) {
-        groupRepository.findById(groupId)
+        Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new RuntimeException("Group not found with id: " + groupId));
 
-        if (userRepository.getUserRole(currentMemberService.getCurrentMember().getAppUserId())
-                .orElseThrow(() -> new RuntimeException("Role not found for user id: " + currentMemberService.getCurrentMember().getAppUserId()))
-                .equals("CHURCH_ADMIN")) {
-            return currentMemberService.getCurrentMember().getChurchId() == groupRepository.findById(groupId)
-                    .orElseThrow(() -> new RuntimeException("Group not found for group id: " + groupId)).getChurchId();
+        Member currentMember = currentMemberService.getCurrentMember();
+        String currentUserRole = userRepository.getUserRole(currentMember.getAppUserId())
+                .orElseThrow(() -> new RuntimeException("Role not found for user id: " + currentMember.getAppUserId()));
+
+        if (currentUserRole.equals("SUPER_ADMIN")) {
+            return true;
+        }
+
+        if (currentUserRole.equals("CHURCH_ADMIN")) {
+            return currentMemberService.getCurrentMember().getChurchId() == group.getChurchId();
         }
         return authorizationRepository.isGroupLeader(groupId, currentMemberService.getCurrentMember().getId());
     }
 
+    //returns true if
+    //the user is a super admin or
+    //the user is a church admin and the leader is a member of the same church as the admin and has the role of leader
     public boolean canEditLeader(Long leaderId) {
-        Member admin = currentMemberService.getCurrentMember();
+        Member currentMember = currentMemberService.getCurrentMember();
+        String currentMemberRole = userRepository.getUserRole(currentMember.getAppUserId())
+                .orElseThrow(() -> new RuntimeException("Role not found for user id: " + currentMember.getAppUserId()));
+        if (currentMemberRole.equals("SUPER_ADMIN")) {
+            return true;
+        }
         Member leader = memberService.getMemberById(leaderId)
                 .orElseThrow(() -> new RuntimeException("Leader not found"));
         String leaderRole = userRepository.getUserRole(leader.getAppUserId())
                 .orElseThrow(() -> new RuntimeException("Role not found for user id: " + leader.getAppUserId()));
-        return admin.getChurchId() == leader.getChurchId() && leaderRole.equals("LEADER");
+        return currentMember.getChurchId() == leader.getChurchId() && leaderRole.equals("LEADER");
     }
 }

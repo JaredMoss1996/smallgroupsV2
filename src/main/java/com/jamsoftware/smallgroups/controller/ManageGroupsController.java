@@ -27,11 +27,13 @@ public class ManageGroupsController {
     @GetMapping({"", "/"})
     public String getDirectory(Model model) {
         Member currentMember = currentMemberService.getCurrentMember();
-        model.addAttribute("groups", groupService.findAllByLeaderId(currentMember.getId()));
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("groups", groupService.findAllByLeaderId(currentMember.getId()));
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("MANAGE_LEADERS"))) {
             model.addAttribute("leaderGroups", groupService.findAllByChurchIdAndLeaderIdNot(currentMember.getChurchId(), currentMember.getId()));
+        }
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("MANAGE_CHURCHES"))) {
+            model.addAttribute("superAdminGroups", groupService.findAll());
         }
         return "manage-groups";
     }
@@ -45,7 +47,7 @@ public class ManageGroupsController {
 
     @PostMapping("/create")
     public String createGroupSubmit(@ModelAttribute Group groupData, Model model) {
-        return "manage-groups";
+        return "redirect:/groups";
     }
 
     @GetMapping("/edit/{id}")

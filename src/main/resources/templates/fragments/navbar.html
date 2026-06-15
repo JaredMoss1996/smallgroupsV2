@@ -26,6 +26,10 @@
                     <a class="nav-link" th:href="@{/leaders}"
                        th:classappend="${activePage == 'manageLeaders'} ? ' active' : ''">Manage Leaders</a>
                 </li>
+                <li class="nav-item" sec:authorize="hasAuthority('MANAGE_CHURCHES')">
+                    <a class="nav-link" th:href="@{/churches}"
+                       th:classappend="${activePage == 'manageChurches'} ? ' active' : ''">Manage Churches</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/profile}"
                        th:classappend="${activePage == 'profile'} ? ' active' : ''">Profile</a>
