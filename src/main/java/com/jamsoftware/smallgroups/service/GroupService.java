@@ -1,6 +1,7 @@
 package com.jamsoftware.smallgroups.service;
 
 import com.jamsoftware.smallgroups.model.Group;
+import com.jamsoftware.smallgroups.model.GroupForm;
 import com.jamsoftware.smallgroups.repository.GroupRepository;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class GroupService {
-    GroupRepository groupRepository;
+    private final GroupRepository groupRepository;
 
      public GroupService(GroupRepository groupRepository) {
         this.groupRepository = groupRepository;
@@ -17,6 +18,13 @@ public class GroupService {
 
     public List<Group> findAll() {
         return groupRepository.findAll();
+    }
+
+    public void createGroup(GroupForm groupForm) {
+         long groupId = groupRepository.createGroupFromGroupForm(groupForm);
+         for (Long leaderId : groupForm.getLeaderIds()) {
+             groupRepository.assignLeaderToGroup(groupId, leaderId);
+         }
     }
 
     public List<Group> findAllByLeaderId(Long memberLeaderId) {

@@ -1,9 +1,13 @@
 package com.jamsoftware.smallgroups.repository;
 
 import com.jamsoftware.smallgroups.model.Group;
+import com.jamsoftware.smallgroups.model.GroupForm;
 import com.jamsoftware.smallgroups.model.Member;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -201,6 +205,50 @@ public class GroupRepository {
         }
 
         return result;
+    }
+
+    public long createGroupFromGroupForm(GroupForm groupForm) {
+        String sql = """
+                INSERT INTO groups (title, description, schedule, location, address, frequency, gender_id, church_id)
+                VALUES (:title, :description, :schedule, :location, :address, :frequency,
+                        (SELECT g.id FROM genders g WHERE g.name = :gender), :churchId)
+                """;
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcClient.sql(sql)
+                .param("title", groupForm.getTitle())
+                .param("description", groupForm.getDescription())
+                .param("schedule", groupForm.getSchedule())
+                .param("location", groupForm.getLocation())
+                .param("address", groupForm.getAddress())
+                .param("frequency", groupForm.getFrequency())
+                .param("gender", groupForm.getGender())
+                .param("churchId", groupForm.getChurchId())
+                .update(keyHolder);
+
+        Number generatedId = keyHolder.getKey();
+        if (generatedId == null) {
+            throw new IllegalStateException("Failed to create group: no generated id returned");
+        }
+
+        return generatedId.longValue();
+    }
+
+    public void assignLeaderToGroup(long groupId, Long leaderId) {
+        String sql = """
+                INSERT INTO group_leaders (group_id, member_id)
+                VALUES (:groupId, :memberId)
+                """;
+
+        try {
+            jdbcClient.sql(sql)
+                    .param("groupId", groupId)
+                    .param("memberId", leaderId)
+                    .update();
+        } catch (DuplicateKeyException ignored) {
+            // Leader is already assigned to the group.
+        }
     }
 
     public int editGroup(long id, Group group) {

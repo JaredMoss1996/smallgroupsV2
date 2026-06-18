@@ -32,6 +32,7 @@
             <form th:action="${isCreate} ? @{/groups/create} : @{/groups/edit/{id}(id=*{id})}"
                   th:object="${groupData}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" th:field="*{id}"/>
+                <input type="hidden" th:field="*{churchId}"/>
 
                 <div class="form-section">
                     <div class="pill-note" th:text="${isCreate} ? 'New group setup' : 'Edit group setup'"></div>
@@ -258,6 +259,64 @@
                             </label>
                         </div>
                     </fieldset>
+
+                    <fieldset class="field clean-fieldset spaced mt-4">
+                        <legend class="field-legend legend-row">Group Leaders <span class="legend-hint">Required - select one or more</span></legend>
+                        <p class="field-help">
+                            Open the dropdown and choose the people who will lead this group.
+                        </p>
+
+                        <div class="dropdown-checklist" data-leaders-dropdown>
+                            <button type="button"
+                                    class="btn btn-outline-dark w-100 text-start"
+                                    data-leaders-toggle
+                                    aria-expanded="false">
+                                Select group leaders
+                            </button>
+
+                            <div class="mt-2 p-3 border rounded bg-transparent" data-leaders-menu hidden>
+
+                                <label th:each="leader : ${leaders}" class="choice-card">
+                                    <input type="checkbox" name="leaderIds" th:id="'leader-' + ${leader.id}" th:value="${leader.id}" th:field="*{leaderIds}"/>
+                                    <div>
+                                        <strong th:text="${leader.firstName}">Leader Name</strong>
+                                    </div>
+                                </label>
+
+                                <label class="choice-card" for="leader-jordan-smith">
+                                    <input type="checkbox" id="leader-jordan-smith" name="leaders" value="Jordan Smith"/>
+                                    <div>
+                                        <strong>Jordan Smith</strong>
+                                        <span>Lead facilitator and discussion guide.</span>
+                                    </div>
+                                </label>
+
+                                <label class="choice-card" for="leader-alex-johnson">
+                                    <input type="checkbox" id="leader-alex-johnson" name="leaders" value="Alex Johnson"/>
+                                    <div>
+                                        <strong>Alex Johnson</strong>
+                                        <span>Hosts prayer and follow-up coordination.</span>
+                                    </div>
+                                </label>
+
+                                <label class="choice-card" for="leader-taylor-brown">
+                                    <input type="checkbox" id="leader-taylor-brown" name="leaders" value="Taylor Brown"/>
+                                    <div>
+                                        <strong>Taylor Brown</strong>
+                                        <span>Welcomes new members and manages logistics.</span>
+                                    </div>
+                                </label>
+
+                                <label class="choice-card" for="leader-morgan-lee">
+                                    <input type="checkbox" id="leader-morgan-lee" name="leaders" value="Morgan Lee"/>
+                                    <div>
+                                        <strong>Morgan Lee</strong>
+                                        <span>Supports teaching prep and communication.</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
 
                 <div class="actions">
@@ -331,8 +390,37 @@
 
         const groupRules = [
             { name: 'ages', message: 'Please select at least one age range.' },
-            { name: 'categories', message: 'Please select at least one category.' }
+            { name: 'categories', message: 'Please select at least one category.' },
+            { name: 'leaderIds', message: 'Please select at least one group leader.' }
         ];
+
+        const leadersDropdown = form.querySelector('[data-leaders-dropdown]');
+        const leadersToggle = leadersDropdown ? leadersDropdown.querySelector('[data-leaders-toggle]') : null;
+        const leadersMenu = leadersDropdown ? leadersDropdown.querySelector('[data-leaders-menu]') : null;
+
+        function updateLeadersToggleLabel() {
+            if (!leadersToggle || !leadersMenu) {
+                return;
+            }
+
+            const selectedNames = Array.prototype.map.call(
+                leadersMenu.querySelectorAll('input[name="leaders"]:checked'),
+                function (checkbox) {
+                    return checkbox.value;
+                }
+            );
+
+            leadersToggle.textContent = selectedNames.length ? selectedNames.join(', ') : 'Select group leaders';
+        }
+
+        function openLeadersMenu() {
+            if (!leadersToggle || !leadersMenu) {
+                return;
+            }
+
+            leadersMenu.removeAttribute('hidden');
+            leadersToggle.setAttribute('aria-expanded', 'true');
+        }
 
         function validateCheckboxGroup(name, message) {
             const checkboxes = form.querySelectorAll('input[name="' + name + '"]');
@@ -353,9 +441,34 @@
             Array.prototype.forEach.call(checkboxes, function (checkbox) {
                 checkbox.addEventListener('change', function () {
                     validateCheckboxGroup(rule.name, rule.message);
+                    if (rule.name === 'leaders') {
+                        updateLeadersToggleLabel();
+                    }
                 });
             });
         });
+
+        if (leadersToggle && leadersMenu) {
+            leadersToggle.addEventListener('click', function () {
+                const isHidden = leadersMenu.hasAttribute('hidden');
+                if (isHidden) {
+                    leadersMenu.removeAttribute('hidden');
+                    leadersToggle.setAttribute('aria-expanded', 'true');
+                } else {
+                    leadersMenu.setAttribute('hidden', 'hidden');
+                    leadersToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!leadersDropdown.contains(event.target)) {
+                    leadersMenu.setAttribute('hidden', 'hidden');
+                    leadersToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            updateLeadersToggleLabel();
+        }
 
         form.addEventListener('submit', function (event) {
             let valid = true;
@@ -367,6 +480,10 @@
             });
 
             if (!valid) {
+                if (!validateCheckboxGroup('leaders', 'Please select at least one group leader.')) {
+                    openLeadersMenu();
+                }
+
                 event.preventDefault();
                 const firstInvalid = form.querySelector(':invalid');
                 if (firstInvalid && typeof firstInvalid.reportValidity === 'function') {
