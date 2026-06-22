@@ -20,7 +20,7 @@ public class GroupForm {
     private String location;
     private String address;
     private List<Long> leaderIds;
-    private List<String> categories;
+    private List<Long> categoryIds;
     private String gender;
     private List<String> ages;
     private Long churchId;

@@ -213,48 +213,13 @@
                         <legend class="field-legend legend-row">Categories <span class="legend-hint">Select all that apply</span>
                         </legend>
                         <div class="choice-grid two">
-                            <label class="choice-card" for="cat-bible-study">
-                                <input type="checkbox" id="cat-bible-study" name="categories" value="Bible Study"
-                                       th:field="*{categories}"/>
-                                <div>
-                                    <strong>Bible Study</strong>
-                                    <span>Scripture-focused teaching and discussion.</span>
-                                </div>
-                            </label>
 
-                            <label class="choice-card" for="cat-community-service">
-                                <input type="checkbox" id="cat-community-service" name="categories"
-                                       value="Community Service" th:field="*{categories}"/>
+                            <label th:each="category : ${categories}" class="choice-card" th:for="'cat-' + ${category.id}">
+                                <input type="checkbox" th:id="'cat-' + ${category.id}" name="categoryIds"
+                                       th:value="${category.id}" th:field="*{categoryIds}"/>
                                 <div>
-                                    <strong>Community Service</strong>
-                                    <span>Serving the community together.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="cat-young-adults">
-                                <input type="checkbox" id="cat-young-adults" name="categories" value="Young Adults"
-                                       th:field="*{categories}"/>
-                                <div>
-                                    <strong>Young Adults</strong>
-                                    <span>Geared toward younger adult members.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="cat-families">
-                                <input type="checkbox" id="cat-families" name="categories" value="Families"
-                                       th:field="*{categories}"/>
-                                <div>
-                                    <strong>Families</strong>
-                                    <span>Designed for households and parents.</span>
-                                </div>
-                            </label>
-
-                            <label class="choice-card" for="cat-seniors">
-                                <input type="checkbox" id="cat-seniors" name="categories" value="Seniors"
-                                       th:field="*{categories}"/>
-                                <div>
-                                    <strong>Seniors</strong>
-                                    <span>Community for older adults.</span>
+                                    <strong th:text="${category.name}">Category Name</strong>
+                                    <span th:text="${category.description}">Category Description</span>
                                 </div>
                             </label>
                         </div>
@@ -275,43 +240,10 @@
                             </button>
 
                             <div class="mt-2 p-3 border rounded bg-transparent" data-leaders-menu hidden>
-
                                 <label th:each="leader : ${leaders}" class="choice-card">
                                     <input type="checkbox" name="leaderIds" th:id="'leader-' + ${leader.id}" th:value="${leader.id}" th:field="*{leaderIds}"/>
                                     <div>
                                         <strong th:text="${leader.firstName}">Leader Name</strong>
-                                    </div>
-                                </label>
-
-                                <label class="choice-card" for="leader-jordan-smith">
-                                    <input type="checkbox" id="leader-jordan-smith" name="leaders" value="Jordan Smith"/>
-                                    <div>
-                                        <strong>Jordan Smith</strong>
-                                        <span>Lead facilitator and discussion guide.</span>
-                                    </div>
-                                </label>
-
-                                <label class="choice-card" for="leader-alex-johnson">
-                                    <input type="checkbox" id="leader-alex-johnson" name="leaders" value="Alex Johnson"/>
-                                    <div>
-                                        <strong>Alex Johnson</strong>
-                                        <span>Hosts prayer and follow-up coordination.</span>
-                                    </div>
-                                </label>
-
-                                <label class="choice-card" for="leader-taylor-brown">
-                                    <input type="checkbox" id="leader-taylor-brown" name="leaders" value="Taylor Brown"/>
-                                    <div>
-                                        <strong>Taylor Brown</strong>
-                                        <span>Welcomes new members and manages logistics.</span>
-                                    </div>
-                                </label>
-
-                                <label class="choice-card" for="leader-morgan-lee">
-                                    <input type="checkbox" id="leader-morgan-lee" name="leaders" value="Morgan Lee"/>
-                                    <div>
-                                        <strong>Morgan Lee</strong>
-                                        <span>Supports teaching prep and communication.</span>
                                     </div>
                                 </label>
                             </div>
@@ -390,7 +322,7 @@
 
         const groupRules = [
             { name: 'ages', message: 'Please select at least one age range.' },
-            { name: 'categories', message: 'Please select at least one category.' },
+            { name: 'categoryIds', message: 'Please select at least one category.' },
             { name: 'leaderIds', message: 'Please select at least one group leader.' }
         ];
 
@@ -404,7 +336,7 @@
             }
 
             const selectedNames = Array.prototype.map.call(
-                leadersMenu.querySelectorAll('input[name="leaders"]:checked'),
+                leadersMenu.querySelectorAll('input[name="leaderIds"]:checked'),
                 function (checkbox) {
                     return checkbox.value;
                 }
@@ -441,7 +373,7 @@
             Array.prototype.forEach.call(checkboxes, function (checkbox) {
                 checkbox.addEventListener('change', function () {
                     validateCheckboxGroup(rule.name, rule.message);
-                    if (rule.name === 'leaders') {
+                    if (rule.name === 'leaderIds') {
                         updateLeadersToggleLabel();
                     }
                 });
@@ -480,7 +412,7 @@
             });
 
             if (!valid) {
-                if (!validateCheckboxGroup('leaders', 'Please select at least one group leader.')) {
+                if (!validateCheckboxGroup('leaderIds', 'Please select at least one group leader.')) {
                     openLeadersMenu();
                 }
 

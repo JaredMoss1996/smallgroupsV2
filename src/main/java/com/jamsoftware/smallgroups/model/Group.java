@@ -21,7 +21,7 @@ public class Group {
     private String address;
     private List<Member> leaders;
     private List<Member> members;
-    private List<String> categories;
+    private List<Category> categories;
     private String gender;
     private List<String> ages;
     private Long churchId;

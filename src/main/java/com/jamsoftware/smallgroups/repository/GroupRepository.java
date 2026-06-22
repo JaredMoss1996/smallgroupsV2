@@ -1,5 +1,6 @@
 package com.jamsoftware.smallgroups.repository;
 
+import com.jamsoftware.smallgroups.model.Category;
 import com.jamsoftware.smallgroups.model.Group;
 import com.jamsoftware.smallgroups.model.GroupForm;
 import com.jamsoftware.smallgroups.model.Member;
@@ -21,7 +22,6 @@ public class GroupRepository {
         this.jdbcClient = jdbcClient;
     }
 
-    // ===================== SELECT ALL =====================
     public List<Group> findAll() {
         String sql = """
                     SELECT gr.id, gr.title, gr.description, gr.schedule, gr.location, gr.address, gr.frequency, ge.name as gender, gr.church_id
@@ -123,16 +123,20 @@ public class GroupRepository {
         return members;
     }
 
-    public List<String> findCategoriesByGroupId(long groupId) {
+    public List<Category> findCategoriesByGroupId(long groupId) {
         String sql = """
-                SELECT c.name
+                SELECT c.name, c.description, c.id
                 FROM group_categories gc
                 JOIN category c ON c.id = gc.category_id
                 WHERE gc.group_id = :groupId;
                 """;
-        List<String> categoryNames = jdbcClient.sql(sql)
+        List<Category> categoryNames = jdbcClient.sql(sql)
                 .param("groupId", groupId)
-                .query((rs, rowNum) -> rs.getString("name"))
+                .query((rs, rowNum) -> Category.builder()
+                        .id(rs.getLong("id"))
+                        .name(rs.getString("name"))
+                        .description(rs.getString("description"))
+                        .build())
                 .list();
         return categoryNames;
     }
@@ -251,7 +255,42 @@ public class GroupRepository {
         }
     }
 
-    public int editGroup(long id, Group group) {
+    public void assignCategoryToGroup(long groupId, Long categoryId) {
+        String sql = """
+                INSERT INTO group_categories (group_id, category_id)
+                VALUES (:groupId, :categoryId)
+                """;
+        try {
+            jdbcClient.sql(sql)
+                    .param("groupId", groupId)
+                    .param("categoryId", categoryId)
+                    .update();
+        } catch (DuplicateKeyException ignored) {
+            // Leader is already assigned to the group.
+        }
+    }
+
+    public void removeAllLeadersFromGroup(Long groupId) {
+        String sql = """
+                DELETE FROM group_leaders WHERE group_id = :groupId
+                """;
+
+        jdbcClient.sql(sql)
+                .param("groupId", groupId)
+                .update();
+    }
+
+    public void removeAllCategoriesFromGroup(Long groupId) {
+        String sql = """
+                DELETE FROM group_categories WHERE group_id = :groupId
+                """;
+
+        jdbcClient.sql(sql)
+                .param("groupId", groupId)
+                .update();
+    }
+
+    public void editGroupFromGroupForm(long id, GroupForm groupForm) {
         String sql = """
             UPDATE groups
             SET title = :title,
@@ -265,17 +304,23 @@ public class GroupRepository {
             WHERE id = :id
             """;
 
-        return jdbcClient.sql(sql)
+        int rowsAffected = jdbcClient.sql(sql)
                 .param("id", id)
-                .param("title", group.getTitle())
-                .param("description", group.getDescription())
-                .param("schedule", group.getSchedule())
-                .param("location", group.getLocation())
-                .param("address", group.getAddress())
-                .param("frequency", group.getFrequency())
-                .param("gender", group.getGender())
-                .param("churchId", group.getChurchId())
+                .param("title", groupForm.getTitle())
+                .param("description", groupForm.getDescription())
+                .param("schedule", groupForm.getSchedule())
+                .param("location", groupForm.getLocation())
+                .param("address", groupForm.getAddress())
+                .param("frequency", groupForm.getFrequency())
+                .param("gender", groupForm.getGender())
+                .param("churchId", groupForm.getChurchId())
                 .update();
+
+        if (rowsAffected == 0) {
+            throw new IllegalArgumentException("Edit failed: no group found with id " + id);
+        } else if (rowsAffected < 0) {
+            throw new IllegalStateException("Edit failed: unexpected row count (" + rowsAffected + ") for group id " + id);
+        }
     }
 
     private Group mapToGroupList(ResultSet rs) throws SQLException {

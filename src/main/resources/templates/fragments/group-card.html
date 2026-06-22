@@ -28,7 +28,7 @@
          th:attr="data-full-description=*{description}"
          th:text="*{truncatedDescription}"></div>
     <div class="mt-2 categories">
-        <span class="category-name" th:each="category : *{categories}" th:text="${category}"></span>
+        <span class="category-name" th:each="category : *{categories}" th:text="${category.name}"></span>
     </div>
     <div class="fw-semibold">Meet the Leaders:</div>
     <div class="mt-2">

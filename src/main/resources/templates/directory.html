@@ -280,18 +280,10 @@
                 </div>
                 <div id="categories-filter-content" class="filter-content collapse">
                     <div class="filter-checkbox-group">
-                        <div class="filter-checkbox-item"><input type="checkbox" id="category-bible-study" name="categories"/><label
-                                for="category-bible-study">Bible Study</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="category-prayer" name="categories"/><label
-                                for="category-prayer">Prayer</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="category-fellowship" name="categories"/><label
-                                for="category-fellowship">Fellowship</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="category-young-adults" name="categories"/><label
-                                for="category-young-adults">Young Adults</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="category-couples" name="categories"/><label
-                                for="category-couples">Couples</label></div>
-                        <div class="filter-checkbox-item"><input type="checkbox" id="category-outreach" name="categories"/><label
-                                for="category-outreach">Outreach</label></div>
+                        <div class="filter-checkbox-item" th:each="category : ${categories}" th:object="${category}">
+                            <input type="checkbox" th:id="'cat-' + *{id}" name="categories"/><label
+                                th:for="'cat-' + *{id}" th:text="*{name}">Bible Study</label>
+                        </div>
                     </div>
                 </div>
             </div>

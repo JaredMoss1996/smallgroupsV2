@@ -34,11 +34,11 @@ INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 3);
 INSERT INTO role_permissions (role_id, permission_id) VALUES (4, 4);
 
 
-INSERT INTO category (name) VALUES ('Bible Study');
-INSERT INTO category (name) VALUES ('Community Service');
-INSERT INTO category (name) VALUES ('Young Adults');
-INSERT INTO category (name) VALUES ('Families');
-INSERT INTO category (name) VALUES ('Seniors');
+INSERT INTO category (name, description) VALUES ('Bible Study', 'Scripture-focused teaching and discussion.');
+INSERT INTO category (name, description) VALUES ('Community Service', 'Serving the community together.');
+INSERT INTO category (name, description) VALUES ('Young Adults', 'Geared toward younger adult members.');
+INSERT INTO category (name, description) VALUES ('Families', 'Designed for households and parents.');
+INSERT INTO category (name, description) VALUES ('Seniors', 'Community for older adults.');
 
 INSERT INTO genders (name) VALUES ('MALE');
 INSERT INTO genders (name) VALUES ('FEMALE');
