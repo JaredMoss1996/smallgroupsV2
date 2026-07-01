@@ -4,10 +4,7 @@ import com.jamsoftware.smallgroups.model.Group;
 import com.jamsoftware.smallgroups.model.GroupForm;
 import com.jamsoftware.smallgroups.model.Member;
 import com.jamsoftware.smallgroups.repository.CategoryRepository;
-import com.jamsoftware.smallgroups.service.CategoryService;
-import com.jamsoftware.smallgroups.service.CurrentMemberService;
-import com.jamsoftware.smallgroups.service.GroupService;
-import com.jamsoftware.smallgroups.service.MemberService;
+import com.jamsoftware.smallgroups.service.*;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,15 +24,18 @@ public class ManageGroupsController {
     private final CurrentMemberService currentMemberService;
     private final MemberService memberService;
     private final CategoryService categoryService;
+    private final ChurchService churchService;
 
     public ManageGroupsController(GroupService groupService,
                                   CurrentMemberService currentMemberService,
                                   MemberService memberService,
-                                  CategoryService categoryService) {
+                                  CategoryService categoryService,
+                                  ChurchService churchService) {
         this.groupService = groupService;
         this.currentMemberService = currentMemberService;
         this.memberService = memberService;
         this.categoryService = categoryService;
+        this.churchService = churchService;
     }
 
     @GetMapping({"", "/"})
@@ -43,6 +43,7 @@ public class ManageGroupsController {
         Member currentMember = currentMemberService.getCurrentMember();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("groups", groupService.findAllByLeaderId(currentMember.getId()));
+        model.addAttribute("churchesMap", churchService.findAllChurchesMapById());
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("MANAGE_LEADERS"))) {
             model.addAttribute("leaderGroups", groupService.findAllByChurchIdAndLeaderIdNot(currentMember.getChurchId(), currentMember.getId()));
         }

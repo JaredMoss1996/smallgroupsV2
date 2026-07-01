@@ -2,7 +2,7 @@
 
 <th:block th:fragment="groupCardStyles"></th:block>
 
-<div th:fragment="groupCard(group)" class="group-card">
+<div th:fragment="groupCard(group, churchesMap)" class="group-card">
     <div class="group-title" th:text="*{title}"></div>
     <div class="d-flex align-items-center badges mb-2">
         <th:block>
@@ -15,6 +15,7 @@
         </th:block>
         <span class="badge rounded-pill"><i class="fa-solid fa-location-dot me-1"></i> Map View</span>
     </div>
+    <div class="meta-line" th:if="*{churchId} and ${churchesMap.get(group.churchId)}"><i class="fa-solid fa-church me-1"></i> [[${churchesMap.get(group.churchId).name}]]</div>
     <div class="meta-line"><i class="fa-solid fa-calendar-day"></i> [[*{schedule}]]</div>
     <div class="age-list">
         <span th:each="age, stat : *{ages}" class="age-pill">

@@ -282,7 +282,7 @@
                     <div class="filter-checkbox-group">
                         <div class="filter-checkbox-item" th:each="category : ${categories}" th:object="${category}">
                             <input type="checkbox" th:id="'cat-' + *{id}" name="categories"/><label
-                                th:for="'cat-' + *{id}" th:text="*{name}">Bible Study</label>
+                                th:for="'cat-' + *{id}" th:text="*{name}"></label>
                         </div>
                     </div>
                 </div>
@@ -296,25 +296,9 @@
                 </div>
                 <div id="churches-filter-content" class="filter-content collapse">
                     <div class="filter-checkbox-group single-column">
-                        <div class="filter-checkbox-item">
-                            <input type="checkbox" id="church-grace-community" name="churches"/>
-                            <label for="church-grace-community">Grace Community Church</label>
-                        </div>
-                        <div class="filter-checkbox-item">
-                            <input type="checkbox" id="church-river-city" name="churches"/>
-                            <label for="church-river-city">River City Church</label>
-                        </div>
-                        <div class="filter-checkbox-item">
-                            <input type="checkbox" id="church-hope-fellowship" name="churches"/>
-                            <label for="church-hope-fellowship">Hope Fellowship</label>
-                        </div>
-                        <div class="filter-checkbox-item">
-                            <input type="checkbox" id="church-new-life" name="churches"/>
-                            <label for="church-new-life">New Life Church</label>
-                        </div>
-                        <div class="filter-checkbox-item">
-                            <input type="checkbox" id="church-cornerstone" name="churches"/>
-                            <label for="church-cornerstone">Cornerstone Church</label>
+                        <div class="filter-checkbox-item" th:each="churchEntry : ${churchesMap}">
+                            <input type="checkbox" th:id="'church-' + ${churchEntry.key}" name="churches" th:value="${churchEntry.key}"/>
+                            <label th:for="'church-' + ${churchEntry.key}" th:text="${churchEntry.value.name}"></label>
                         </div>
                     </div>
                 </div>
@@ -381,13 +365,14 @@
                  th:data-schedule="*{schedule}"
                  th:data-location="*{location}"
                  th:data-gender="*{gender}"
+                 th:data-church-id="*{churchId}"
                  th:data-ages="${group.ages != null ? #strings.listJoin(group.ages, ',') : ''}"
                  th:data-categories="${group.categories != null ? #strings.listJoin(group.categories, ',') : ''}"
                  th:data-leaders="${group.leaders != null ? #strings.listJoin(group.leaders.![firstName + ' ' + lastName], ',') : ''}"
                  th:data-members="${group.members != null ? #strings.listJoin(group.members.![email], ',') : ''}"
                  th:data-joined="${#authentication != null and #authentication.name != 'anonymousUser' and group.members != null and #lists.contains(group.members.![email], #authentication.name)}"
                  th:data-search="${(group.title != null ? group.title : '') + ' ' + (group.description != null ? group.description : '') + ' ' + (group.schedule != null ? group.schedule : '') + ' ' + (group.location != null ? group.location : '') + ' ' + (group.categories != null ? #strings.listJoin(group.categories, ' ') : '') + ' ' + (group.ages != null ? #strings.listJoin(group.ages, ' ') : '') + ' ' + (group.leaders != null ? #strings.listJoin(group.leaders.![firstName + ' ' + lastName], ' ') : '')}">
-                <th:block th:insert="~{fragments/group-card :: groupCard(${group})}"></th:block>
+                <th:block th:insert="~{fragments/group-card :: groupCard(${group}, ${churchesMap})}"></th:block>
             </div>
         </div>
         <p id="directory-empty-state" class="small-muted mt-3 mb-0" style="display: none;">
@@ -435,6 +420,12 @@
 
         function getCheckedValues(name) {
             return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(getLabelTextForInput);
+        }
+
+        function getCheckedChurchIds() {
+            return Array.from(document.querySelectorAll('input[name="churches"]:checked')).map(function (input) {
+                return input.value;
+            });
         }
 
         function getSelectedGender() {
@@ -508,7 +499,7 @@
             const query = normalizeText(searchInput ? searchInput.value : '');
             const selectedAges = getCheckedValues('age_range');
             const selectedCategories = getCheckedValues('categories');
-            const selectedChurches = getCheckedValues('churches');
+            const selectedChurchIds = getCheckedChurchIds();
             const selectedGender = getSelectedGender();
             const joinedOnly = isJoinedOnlyActive();
 
@@ -519,7 +510,7 @@
                     || normalizeText(col.dataset.title + ' ' + col.dataset.description + ' ' + col.textContent);
                 const groupAges = splitCsv(col.dataset.ages);
                 const groupCategories = splitCsv(col.dataset.categories);
-                const churchSource = normalizeText(col.dataset.location + ' ' + col.dataset.search);
+                const groupChurchId = col.dataset.churchId;
                 const groupJoined = normalizeText(col.dataset.joined) === 'true';
 
                 const matchesSearch = !query || groupSearchText.includes(query);
@@ -533,7 +524,7 @@
                         return groupCategory.includes(category) || category.includes(groupCategory);
                     });
                 });
-                const matchesChurch = matchesAnyToken(churchSource, selectedChurches);
+                const matchesChurch = selectedChurchIds.length === 0 || selectedChurchIds.includes(groupChurchId);
                 const genderMatches = matchesGender(col.dataset.gender, selectedGender);
                 const joinedMatches = !joinedOnly || groupJoined;
 

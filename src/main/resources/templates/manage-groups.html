@@ -115,7 +115,7 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
             <div class="col" th:each="group : ${groups}" th:object="${group}"
                  th:attr="data-edit-url=@{/groups/edit/{id}(id=*{id})}">
-                <th:block th:insert="~{fragments/group-card :: groupCard(${group})}"></th:block>
+                <th:block th:insert="~{fragments/group-card :: groupCard(${group}, ${churchesMap})}"></th:block>
             </div>
             <div th:if="${#lists.isEmpty(groups)}" class="col">
                 You Haven't Created Any Groups
@@ -130,7 +130,7 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
             <div class="col" th:each="group : ${leaderGroups}" th:object="${group}"
                  th:attr="data-edit-url=@{/groups/edit/{id}(id=*{id})}">
-                <th:block th:insert="~{fragments/group-card :: groupCard(${group})}"></th:block>
+                <th:block th:insert="~{fragments/group-card :: groupCard(${group}, ${churchesMap})}"></th:block>
             </div>
             <div th:if="${#lists.isEmpty(leaderGroups)}" class="col">
                 Your Leaders Haven't Created Any Groups Yet
@@ -145,7 +145,7 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 results-grid">
             <div class="col" th:each="group : ${superAdminGroups}" th:object="${group}"
                  th:attr="data-edit-url=@{/groups/edit/{id}(id=*{id})}">
-                <th:block th:insert="~{fragments/group-card :: groupCard(${group})}"></th:block>
+                <th:block th:insert="~{fragments/group-card :: groupCard(${group}, ${churchesMap})}"></th:block>
             </div>
             <div th:if="${#lists.isEmpty(superAdminGroups)}" class="col">
                 There are no groups.
